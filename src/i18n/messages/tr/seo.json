@@ -1,0 +1,27 @@
+{
+  "titleTemplate": "%s · Telzyra",
+  "home": {
+    "title": "Telzyra — Görsel İş Akışı Otomasyon Platformu",
+    "description": "Telzyra ile uygulamalarınızı bağlayın, akıllı iş akışları oluşturun ve tekrarlayan görevleri otomatikleştirin. Bağımsız görsel otomasyon platformu, kod gerektirmez."
+  },
+  "features": {
+    "title": "Özellikler",
+    "description": "Görsel iş akışı oluşturucu, akıllı tetikleyiciler, koşullu mantık, yapay zekâ adımları, webhook'lar ve çalıştırma izleme. İşinizi otomatikleştirmek için ihtiyacınız olan her şey."
+  },
+  "integrations": {
+    "title": "Entegrasyonlar",
+    "description": "Telzyra'ya hangi uygulama ve servisleri bağlayabileceğinizi, her bağlayıcının gerçek durumuyla birlikte görün."
+  },
+  "pricing": {
+    "title": "Fiyatlandırma",
+    "description": "Basit ve şeffaf fiyatlandırma. Ücretsiz başlayın, otomasyonlarınız büyüdükçe Starter, Pro veya Business planına geçin."
+  },
+  "login": {
+    "title": "Giriş yap",
+    "description": "Telzyra çalışma alanınıza giriş yapın."
+  },
+  "register": {
+    "title": "Hesabınızı oluşturun",
+    "description": "Ücretsiz bir Telzyra hesabı oluşturun ve ilk iş akışınızı kurun."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "required": "This field is required.",
+  "email": "Enter a valid email address.",
+  "passwordMin": "Password must be at least {min} characters.",
+  "nameMin": "Name must be at least {min} characters.",
+  "auth.invalid_credentials": "The email or password is incorrect.",
+  "auth.email_taken": "An account with this email already exists.",
+  "service.unavailable": "Account services are not available yet. Please try again later.",
+  "unknown": "Something went wrong. Please try again."
+}

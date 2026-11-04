@@ -1,0 +1,143 @@
+{
+  "hero": {
+    "eyebrow": "Visual workflow automation",
+    "title": "Automate your work. Focus on growth.",
+    "description": "Connect your favorite apps, build intelligent workflows, and automate repetitive tasks with Telzyra.",
+    "note": "Free plan available. No credit card required."
+  },
+  "preview": {
+    "workflowName": "New lead → CRM → Team alert",
+    "statusActive": "Active",
+    "ariaLabel": "Illustration of the Telzyra workflow editor with connected nodes"
+  },
+  "problem": {
+    "title": "Too much manual work. Too many disconnected tools.",
+    "description": "Teams lose hours every week moving information between systems by hand. Telzyra connects those steps into one reliable workflow.",
+    "items": {
+      "dataEntry": {
+        "title": "Repetitive data entry",
+        "description": "Copying the same details from forms, emails and spreadsheets into other tools."
+      },
+      "reports": {
+        "title": "Manual reports",
+        "description": "Collecting numbers from several sources every week just to build one report."
+      },
+      "disconnected": {
+        "title": "Disconnected applications",
+        "description": "Business apps that don't talk to each other, so data ends up out of date or duplicated."
+      },
+      "notifications": {
+        "title": "Delayed notifications",
+        "description": "Important events, like a new order or lead, reach the right person hours too late."
+      },
+      "communication": {
+        "title": "Repetitive customer communication",
+        "description": "Sending the same confirmations, reminders and follow-ups by hand, one at a time."
+      }
+    }
+  },
+  "features": {
+    "eyebrow": "Platform",
+    "title": "Everything you need to automate with confidence",
+    "description": "Telzyra combines a visual builder with a dedicated execution engine, so workflows are easy to create and dependable in production."
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "title": "From idea to running workflow in four steps",
+    "steps": {
+      "trigger": {
+        "title": "Choose your trigger",
+        "description": "Start a workflow from a webhook, a schedule or an event in a connected app."
+      },
+      "connect": {
+        "title": "Connect your applications",
+        "description": "Authorize the apps you use once. Telzyra stores credentials securely in your workspace."
+      },
+      "configure": {
+        "title": "Configure automation steps",
+        "description": "Add actions, conditions and AI steps, and map data between them visually."
+      },
+      "activate": {
+        "title": "Activate your workflow",
+        "description": "Turn it on and follow every execution with detailed logs and run history."
+      }
+    }
+  },
+  "integrations": {
+    "eyebrow": "Integrations",
+    "title": "Built to connect the tools you already use",
+    "description": "Connectors are released step by step. Each one is marked with its real status, so you always know what is available today.",
+    "viewAll": "View all integrations"
+  },
+  "useCases": {
+    "eyebrow": "Use cases",
+    "title": "What teams automate with Telzyra",
+    "description": "Examples of workflows you can design. Examples that depend on connectors not yet released are labeled as demonstrations.",
+    "items": {
+      "leads": {
+        "title": "Lead management",
+        "description": "Capture leads from website forms, enrich them and add them to your CRM automatically."
+      },
+      "orders": {
+        "title": "E-commerce order processing",
+        "description": "Process new orders, update inventory records and notify your fulfilment team."
+      },
+      "notifications": {
+        "title": "Customer notifications",
+        "description": "Send confirmations and status updates by email or messenger the moment something changes."
+      },
+      "reporting": {
+        "title": "Automated reporting",
+        "description": "Collect metrics from several sources on a schedule and deliver a ready report to your team."
+      },
+      "documents": {
+        "title": "AI-powered document processing",
+        "description": "Extract key fields from invoices, contracts and emails with AI and pass them to the next step."
+      },
+      "sales": {
+        "title": "Sales pipeline automation",
+        "description": "Move deals between stages, assign owners and schedule follow-ups based on clear rules."
+      }
+    }
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Simple pricing that grows with you",
+    "description": "Start free. Upgrade when your workflows need more operations, speed or team members.",
+    "compare": "Compare all plans"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "What is Telzyra?",
+        "a": "Telzyra is an independent workflow automation platform. You subscribe, connect the apps you use and build automations in a visual editor. Your workflows run on Telzyra's own execution engine."
+      },
+      {
+        "q": "How does workflow automation work?",
+        "a": "Every workflow starts with a trigger, such as an incoming webhook, a schedule or an app event. Telzyra then runs the steps you defined in order, passes data from one step to the next and records the result of every run."
+      },
+      {
+        "q": "Do I need programming skills?",
+        "a": "No. Workflows are built visually by connecting nodes and mapping fields. If you are technical, you can still use webhooks, HTTP requests and custom expressions for advanced cases."
+      },
+      {
+        "q": "Which applications can I connect?",
+        "a": "Telzyra includes core building blocks such as webhooks, HTTP requests, schedules and conditional logic. App connectors are being released gradually, and the Integrations page shows the current status of each one."
+      },
+      {
+        "q": "How does pricing work?",
+        "a": "Plans differ by monthly operations, active workflows, scheduling frequency and team size. You can start on the free plan and upgrade or downgrade at any time. Yearly billing includes two months free."
+      },
+      {
+        "q": "Is my data secure?",
+        "a": "Telzyra is designed with security first. Data is encrypted in transit, connection credentials are encrypted at rest and stay inside your workspace, and you control how long execution history is kept."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Your next automation starts here.",
+    "description": "Create a free account and build your first workflow in minutes."
+  }
+}

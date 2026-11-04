@@ -1,0 +1,40 @@
+{
+  "kinds": {
+    "trigger": "Tetikleyici",
+    "action": "İşlem",
+    "logic": "Mantık",
+    "ai": "Yapay Zekâ"
+  },
+  "trigger.webhook": {
+    "label": "Webhook",
+    "description": "Benzersiz bir URL'ye veri gönderildiğinde iş akışını başlatır."
+  },
+  "trigger.schedule": {
+    "label": "Zamanlama",
+    "description": "İş akışını belirli aralıklarla veya belirlenen saatte çalıştırır."
+  },
+  "action.http_request": {
+    "label": "HTTP İsteği",
+    "description": "Herhangi bir REST API'yi çağırır ve yanıtı döndürür."
+  },
+  "action.send_email": {
+    "label": "E-posta Gönder",
+    "description": "Önceki adımlardaki verilerle e-posta gönderir."
+  },
+  "action.data_store": {
+    "label": "Veri Deposu",
+    "description": "Çalışma alanınızda kayıtları saklar ve okur."
+  },
+  "logic.condition": {
+    "label": "Koşul",
+    "description": "Kurallara göre veriyi farklı dallara yönlendirir."
+  },
+  "logic.filter": {
+    "label": "Filtre",
+    "description": "Yalnızca veri ölçütlerinize uyduğunda devam eder."
+  },
+  "ai.text_extract": {
+    "label": "Yapay Zekâ ile Çıkarım",
+    "description": "Yapılandırılmamış metinden yapılandırılmış alanlar çıkarır."
+  }
+}

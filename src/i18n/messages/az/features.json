@@ -1,0 +1,45 @@
+{
+  "page": {
+    "eyebrow": "İmkanlar",
+    "title": "Avtomatlaşdırmaları qurmaq və icra etmək üçün tam platforma",
+    "description": "İlk tətikləyicidən son log qeydinə qədər Telzyra iş axınlarını vizual şəkildə tərtib etmək və etibarlı icra etmək üçün lazımi alətləri təqdim edir."
+  },
+  "items": {
+    "builder": {
+      "title": "Vizual iş axını qurucusu",
+      "description": "Avtomatlaşdırmaları node-ları birləşdirərək aydın lövhə üzərində tərtib edin. Bütün prosesi bir baxışda görün və kodla işləmədən dəyişin."
+    },
+    "integrations": {
+      "title": "Tətbiq inteqrasiyaları",
+      "description": "Biznes tətbiqlərini bir dəfə qoşun və həmin bağlantılardan istənilən iş axınında istifadə edin. Giriş məlumatları iş sahənizdə təhlükəsiz saxlanılır."
+    },
+    "ai": {
+      "title": "Süni intellektlə avtomatlaşdırma",
+      "description": "Mesajları təsnif etmək, mətni xülasələşdirmək və ya sənədlərdən strukturlaşdırılmış məlumat çıxarmaq üçün eyni iş axınına süni intellekt addımları əlavə edin."
+    },
+    "triggers": {
+      "title": "Ağıllı tətikləyicilər",
+      "description": "İş axınlarını vebhuklar, cədvəllər və ya tətbiq hadisələri ilə başladın — iş məhz lazım olduğu anda görülsün."
+    },
+    "logic": {
+      "title": "Şərti məntiq",
+      "description": "Şərtlər, filtrlər və budaqlarla məlumatları yönləndirin ki, hər qeyd tam olaraq lazımi yolla getsin."
+    },
+    "monitoring": {
+      "title": "İcra monitorinqi",
+      "description": "Hər icranı addım-addım loglar, giriş və çıxış məlumatları, aydın xəta mesajları ilə izləyin və problemləri tez həll edin."
+    },
+    "webhooks": {
+      "title": "Vebhuklar və API bağlantıları",
+      "description": "Vebhuklarla istənilən sistemdən məlumat qəbul edin və HTTP sorğuları ilə istənilən REST API-yə müraciət edin — hətta xüsusi konnektor olmadan belə."
+    },
+    "templates": {
+      "title": "İş axını şablonları",
+      "description": "Geniş yayılmış proseslər üçün hazır iş axını strukturlarından başlayın, sonra hər addımı biznesinizə uyğunlaşdırın."
+    }
+  },
+  "nodesSection": {
+    "title": "Əsas komponentlər",
+    "description": "Hər iş axını node-lardan ibarətdir. Hər node-un dəyişməz texniki identifikatoru var, buna görə iş axınları bütün dillərdə eyni şəkildə işləyir."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "brand": {
+    "tagline": "Görsel iş akışı otomasyon platformu"
+  },
+  "nav": {
+    "product": "Ürün",
+    "integrations": "Entegrasyonlar",
+    "useCases": "Kullanım Senaryoları",
+    "pricing": "Fiyatlandırma",
+    "resources": "Kaynaklar",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "mainLabel": "Ana gezinme"
+  },
+  "cta": {
+    "login": "Giriş yap",
+    "startFree": "Ücretsiz başla",
+    "explore": "Platformu keşfet",
+    "createAccount": "Ücretsiz hesabını oluştur",
+    "learnMore": "Daha fazla bilgi"
+  },
+  "language": {
+    "label": "Dil",
+    "change": "Dili değiştir"
+  },
+  "labels": {
+    "comingSoon": "Çok yakında",
+    "planned": "Planlanıyor",
+    "available": "Kullanılabilir",
+    "beta": "Beta",
+    "demo": "Örnek senaryo",
+    "preview": "Ürün önizlemesi",
+    "skipToContent": "İçeriğe geç"
+  },
+  "footer": {
+    "description": "Telzyra, bağımsız bir görsel iş akışı otomasyon platformudur. Uygulamalarınızı bağlayın, iş akışları oluşturun ve her çalıştırmayı takip edin; üstelik kod yazmadan.",
+    "product": "Ürün",
+    "company": "Şirket",
+    "legal": "Yasal",
+    "features": "Özellikler",
+    "integrations": "Entegrasyonlar",
+    "pricing": "Fiyatlandırma",
+    "documentation": "Dokümantasyon",
+    "contact": "İletişim",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları",
+    "rights": "© {year} Telzyra. Tüm hakları saklıdır."
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "description": "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
+    "back": "Ana sayfaya dön"
+  }
+}

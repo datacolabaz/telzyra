@@ -1,0 +1,58 @@
+{
+  "page": {
+    "eyebrow": "Fiyatlandırma",
+    "title": "İş akışlarınıza uygun planı seçin",
+    "description": "Her plan görsel oluşturucuyu, çalıştırma motorunu ve çalıştırma kayıtlarını içerir. Planınızı dilediğiniz zaman yükseltebilir veya düşürebilirsiniz."
+  },
+  "billing": {
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "yearlyBadge": "2 ay ücretsiz",
+    "toggleLabel": "Faturalandırma dönemi"
+  },
+  "price": {
+    "perMonth": "/ay",
+    "billedYearly": "Yıllık {amount} faturalandırılır",
+    "free": "Sonsuza kadar ücretsiz"
+  },
+  "plans": {
+    "free": {
+      "name": "Free",
+      "description": "Telzyra'yı denemek ve basit kişisel görevleri otomatikleştirmek için.",
+      "cta": "Ücretsiz başla"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "Günlük işlerini otomatikleştiren serbest çalışanlar ve küçük ekipler için.",
+      "cta": "Starter'ı seç"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Her gün otomasyona güvenen, büyüyen ekipler için.",
+      "cta": "Pro'yu seç",
+      "badge": "En popüler"
+    },
+    "business": {
+      "name": "Business",
+      "description": "İş açısından kritik iş akışlarını büyük ölçekte çalıştıran şirketler için.",
+      "cta": "Business'ı seç"
+    }
+  },
+  "limits": {
+    "operations": "Aylık {count} işlem",
+    "workflows": "{count} aktif iş akışı",
+    "workflowsUnlimited": "Sınırsız aktif iş akışı",
+    "schedule": "{count} dakikada bir çalıştırma",
+    "history": "{count} günlük çalıştırma geçmişi",
+    "members": "{count} ekip üyesi",
+    "member": "1 ekip üyesi"
+  },
+  "features": {
+    "webhooks": "Webhook'lar ve HTTP istekleri",
+    "conditionalLogic": "Koşullu mantık ve filtreler",
+    "aiSteps": "Yapay zekâ otomasyon adımları",
+    "teamRoles": "Ekip rolleri ve yetkiler",
+    "prioritySupport": "Öncelikli destek"
+  },
+  "footnote": "Fiyatlar ABD doları cinsindendir ve geçerli vergileri içermez. Plan limitleri genel kullanıma açılmadan önce güncellenebilir."
+}

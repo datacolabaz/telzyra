@@ -1,0 +1,58 @@
+{
+  "page": {
+    "eyebrow": "Pricing",
+    "title": "Choose the plan that fits your workflows",
+    "description": "Every plan includes the visual builder, the execution engine and execution logs. Upgrade or downgrade at any time."
+  },
+  "billing": {
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "yearlyBadge": "2 months free",
+    "toggleLabel": "Billing period"
+  },
+  "price": {
+    "perMonth": "/month",
+    "billedYearly": "{amount} billed yearly",
+    "free": "Free forever"
+  },
+  "plans": {
+    "free": {
+      "name": "Free",
+      "description": "For trying Telzyra and automating simple personal tasks.",
+      "cta": "Start for Free"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "For freelancers and small teams automating everyday work.",
+      "cta": "Choose Starter"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "For growing teams that rely on automation every day.",
+      "cta": "Choose Pro",
+      "badge": "Most popular"
+    },
+    "business": {
+      "name": "Business",
+      "description": "For companies running business-critical workflows at scale.",
+      "cta": "Choose Business"
+    }
+  },
+  "limits": {
+    "operations": "{count} operations / month",
+    "workflows": "{count} active workflows",
+    "workflowsUnlimited": "Unlimited active workflows",
+    "schedule": "Runs as often as every {count} min",
+    "history": "{count}-day execution history",
+    "members": "{count} team members",
+    "member": "1 team member"
+  },
+  "features": {
+    "webhooks": "Webhooks and HTTP requests",
+    "conditionalLogic": "Conditional logic and filters",
+    "aiSteps": "AI automation steps",
+    "teamRoles": "Team roles and permissions",
+    "prioritySupport": "Priority support"
+  },
+  "footnote": "Prices are in USD and exclude applicable taxes. Plan limits may be updated before general availability."
+}

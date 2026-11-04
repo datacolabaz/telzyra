@@ -1,0 +1,40 @@
+{
+  "kinds": {
+    "trigger": "Tətikləyici",
+    "action": "Əməliyyat",
+    "logic": "Məntiq",
+    "ai": "Süni intellekt"
+  },
+  "trigger.webhook": {
+    "label": "Vebhuk",
+    "description": "Unikal URL-ə məlumat göndərildikdə iş axınını başladır."
+  },
+  "trigger.schedule": {
+    "label": "Cədvəl",
+    "description": "İş axınını müəyyən intervalla və ya təyin olunmuş vaxtda icra edir."
+  },
+  "action.http_request": {
+    "label": "HTTP sorğusu",
+    "description": "İstənilən REST API-yə müraciət edir və cavabı qaytarır."
+  },
+  "action.send_email": {
+    "label": "E-poçt göndər",
+    "description": "Əvvəlki addımların məlumatları ilə e-poçt göndərir."
+  },
+  "action.data_store": {
+    "label": "Məlumat anbarı",
+    "description": "İş sahənizdə qeydləri saxlayır və oxuyur."
+  },
+  "logic.condition": {
+    "label": "Şərt",
+    "description": "Qaydalara əsasən məlumatı müxtəlif budaqlara yönləndirir."
+  },
+  "logic.filter": {
+    "label": "Filtr",
+    "description": "Yalnız məlumat meyarlarınıza uyğun gəldikdə davam edir."
+  },
+  "ai.text_extract": {
+    "label": "Süni intellektlə çıxarış",
+    "description": "Strukturlaşdırılmamış mətndən strukturlaşdırılmış sahələri çıxarır."
+  }
+}

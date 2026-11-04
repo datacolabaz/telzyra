@@ -1,0 +1,143 @@
+{
+  "hero": {
+    "eyebrow": "Vizual iş axını avtomatlaşdırması",
+    "title": "İşinizi avtomatlaşdırın. İnkişafa fokuslanın.",
+    "description": "Sevdiyiniz tətbiqləri birləşdirin, ağıllı iş axınları qurun və təkrarlanan tapşırıqları Telzyra ilə avtomatlaşdırın.",
+    "note": "Pulsuz plan mövcuddur. Kredit kartı tələb olunmur."
+  },
+  "preview": {
+    "workflowName": "Yeni müraciət → CRM → Komandaya bildiriş",
+    "statusActive": "Aktiv",
+    "ariaLabel": "Bir-birinə qoşulmuş node-larla Telzyra iş axını redaktorunun təsviri"
+  },
+  "problem": {
+    "title": "Həddən artıq əl işi. Bir-biri ilə əlaqəsi olmayan alətlər.",
+    "description": "Komandalar hər həftə məlumatı sistemlər arasında əl ilə daşımağa saatlarla vaxt itirir. Telzyra bu addımları vahid və etibarlı iş axınında birləşdirir.",
+    "items": {
+      "dataEntry": {
+        "title": "Təkrarlanan məlumat daxiletməsi",
+        "description": "Formlardan, e-poçtlardan və cədvəllərdən eyni məlumatları digər alətlərə köçürmək."
+      },
+      "reports": {
+        "title": "Əl ilə hazırlanan hesabatlar",
+        "description": "Bir hesabat üçün hər həftə müxtəlif mənbələrdən rəqəmləri toplamaq."
+      },
+      "disconnected": {
+        "title": "Əlaqəsiz tətbiqlər",
+        "description": "Bir-biri ilə əlaqə qurmayan biznes tətbiqləri — nəticədə məlumatlar köhnəlir və ya təkrarlanır."
+      },
+      "notifications": {
+        "title": "Gecikən bildirişlər",
+        "description": "Yeni sifariş və ya müraciət kimi vacib hadisələr lazımi şəxsə saatlarla gec çatır."
+      },
+      "communication": {
+        "title": "Müştərilərlə təkrarlanan ünsiyyət",
+        "description": "Eyni təsdiqləri, xatırlatmaları və izləmə mesajlarını əl ilə, bir-bir göndərmək."
+      }
+    }
+  },
+  "features": {
+    "eyebrow": "Platforma",
+    "title": "Etibarlı avtomatlaşdırma üçün lazım olan hər şey",
+    "description": "Telzyra vizual qurucunu xüsusi icra mühərriki ilə birləşdirir: iş axınlarını yaratmaq asandır, real istifadədə isə onlar etibarlı işləyir."
+  },
+  "howItWorks": {
+    "eyebrow": "Necə işləyir",
+    "title": "İdeyadan işləyən iş axınına dörd addımda",
+    "steps": {
+      "trigger": {
+        "title": "Tətikləyici seçin",
+        "description": "İş axınını vebhuk, cədvəl və ya qoşulmuş tətbiqdəki hadisə ilə başladın."
+      },
+      "connect": {
+        "title": "Tətbiqlərinizi qoşun",
+        "description": "İstifadə etdiyiniz tətbiqlərə bir dəfə icazə verin. Telzyra giriş məlumatlarını iş sahənizdə təhlükəsiz saxlayır."
+      },
+      "configure": {
+        "title": "Avtomatlaşdırma addımlarını tənzimləyin",
+        "description": "Əməliyyatlar, şərtlər və süni intellekt addımları əlavə edin, məlumatları onlar arasında vizual şəkildə ötürün."
+      },
+      "activate": {
+        "title": "İş axınını aktivləşdirin",
+        "description": "İş axınını işə salın və hər icranı ətraflı loglar və icra tarixçəsi ilə izləyin."
+      }
+    }
+  },
+  "integrations": {
+    "eyebrow": "İnteqrasiyalar",
+    "title": "Artıq istifadə etdiyiniz alətlərlə işləmək üçün yaradılıb",
+    "description": "Konnektorlar mərhələlərlə təqdim olunur. Hər biri real statusu ilə qeyd edilir ki, bu gün nəyin mövcud olduğunu həmişə biləsiniz.",
+    "viewAll": "Bütün inteqrasiyalara bax"
+  },
+  "useCases": {
+    "eyebrow": "İstifadə ssenariləri",
+    "title": "Komandalar Telzyra ilə nələri avtomatlaşdırır",
+    "description": "Qura biləcəyiniz iş axınlarından nümunələr. Hələ təqdim olunmamış konnektorlardan asılı olan nümunələr «Nümayiş» kimi qeyd edilib.",
+    "items": {
+      "leads": {
+        "title": "Müraciətlərin idarə olunması",
+        "description": "Saytdakı formlardan gələn müraciətləri qəbul edin, məlumatlarla zənginləşdirin və avtomatik olaraq CRM-ə əlavə edin."
+      },
+      "orders": {
+        "title": "E-ticarət sifarişlərinin emalı",
+        "description": "Yeni sifarişləri emal edin, anbar qeydlərini yeniləyin və çatdırılma komandasını xəbərdar edin."
+      },
+      "notifications": {
+        "title": "Müştəri bildirişləri",
+        "description": "Hər hansı dəyişiklik baş verən kimi e-poçt və ya messencer vasitəsilə təsdiq və status yenilənmələri göndərin."
+      },
+      "reporting": {
+        "title": "Avtomatlaşdırılmış hesabatlar",
+        "description": "Göstəriciləri müəyyən cədvəl üzrə bir neçə mənbədən toplayın və hazır hesabatı komandanıza çatdırın."
+      },
+      "documents": {
+        "title": "Süni intellektlə sənəd emalı",
+        "description": "Süni intellekt vasitəsilə fakturalardan, müqavilələrdən və e-poçtlardan əsas sahələri çıxarın və növbəti addıma ötürün."
+      },
+      "sales": {
+        "title": "Satış prosesinin avtomatlaşdırılması",
+        "description": "Aydın qaydalar əsasında sövdələşmələri mərhələlər arasında keçirin, məsul şəxs təyin edin və izləmə tapşırıqları planlaşdırın."
+      }
+    }
+  },
+  "pricing": {
+    "eyebrow": "Qiymətlər",
+    "title": "Sizinlə birgə böyüyən sadə qiymətlər",
+    "description": "Pulsuz başlayın. İş axınlarınıza daha çox əməliyyat, sürət və ya komanda üzvü lazım olduqda planınızı yüksəldin.",
+    "compare": "Bütün planları müqayisə et"
+  },
+  "faq": {
+    "eyebrow": "Suallar",
+    "title": "Tez-tez verilən suallar",
+    "items": [
+      {
+        "q": "Telzyra nədir?",
+        "a": "Telzyra müstəqil iş axını avtomatlaşdırma platformasıdır. Abunə olursunuz, istifadə etdiyiniz tətbiqləri qoşursunuz və avtomatlaşdırmaları vizual redaktorda qurursunuz. İş axınlarınız Telzyra-nın öz icra mühərrikində işləyir."
+      },
+      {
+        "q": "İş axını avtomatlaşdırması necə işləyir?",
+        "a": "Hər iş axını tətikləyici ilə başlayır: daxil olan vebhuk, cədvəl və ya tətbiqdəki hadisə. Daha sonra Telzyra təyin etdiyiniz addımları ardıcıl icra edir, məlumatı bir addımdan digərinə ötürür və hər icranın nəticəsini qeyd edir."
+      },
+      {
+        "q": "Proqramlaşdırma bilikləri tələb olunurmu?",
+        "a": "Xeyr. İş axınları node-ları birləşdirmək və sahələri uyğunlaşdırmaqla vizual şəkildə qurulur. Texniki biliyiniz varsa, mürəkkəb hallar üçün vebhuklardan, HTTP sorğularından və xüsusi ifadələrdən də istifadə edə bilərsiniz."
+      },
+      {
+        "q": "Hansı tətbiqləri qoşa bilərəm?",
+        "a": "Telzyra vebhuklar, HTTP sorğuları, cədvəllər və şərti məntiq kimi əsas komponentləri ehtiva edir. Tətbiq konnektorları mərhələlərlə təqdim olunur və İnteqrasiyalar səhifəsində hər birinin cari statusu göstərilir."
+      },
+      {
+        "q": "Qiymətləndirmə necə işləyir?",
+        "a": "Planlar aylıq əməliyyat sayı, aktiv iş axınları, icra tezliyi və komanda ölçüsünə görə fərqlənir. Pulsuz planla başlaya və istənilən vaxt planınızı yüksəldə və ya aşağı sala bilərsiniz. İllik ödənişdə iki ay pulsuzdur."
+      },
+      {
+        "q": "Məlumatlarım təhlükəsizdirmi?",
+        "a": "Telzyra təhlükəsizlik prioritet olmaqla hazırlanır. Məlumatlar ötürülmə zamanı şifrələnir, qoşulma üçün giriş məlumatları saxlanılarkən şifrələnir və iş sahənizdən kənara çıxmır. İcra tarixçəsinin nə qədər saxlanılacağına isə siz qərar verirsiniz."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Növbəti avtomatlaşdırmanız buradan başlayır.",
+    "description": "Pulsuz hesab yaradın və ilk iş axınınızı bir neçə dəqiqəyə qurun."
+  }
+}

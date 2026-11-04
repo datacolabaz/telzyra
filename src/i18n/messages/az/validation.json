@@ -1,0 +1,10 @@
+{
+  "required": "Bu sahə mütləq doldurulmalıdır.",
+  "email": "Düzgün e-poçt ünvanı daxil edin.",
+  "passwordMin": "Şifrə ən azı {min} simvoldan ibarət olmalıdır.",
+  "nameMin": "Ad ən azı {min} simvoldan ibarət olmalıdır.",
+  "auth.invalid_credentials": "E-poçt və ya şifrə yanlışdır.",
+  "auth.email_taken": "Bu e-poçt ünvanı ilə artıq hesab mövcuddur.",
+  "service.unavailable": "Hesab xidmətləri hələ əlçatan deyil. Bir az sonra yenidən cəhd edin.",
+  "unknown": "Xəta baş verdi. Yenidən cəhd edin."
+}

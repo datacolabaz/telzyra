@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Telzyra design tokens */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-ink-950: #0b0d2a;   /* primary navy */
+  --color-ink-900: #14173d;
+  --color-ink-800: #1f2352;
+  --color-ink-700: #33386b;
+  --color-ink-500: #5b6089;
+  --color-ink-400: #868aa8;
+  --color-ink-300: #b7b9cd;
+  --color-ink-200: #dcdde8;
+  --color-ink-100: #eceef4;
+  --color-ink-50:  #f6f7fa;
+
+  --color-brand-600: #4338ca;  /* deep indigo-violet */
+  --color-brand-500: #5146e5;
+  --color-brand-100: #e7e6fc;
+  --color-brand-50:  #f3f2fe;
+
+  --color-signal-600: #2563eb; /* blue accent */
+  --color-signal-50:  #eef4ff;
+  --color-go-600:     #059669; /* green accent */
+  --color-go-50:      #ecfdf5;
+  --color-warn-700:   #b45309;
+  --color-warn-50:    #fffbeb;
+
+  --radius-card: 14px;
+  --shadow-card: 0 1px 2px rgb(11 13 42 / 0.04), 0 1px 1px rgb(11 13 42 / 0.03);
+  --shadow-float: 0 1px 2px rgb(11 13 42 / 0.05), 0 12px 32px -12px rgb(11 13 42 / 0.18);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink-900 font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(11 13 42 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(11 13 42 / 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

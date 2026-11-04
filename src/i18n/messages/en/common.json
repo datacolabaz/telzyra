@@ -1,0 +1,54 @@
+{
+  "brand": {
+    "tagline": "Visual workflow automation platform"
+  },
+  "nav": {
+    "product": "Product",
+    "integrations": "Integrations",
+    "useCases": "Use Cases",
+    "pricing": "Pricing",
+    "resources": "Resources",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainLabel": "Main navigation"
+  },
+  "cta": {
+    "login": "Log in",
+    "startFree": "Start for Free",
+    "explore": "Explore Platform",
+    "createAccount": "Create Your Free Account",
+    "learnMore": "Learn more"
+  },
+  "language": {
+    "label": "Language",
+    "change": "Change language"
+  },
+  "labels": {
+    "comingSoon": "Coming soon",
+    "planned": "Planned",
+    "available": "Available",
+    "beta": "Beta",
+    "demo": "Demonstration",
+    "preview": "Product preview",
+    "skipToContent": "Skip to content"
+  },
+  "footer": {
+    "description": "Telzyra is an independent visual workflow automation platform. Connect your apps, build workflows and monitor every run, without writing code.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "features": "Features",
+    "integrations": "Integrations",
+    "pricing": "Pricing",
+    "documentation": "Documentation",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "© {year} Telzyra. All rights reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist or has moved.",
+    "back": "Back to home"
+  }
+}

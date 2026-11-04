@@ -1,0 +1,54 @@
+{
+  "brand": {
+    "tagline": "Vizual iş axını avtomatlaşdırma platforması"
+  },
+  "nav": {
+    "product": "Məhsul",
+    "integrations": "İnteqrasiyalar",
+    "useCases": "İstifadə ssenariləri",
+    "pricing": "Qiymətlər",
+    "resources": "Resurslar",
+    "openMenu": "Menyunu aç",
+    "closeMenu": "Menyunu bağla",
+    "mainLabel": "Əsas naviqasiya"
+  },
+  "cta": {
+    "login": "Daxil ol",
+    "startFree": "Pulsuz başla",
+    "explore": "Platformanı kəşf et",
+    "createAccount": "Pulsuz hesab yarat",
+    "learnMore": "Ətraflı"
+  },
+  "language": {
+    "label": "Dil",
+    "change": "Dili dəyiş"
+  },
+  "labels": {
+    "comingSoon": "Tezliklə",
+    "planned": "Planlaşdırılır",
+    "available": "Mövcuddur",
+    "beta": "Beta",
+    "demo": "Nümayiş",
+    "preview": "Məhsulun önizləməsi",
+    "skipToContent": "Məzmuna keç"
+  },
+  "footer": {
+    "description": "Telzyra müstəqil vizual iş axını avtomatlaşdırma platformasıdır. Tətbiqlərinizi birləşdirin, iş axınları qurun və hər icranı izləyin — kod yazmadan.",
+    "product": "Məhsul",
+    "company": "Şirkət",
+    "legal": "Hüquqi məlumat",
+    "features": "İmkanlar",
+    "integrations": "İnteqrasiyalar",
+    "pricing": "Qiymətlər",
+    "documentation": "Sənədlər",
+    "contact": "Əlaqə",
+    "privacy": "Məxfilik siyasəti",
+    "terms": "İstifadə şərtləri",
+    "rights": "© {year} Telzyra. Bütün hüquqlar qorunur."
+  },
+  "notFound": {
+    "title": "Səhifə tapılmadı",
+    "description": "Axtardığınız səhifə mövcud deyil və ya başqa ünvana köçürülüb.",
+    "back": "Ana səhifəyə qayıt"
+  }
+}

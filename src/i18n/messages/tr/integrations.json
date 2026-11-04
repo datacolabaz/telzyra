@@ -1,0 +1,31 @@
+{
+  "page": {
+    "eyebrow": "Entegrasyonlar",
+    "title": "Telzyra'yı araçlarınıza bağlayın",
+    "description": "Telzyra erken erişim aşamasında. Önce temel yapı taşları sunuluyor, uygulama bağlayıcıları ise adım adım yayınlanıyor. Aşağıdaki her bağlayıcının gerçek durumu gösterilir."
+  },
+  "categories": {
+    "productivity": "Verimlilik",
+    "communication": "İletişim",
+    "ai": "Yapay Zekâ",
+    "marketing": "Pazarlama",
+    "ecommerce": "E-ticaret",
+    "databases": "Veritabanları",
+    "business": "İş Araçları"
+  },
+  "status": {
+    "available": "Kullanılabilir",
+    "beta": "Beta",
+    "planned": "Planlanıyor"
+  },
+  "notice": "Henüz hiçbir üçüncü taraf bağlayıcı yayında değil. Bir bağlayıcı yayınlanana kadar çoğu servise webhook'lar ve HTTP istekleri aracılığıyla bağlanabilirsiniz.",
+  "universal": {
+    "title": "Her API ile çalışır",
+    "description": "Henüz özel bağlayıcısı olmayan servisleri bağlamak için Webhook tetikleyicisini ve HTTP Request işlemini kullanın."
+  },
+  "request": {
+    "title": "Aradığınız uygulama yok mu?",
+    "description": "Ekibiniz için hangi entegrasyonun en önemli olduğunu bize bildirin. Talepleriniz bir sonraki adımlarımızı belirlememize yardımcı olur.",
+    "cta": "Entegrasyon talep et"
+  }
+}

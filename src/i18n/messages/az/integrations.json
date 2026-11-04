@@ -1,0 +1,31 @@
+{
+  "page": {
+    "eyebrow": "İnteqrasiyalar",
+    "title": "Telzyra-nı alətlərinizə qoşun",
+    "description": "Telzyra erkən giriş mərhələsindədir. Əvvəlcə əsas komponentlər təqdim olunur, tətbiq konnektorları isə mərhələlərlə əlavə edilir. Aşağıdakı hər konnektorun real statusu göstərilir."
+  },
+  "categories": {
+    "productivity": "Məhsuldarlıq",
+    "communication": "Kommunikasiya",
+    "ai": "Süni intellekt",
+    "marketing": "Marketinq",
+    "ecommerce": "E-ticarət",
+    "databases": "Verilənlər bazaları",
+    "business": "Biznes alətləri"
+  },
+  "status": {
+    "available": "Mövcuddur",
+    "beta": "Beta",
+    "planned": "Planlaşdırılır"
+  },
+  "notice": "Hazırda üçüncü tərəf konnektorlarının heç biri istifadəyə verilməyib. Konnektor təqdim olunana qədər əksər xidmətlərə vebhuklar və HTTP sorğuları vasitəsilə qoşula bilərsiniz.",
+  "universal": {
+    "title": "İstənilən API ilə işləyir",
+    "description": "Hələ xüsusi konnektoru olmayan xidmətləri qoşmaq üçün Webhook tətikləyicisindən və HTTP Request əməliyyatından istifadə edin."
+  },
+  "request": {
+    "title": "Lazım olan tətbiq yoxdur?",
+    "description": "Komandanız üçün hansı inteqrasiyanın daha vacib olduğunu bizə bildirin. Sorğularınız növbəti addımlarımızı müəyyənləşdirməyə kömək edir.",
+    "cta": "İnteqrasiya təklif et"
+  }
+}

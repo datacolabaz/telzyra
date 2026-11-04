@@ -1,0 +1,143 @@
+{
+  "hero": {
+    "eyebrow": "Görsel iş akışı otomasyonu",
+    "title": "İşinizi otomatikleştirin. Büyümeye odaklanın.",
+    "description": "Favori uygulamalarınızı bağlayın, akıllı iş akışları oluşturun ve tekrarlayan görevleri Telzyra ile otomatikleştirin.",
+    "note": "Ücretsiz plan mevcut. Kredi kartı gerekmez."
+  },
+  "preview": {
+    "workflowName": "Yeni potansiyel müşteri → CRM → Ekip bildirimi",
+    "statusActive": "Aktif",
+    "ariaLabel": "Birbirine bağlı düğümlerle Telzyra iş akışı düzenleyicisinin görseli"
+  },
+  "problem": {
+    "title": "Çok fazla manuel iş. Birbirinden kopuk araçlar.",
+    "description": "Ekipler her hafta bilgileri sistemler arasında elle taşımak için saatler harcıyor. Telzyra bu adımları tek ve güvenilir bir iş akışında birleştirir.",
+    "items": {
+      "dataEntry": {
+        "title": "Tekrarlayan veri girişi",
+        "description": "Aynı bilgileri formlardan, e-postalardan ve tablolardan diğer araçlara kopyalamak."
+      },
+      "reports": {
+        "title": "Manuel raporlar",
+        "description": "Tek bir rapor için her hafta farklı kaynaklardan rakam toplamak."
+      },
+      "disconnected": {
+        "title": "Birbirinden kopuk uygulamalar",
+        "description": "Birbiriyle konuşmayan iş uygulamaları yüzünden güncelliğini yitiren ya da tekrarlanan veriler."
+      },
+      "notifications": {
+        "title": "Geciken bildirimler",
+        "description": "Yeni sipariş veya potansiyel müşteri gibi önemli olayların doğru kişiye saatler sonra ulaşması."
+      },
+      "communication": {
+        "title": "Tekrarlayan müşteri iletişimi",
+        "description": "Aynı onay, hatırlatma ve takip mesajlarını tek tek, elle göndermek."
+      }
+    }
+  },
+  "features": {
+    "eyebrow": "Platform",
+    "title": "Güvenle otomasyon kurmak için ihtiyacınız olan her şey",
+    "description": "Telzyra, görsel oluşturucuyu kendine ait bir çalıştırma motoruyla birleştirir. Böylece iş akışları kolayca oluşturulur ve canlı ortamda güvenilir şekilde çalışır."
+  },
+  "howItWorks": {
+    "eyebrow": "Nasıl çalışır",
+    "title": "Fikirden çalışan iş akışına dört adımda",
+    "steps": {
+      "trigger": {
+        "title": "Tetikleyicinizi seçin",
+        "description": "İş akışını bir webhook, zamanlama veya bağlı bir uygulamadaki olayla başlatın."
+      },
+      "connect": {
+        "title": "Uygulamalarınızı bağlayın",
+        "description": "Kullandığınız uygulamalara bir kez yetki verin. Telzyra kimlik bilgilerini çalışma alanınızda güvenle saklar."
+      },
+      "configure": {
+        "title": "Otomasyon adımlarını yapılandırın",
+        "description": "İşlemler, koşullar ve yapay zekâ adımları ekleyin; verileri adımlar arasında görsel olarak eşleştirin."
+      },
+      "activate": {
+        "title": "İş akışınızı etkinleştirin",
+        "description": "İş akışını açın ve her çalıştırmayı ayrıntılı kayıtlar ve çalıştırma geçmişiyle takip edin."
+      }
+    }
+  },
+  "integrations": {
+    "eyebrow": "Entegrasyonlar",
+    "title": "Zaten kullandığınız araçlarla çalışmak için tasarlandı",
+    "description": "Bağlayıcılar adım adım yayınlanıyor. Her biri gerçek durumuyla işaretlenir; böylece bugün neyin kullanılabilir olduğunu her zaman bilirsiniz.",
+    "viewAll": "Tüm entegrasyonları gör"
+  },
+  "useCases": {
+    "eyebrow": "Kullanım senaryoları",
+    "title": "Ekipler Telzyra ile neleri otomatikleştiriyor",
+    "description": "Tasarlayabileceğiniz iş akışlarından örnekler. Henüz yayınlanmamış bağlayıcılara dayanan örnekler «Örnek senaryo» olarak işaretlenmiştir.",
+    "items": {
+      "leads": {
+        "title": "Potansiyel müşteri yönetimi",
+        "description": "Web sitesi formlarından gelen potansiyel müşterileri yakalayın, zenginleştirin ve otomatik olarak CRM'inize ekleyin."
+      },
+      "orders": {
+        "title": "E-ticaret sipariş işleme",
+        "description": "Yeni siparişleri işleyin, stok kayıtlarını güncelleyin ve sevkiyat ekibinizi bilgilendirin."
+      },
+      "notifications": {
+        "title": "Müşteri bildirimleri",
+        "description": "Bir şey değiştiği anda e-posta veya mesajlaşma uygulaması üzerinden onay ve durum güncellemeleri gönderin."
+      },
+      "reporting": {
+        "title": "Otomatik raporlama",
+        "description": "Metrikleri belirli bir zamanlamayla farklı kaynaklardan toplayın ve hazır raporu ekibinize iletin."
+      },
+      "documents": {
+        "title": "Yapay zekâ destekli belge işleme",
+        "description": "Faturalardan, sözleşmelerden ve e-postalardan temel alanları yapay zekâ ile çıkarın ve bir sonraki adıma aktarın."
+      },
+      "sales": {
+        "title": "Satış süreci otomasyonu",
+        "description": "Net kurallara göre fırsatları aşamalar arasında taşıyın, sorumlu atayın ve takip görevlerini planlayın."
+      }
+    }
+  },
+  "pricing": {
+    "eyebrow": "Fiyatlandırma",
+    "title": "Sizinle birlikte büyüyen basit fiyatlandırma",
+    "description": "Ücretsiz başlayın. İş akışlarınız daha fazla işlem, hız veya ekip üyesi gerektirdiğinde planınızı yükseltin.",
+    "compare": "Tüm planları karşılaştır"
+  },
+  "faq": {
+    "eyebrow": "SSS",
+    "title": "Sıkça sorulan sorular",
+    "items": [
+      {
+        "q": "Telzyra nedir?",
+        "a": "Telzyra bağımsız bir iş akışı otomasyon platformudur. Abone olur, kullandığınız uygulamaları bağlar ve otomasyonlarınızı görsel bir düzenleyicide oluşturursunuz. İş akışlarınız Telzyra'nın kendi çalıştırma motorunda çalışır."
+      },
+      {
+        "q": "İş akışı otomasyonu nasıl çalışır?",
+        "a": "Her iş akışı bir tetikleyiciyle başlar: gelen bir webhook, bir zamanlama veya bir uygulama olayı. Ardından Telzyra tanımladığınız adımları sırayla çalıştırır, veriyi bir adımdan diğerine aktarır ve her çalıştırmanın sonucunu kaydeder."
+      },
+      {
+        "q": "Programlama bilgisi gerekiyor mu?",
+        "a": "Hayır. İş akışları düğümleri birbirine bağlayıp alanları eşleştirerek görsel olarak oluşturulur. Teknik bilginiz varsa, ileri düzey durumlar için webhook'ları, HTTP isteklerini ve özel ifadeleri de kullanabilirsiniz."
+      },
+      {
+        "q": "Hangi uygulamaları bağlayabilirim?",
+        "a": "Telzyra; webhook'lar, HTTP istekleri, zamanlamalar ve koşullu mantık gibi temel yapı taşlarını içerir. Uygulama bağlayıcıları kademeli olarak yayınlanıyor ve Entegrasyonlar sayfasında her birinin güncel durumu gösteriliyor."
+      },
+      {
+        "q": "Fiyatlandırma nasıl işliyor?",
+        "a": "Planlar aylık işlem sayısı, aktif iş akışları, zamanlama sıklığı ve ekip büyüklüğüne göre farklılık gösterir. Ücretsiz planla başlayabilir, dilediğiniz zaman planınızı yükseltebilir veya düşürebilirsiniz. Yıllık faturalandırmada iki ay ücretsizdir."
+      },
+      {
+        "q": "Verilerim güvende mi?",
+        "a": "Telzyra güvenlik öncelikli olarak tasarlanmaktadır. Veriler aktarım sırasında şifrelenir, bağlantı kimlik bilgileri saklanırken şifrelenir ve çalışma alanınızın dışına çıkmaz. Çalıştırma geçmişinin ne kadar süre tutulacağına siz karar verirsiniz."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Bir sonraki otomasyonunuz burada başlıyor.",
+    "description": "Ücretsiz bir hesap oluşturun ve ilk iş akışınızı dakikalar içinde kurun."
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "page": {
+    "eyebrow": "Qiymətlər",
+    "title": "İş axınlarınıza uyğun planı seçin",
+    "description": "Hər plana vizual qurucu, icra mühərriki və icra logları daxildir. Planınızı istənilən vaxt yüksəldə və ya aşağı sala bilərsiniz."
+  },
+  "billing": {
+    "monthly": "Aylıq",
+    "yearly": "İllik",
+    "yearlyBadge": "2 ay pulsuz",
+    "toggleLabel": "Ödəniş dövrü"
+  },
+  "price": {
+    "perMonth": "/ay",
+    "billedYearly": "İllik ödəniş: {amount}",
+    "free": "Həmişə pulsuz"
+  },
+  "plans": {
+    "free": {
+      "name": "Free",
+      "description": "Telzyra-nı sınamaq və sadə şəxsi tapşırıqları avtomatlaşdırmaq üçün.",
+      "cta": "Pulsuz başla"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "Gündəlik işlərini avtomatlaşdıran frilanserlər və kiçik komandalar üçün.",
+      "cta": "Starter planını seç"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Hər gün avtomatlaşdırmaya güvənən böyüyən komandalar üçün.",
+      "cta": "Pro planını seç",
+      "badge": "Ən populyar"
+    },
+    "business": {
+      "name": "Business",
+      "description": "Biznes üçün kritik iş axınlarını geniş miqyasda icra edən şirkətlər üçün.",
+      "cta": "Business planını seç"
+    }
+  },
+  "limits": {
+    "operations": "Ayda {count} əməliyyat",
+    "workflows": "{count} aktiv iş axını",
+    "workflowsUnlimited": "Limitsiz aktiv iş axını",
+    "schedule": "Hər {count} dəqiqədən bir icra",
+    "history": "{count} günlük icra tarixçəsi",
+    "members": "{count} komanda üzvü",
+    "member": "1 komanda üzvü"
+  },
+  "features": {
+    "webhooks": "Vebhuklar və HTTP sorğuları",
+    "conditionalLogic": "Şərti məntiq və filtrlər",
+    "aiSteps": "Süni intellekt addımları",
+    "teamRoles": "Komanda rolları və icazələr",
+    "prioritySupport": "Prioritet dəstək"
+  },
+  "footnote": "Qiymətlər ABŞ dolları ilə göstərilib və tətbiq olunan vergiləri əhatə etmir. Plan limitləri ümumi istifadəyə verilməzdən əvvəl yenilənə bilər."
+}

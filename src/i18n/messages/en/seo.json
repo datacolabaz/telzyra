@@ -1,0 +1,27 @@
+{
+  "titleTemplate": "%s · Telzyra",
+  "home": {
+    "title": "Telzyra — Visual Workflow Automation Platform",
+    "description": "Connect your apps, build intelligent workflows and automate repetitive tasks with Telzyra, an independent visual automation platform. No code required."
+  },
+  "features": {
+    "title": "Features",
+    "description": "Visual workflow builder, smart triggers, conditional logic, AI steps, webhooks and execution monitoring. Everything you need to automate your work."
+  },
+  "integrations": {
+    "title": "Integrations",
+    "description": "See which apps and services you can connect to Telzyra, with an honest status for every connector."
+  },
+  "pricing": {
+    "title": "Pricing",
+    "description": "Simple, transparent pricing. Start free, then upgrade to Starter, Pro or Business as your automations grow."
+  },
+  "login": {
+    "title": "Log in",
+    "description": "Log in to your Telzyra workspace."
+  },
+  "register": {
+    "title": "Create your account",
+    "description": "Create a free Telzyra account and build your first workflow."
+  }
+}

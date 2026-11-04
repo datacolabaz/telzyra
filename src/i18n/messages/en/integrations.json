@@ -1,0 +1,31 @@
+{
+  "page": {
+    "eyebrow": "Integrations",
+    "title": "Connect Telzyra to your tools",
+    "description": "Telzyra is in early access. Core building blocks come first, and app connectors are released step by step. Every connector below shows its real status."
+  },
+  "categories": {
+    "productivity": "Productivity",
+    "communication": "Communication",
+    "ai": "AI",
+    "marketing": "Marketing",
+    "ecommerce": "E-commerce",
+    "databases": "Databases",
+    "business": "Business Tools"
+  },
+  "status": {
+    "available": "Available",
+    "beta": "Beta",
+    "planned": "Planned"
+  },
+  "notice": "No third-party connector is live yet. Until a connector is released, you can reach most services through webhooks and HTTP requests.",
+  "universal": {
+    "title": "Works with any API",
+    "description": "Use the Webhook trigger and the HTTP Request action to connect services that don't have a dedicated connector yet."
+  },
+  "request": {
+    "title": "Missing an app?",
+    "description": "Tell us which integration matters most to your team. Requests help us decide what to build next.",
+    "cta": "Request an integration"
+  }
+}

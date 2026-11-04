@@ -1,0 +1,40 @@
+{
+  "kinds": {
+    "trigger": "Trigger",
+    "action": "Action",
+    "logic": "Logic",
+    "ai": "AI"
+  },
+  "trigger.webhook": {
+    "label": "Webhook",
+    "description": "Starts the workflow when data is sent to a unique URL."
+  },
+  "trigger.schedule": {
+    "label": "Schedule",
+    "description": "Runs the workflow at a fixed interval or time."
+  },
+  "action.http_request": {
+    "label": "HTTP Request",
+    "description": "Calls any REST API and returns the response."
+  },
+  "action.send_email": {
+    "label": "Send Email",
+    "description": "Sends an email using data from previous steps."
+  },
+  "action.data_store": {
+    "label": "Data Store",
+    "description": "Saves and reads records inside your workspace."
+  },
+  "logic.condition": {
+    "label": "Condition",
+    "description": "Sends data down different branches based on rules."
+  },
+  "logic.filter": {
+    "label": "Filter",
+    "description": "Continues only when the data matches your criteria."
+  },
+  "ai.text_extract": {
+    "label": "AI Extract",
+    "description": "Pulls structured fields out of unstructured text."
+  }
+}

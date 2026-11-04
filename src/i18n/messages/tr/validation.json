@@ -1,0 +1,10 @@
+{
+  "required": "Bu alan zorunludur.",
+  "email": "Geçerli bir e-posta adresi girin.",
+  "passwordMin": "Şifre en az {min} karakter olmalıdır.",
+  "nameMin": "Ad en az {min} karakter olmalıdır.",
+  "auth.invalid_credentials": "E-posta veya şifre hatalı.",
+  "auth.email_taken": "Bu e-posta adresiyle kayıtlı bir hesap zaten var.",
+  "service.unavailable": "Hesap hizmetleri henüz kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
+  "unknown": "Bir sorun oluştu. Lütfen tekrar deneyin."
+}

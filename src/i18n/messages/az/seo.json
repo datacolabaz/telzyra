@@ -1,0 +1,27 @@
+{
+  "titleTemplate": "%s · Telzyra",
+  "home": {
+    "title": "Telzyra — Vizual iş axını avtomatlaşdırma platforması",
+    "description": "Telzyra ilə tətbiqlərinizi birləşdirin, ağıllı iş axınları qurun və təkrarlanan tapşırıqları avtomatlaşdırın. Müstəqil vizual platforma, kod tələb olunmur."
+  },
+  "features": {
+    "title": "İmkanlar",
+    "description": "Vizual iş axını qurucusu, ağıllı tətikləyicilər, şərti məntiq, süni intellekt addımları, vebhuklar və icra monitorinqi — işinizi avtomatlaşdırmaq üçün lazım olan hər şey."
+  },
+  "integrations": {
+    "title": "İnteqrasiyalar",
+    "description": "Telzyra-ya hansı tətbiq və xidmətləri qoşa biləcəyinizi və hər konnektorun real statusunu görün."
+  },
+  "pricing": {
+    "title": "Qiymətlər",
+    "description": "Sadə və şəffaf qiymətlər. Pulsuz başlayın, avtomatlaşdırmalarınız böyüdükcə Starter, Pro və ya Business planına keçin."
+  },
+  "login": {
+    "title": "Daxil ol",
+    "description": "Telzyra iş sahənizə daxil olun."
+  },
+  "register": {
+    "title": "Hesab yaradın",
+    "description": "Pulsuz Telzyra hesabı yaradın və ilk iş axınınızı qurun."
+  }
+}

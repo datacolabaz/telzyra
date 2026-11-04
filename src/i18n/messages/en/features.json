@@ -1,0 +1,45 @@
+{
+  "page": {
+    "eyebrow": "Features",
+    "title": "A complete platform for building and running automations",
+    "description": "From the first trigger to the last log entry, Telzyra gives you the tools to design workflows visually and run them reliably."
+  },
+  "items": {
+    "builder": {
+      "title": "Visual Workflow Builder",
+      "description": "Design automations on a clear canvas by connecting nodes. See the whole process at a glance and change it without touching code."
+    },
+    "integrations": {
+      "title": "App Integrations",
+      "description": "Connect business apps once and reuse those connections in any workflow, with credentials kept securely in your workspace."
+    },
+    "ai": {
+      "title": "AI Automation",
+      "description": "Add AI steps to classify messages, summarize text or extract structured data from documents, inside the same workflow."
+    },
+    "triggers": {
+      "title": "Smart Triggers",
+      "description": "Start workflows from webhooks, schedules or app events, so work happens the moment it is needed."
+    },
+    "logic": {
+      "title": "Conditional Logic",
+      "description": "Route data with conditions, filters and branches, so each record follows exactly the path it should."
+    },
+    "monitoring": {
+      "title": "Execution Monitoring",
+      "description": "Follow every run with step-by-step logs, input and output data, and clear error messages for fast troubleshooting."
+    },
+    "webhooks": {
+      "title": "Webhooks and API Connections",
+      "description": "Receive data from any system with webhooks and call any REST API with HTTP requests, even without a dedicated connector."
+    },
+    "templates": {
+      "title": "Workflow Templates",
+      "description": "Start from ready-made workflow structures for common processes, then adapt each step to your business."
+    }
+  },
+  "nodesSection": {
+    "title": "Core building blocks",
+    "description": "Every workflow is made of nodes. Each node has a stable technical identifier, so workflows keep working in every language."
+  }
+}

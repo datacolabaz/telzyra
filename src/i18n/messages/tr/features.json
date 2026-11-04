@@ -1,0 +1,45 @@
+{
+  "page": {
+    "eyebrow": "Özellikler",
+    "title": "Otomasyon oluşturmak ve çalıştırmak için eksiksiz bir platform",
+    "description": "İlk tetikleyiciden son kayda kadar Telzyra, iş akışlarını görsel olarak tasarlamanız ve güvenilir şekilde çalıştırmanız için gereken araçları sunar."
+  },
+  "items": {
+    "builder": {
+      "title": "Görsel İş Akışı Oluşturucu",
+      "description": "Otomasyonları düğümleri birbirine bağlayarak sade bir tuval üzerinde tasarlayın. Tüm süreci tek bakışta görün ve koda dokunmadan değiştirin."
+    },
+    "integrations": {
+      "title": "Uygulama Entegrasyonları",
+      "description": "İş uygulamalarını bir kez bağlayın ve bu bağlantıları dilediğiniz iş akışında yeniden kullanın. Kimlik bilgileri çalışma alanınızda güvenle saklanır."
+    },
+    "ai": {
+      "title": "Yapay Zekâ Otomasyonu",
+      "description": "Mesajları sınıflandırmak, metinleri özetlemek veya belgelerden yapılandırılmış veri çıkarmak için aynı iş akışına yapay zekâ adımları ekleyin."
+    },
+    "triggers": {
+      "title": "Akıllı Tetikleyiciler",
+      "description": "İş akışlarını webhook'lar, zamanlamalar veya uygulama olaylarıyla başlatın; iş tam ihtiyaç duyulduğu anda yapılsın."
+    },
+    "logic": {
+      "title": "Koşullu Mantık",
+      "description": "Verileri koşullar, filtreler ve dallarla yönlendirin; her kayıt tam olarak izlemesi gereken yolu izlesin."
+    },
+    "monitoring": {
+      "title": "Çalıştırma İzleme",
+      "description": "Her çalıştırmayı adım adım kayıtlar, giriş ve çıkış verileri ve anlaşılır hata mesajlarıyla takip ederek sorunları hızla çözün."
+    },
+    "webhooks": {
+      "title": "Webhook'lar ve API Bağlantıları",
+      "description": "Webhook'larla herhangi bir sistemden veri alın, HTTP istekleriyle herhangi bir REST API'yi çağırın; özel bir bağlayıcı olmasa bile."
+    },
+    "templates": {
+      "title": "İş Akışı Şablonları",
+      "description": "Yaygın süreçler için hazır iş akışı yapılarıyla başlayın, ardından her adımı işinize göre uyarlayın."
+    }
+  },
+  "nodesSection": {
+    "title": "Temel yapı taşları",
+    "description": "Her iş akışı düğümlerden oluşur. Her düğümün değişmeyen teknik bir tanımlayıcısı vardır; bu sayede iş akışları her dilde aynı şekilde çalışır."
+  }
+}
