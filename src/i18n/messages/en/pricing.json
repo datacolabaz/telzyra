@@ -10,6 +10,15 @@
     "yearlyBadge": "2 months free",
     "toggleLabel": "Billing period"
   },
+  "currency": {
+    "label": "Currency",
+    "names": {
+      "AZN": "Azerbaijani manat",
+      "USD": "US dollar",
+      "TRY": "Turkish lira",
+      "RUB": "Russian ruble"
+    }
+  },
   "price": {
     "perMonth": "/month",
     "billedYearly": "{amount} billed yearly",
@@ -54,5 +63,5 @@
     "teamRoles": "Team roles and permissions",
     "prioritySupport": "Priority support"
   },
-  "footnote": "Prices are in USD and exclude applicable taxes. Plan limits may be updated before general availability."
+  "footnote": "Prices exclude applicable taxes. Plan limits may be updated before general availability."
 }

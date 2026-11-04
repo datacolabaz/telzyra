@@ -24,12 +24,14 @@ Environment variables (all optional in phase 1):
 | `TELZYRA_API_URL` | Telzyra Platform API. Unset → auth forms report "service unavailable" and plans use the defaults in `src/config/plans.ts` |
 
 ## Languages
-| Locale | URL | Status |
-|---|---|---|
-| English (default) | `/` | active |
-| Azerbaijani | `/az/` | active |
-| Turkish | `/tr/` | active |
-| Russian | `/ru/` | planned (404 until activated) |
+Switcher order: **AZ | RU | TR | EN** (the order of entries in `src/i18n/config.ts`).
+
+| Locale | URL | Status | Default currency |
+|---|---|---|---|
+| English (default) | `/` | active | $ USD |
+| Azerbaijani | `/az/` | active | ₼ AZN |
+| Russian | `/ru/` | active | ₼ AZN |
+| Turkish | `/tr/` | active | ₺ TRY |
 
 - `/en/*` permanently redirects to the unprefixed URL.
 - There are no IP-based or `Accept-Language` redirects.
@@ -39,6 +41,15 @@ Environment variables (all optional in phase 1):
   contain UI text.
 - Node IDs (`trigger.webhook`, …) and error codes (`auth.invalid_credentials`, …) are
   technical identifiers. They are never translated, only mapped to labels.
+
+## Currency
+The pricing section has a currency selector: **₼ AZN | $ USD | ₺ TRY | ₽ RUB**. It starts
+in the page language's default currency (table above). The visitor's choice is stored in
+the `TELZYRA_CURRENCY` cookie and applies on every language.
+
+Each plan has a **fixed price point per currency** in `src/config/plans.ts`. Prices are
+not converted live from exchange rates. The current values are placeholders taken from
+the USD prices and should be confirmed before launch.
 
 **Adding a language:** add an entry to `src/i18n/config.ts`, add
 `src/i18n/messages/<code>/`, run `npm run i18n:check`, then set `status: "active"`.

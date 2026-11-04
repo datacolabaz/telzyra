@@ -10,6 +10,15 @@
     "yearlyBadge": "2 ay pulsuz",
     "toggleLabel": "Ödəniş dövrü"
   },
+  "currency": {
+    "label": "Valyuta",
+    "names": {
+      "AZN": "Azərbaycan manatı",
+      "USD": "ABŞ dolları",
+      "TRY": "Türk lirəsi",
+      "RUB": "Rusiya rublu"
+    }
+  },
   "price": {
     "perMonth": "/ay",
     "billedYearly": "İllik ödəniş: {amount}",
@@ -54,5 +63,5 @@
     "teamRoles": "Komanda rolları və icazələr",
     "prioritySupport": "Prioritet dəstək"
   },
-  "footnote": "Qiymətlər ABŞ dolları ilə göstərilib və tətbiq olunan vergiləri əhatə etmir. Plan limitləri ümumi istifadəyə verilməzdən əvvəl yenilənə bilər."
+  "footnote": "Qiymətlərə tətbiq olunan vergilər daxil deyil. Plan limitləri ümumi istifadəyə verilməzdən əvvəl yenilənə bilər."
 }

@@ -1,5 +1,10 @@
+import type { Currency } from "@/config/currency";
+
 /**
  * Locale registry — the single source of truth for languages.
+ *
+ * Entry order is the display order of the language switcher (AZ | RU | TR | EN).
+ * The default (unprefixed) locale is set separately by DEFAULT_LOCALE.
  *
  * To add a language:
  *   1. Add an entry here with status "planned".
@@ -8,15 +13,6 @@
  * No component changes are required.
  */
 export const LOCALES = {
-  en: {
-    status: "active",
-    nativeName: "English",
-    englishName: "English",
-    hreflang: "en",
-    ogLocale: "en_US",
-    intl: "en-US",
-    dir: "ltr",
-  },
   az: {
     status: "active",
     nativeName: "Azərbaycanca",
@@ -25,6 +21,17 @@ export const LOCALES = {
     ogLocale: "az_AZ",
     intl: "az-AZ",
     dir: "ltr",
+    defaultCurrency: "AZN",
+  },
+  ru: {
+    status: "active",
+    nativeName: "Русский",
+    englishName: "Russian",
+    hreflang: "ru",
+    ogLocale: "ru_RU",
+    intl: "ru-RU",
+    dir: "ltr",
+    defaultCurrency: "AZN",
   },
   tr: {
     status: "active",
@@ -34,15 +41,17 @@ export const LOCALES = {
     ogLocale: "tr_TR",
     intl: "tr-TR",
     dir: "ltr",
+    defaultCurrency: "TRY",
   },
-  ru: {
-    status: "planned",
-    nativeName: "Русский",
-    englishName: "Russian",
-    hreflang: "ru",
-    ogLocale: "ru_RU",
-    intl: "ru-RU",
+  en: {
+    status: "active",
+    nativeName: "English",
+    englishName: "English",
+    hreflang: "en",
+    ogLocale: "en_US",
+    intl: "en-US",
     dir: "ltr",
+    defaultCurrency: "USD",
   },
 } as const satisfies Record<string, LocaleDefinition>;
 
@@ -54,6 +63,8 @@ export interface LocaleDefinition {
   ogLocale: string;
   intl: string;
   dir: "ltr" | "rtl";
+  /** Currency shown on pricing until the visitor picks another one. */
+  defaultCurrency: Currency;
 }
 
 export type AnyLocale = keyof typeof LOCALES;

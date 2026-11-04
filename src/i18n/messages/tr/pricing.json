@@ -10,6 +10,15 @@
     "yearlyBadge": "2 ay ücretsiz",
     "toggleLabel": "Faturalandırma dönemi"
   },
+  "currency": {
+    "label": "Para birimi",
+    "names": {
+      "AZN": "Azerbaycan manatı",
+      "USD": "ABD doları",
+      "TRY": "Türk lirası",
+      "RUB": "Rus rublesi"
+    }
+  },
   "price": {
     "perMonth": "/ay",
     "billedYearly": "Yıllık {amount} faturalandırılır",
@@ -54,5 +63,5 @@
     "teamRoles": "Ekip rolleri ve yetkiler",
     "prioritySupport": "Öncelikli destek"
   },
-  "footnote": "Fiyatlar ABD doları cinsindendir ve geçerli vergileri içermez. Plan limitleri genel kullanıma açılmadan önce güncellenebilir."
+  "footnote": "Fiyatlara geçerli vergiler dahil değildir. Plan limitleri genel kullanıma açılmadan önce güncellenebilir."
 }

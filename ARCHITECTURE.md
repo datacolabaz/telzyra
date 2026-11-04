@@ -5,10 +5,14 @@ This document covers the six items required before implementation: architecture,
 component structure, routes, localization, marketing ↔ app communication, and the
 phased plan.
 
-> **Language policy (supersedes §2 of the original brief):** English is the primary
-> and default language, served at `/`. Azerbaijani (`/az/`) and Turkish (`/tr/`) ship
-> at launch. Russian (`/ru/`) is configured as *planned*: its files and config are
-> in place, but its routes are disabled until it has a full translation.
+> **Language policy:** English is the primary and default language, served at `/`.
+> Azerbaijani (`/az/`), Russian (`/ru/`) and Turkish (`/tr/`) are live. The switcher
+> shows **AZ | RU | TR | EN**.
+>
+> **Currency policy:** pricing shows a currency selector (**₼ AZN | $ USD | ₺ TRY | ₽ RUB**).
+> The default follows the page language (AZ → ₼, RU → ₼, TR → ₺, EN → $), and the
+> visitor's choice is remembered in the `TELZYRA_CURRENCY` cookie. Each plan has fixed
+> per-currency price points (`config/plans.ts`), never live conversions.
 
 ---
 
@@ -126,7 +130,7 @@ Rules:
 en: { status: 'active',  nativeName: 'English',     hreflang: 'en', ogLocale: 'en_US' }
 az: { status: 'active',  nativeName: 'Azərbaycanca', hreflang: 'az', ogLocale: 'az_AZ' }
 tr: { status: 'active',  nativeName: 'Türkçe',       hreflang: 'tr', ogLocale: 'tr_TR' }
-ru: { status: 'planned', nativeName: 'Русский',      hreflang: 'ru', ogLocale: 'ru_RU' }
+ru: { status: 'active',  nativeName: 'Русский',      hreflang: 'ru', ogLocale: 'ru_RU' }
 ```
 
 Adding a language means adding one registry entry and one `messages/<locale>/`
@@ -202,7 +206,7 @@ the OG locale. `sitemap.ts` lists every public page with its language alternates
 | **3. App shell + dashboard** | Sidebar layout, workflow list, active workflows, recent executions, usage, connections, subscription, settings (incl. language preference) | |
 | **4. Workflow editor** | Canvas, node palette from the node catalogue, inspector, validation, run and test against the engine | |
 | **5. Billing + notifications** | Payment provider integration, plan enforcement from API limits, in-app notifications | |
-| **6. Russian launch** | Professional RU translation → set `ru.status = 'active'` | |
+| **6. Russian launch** | RU translation written and active; native review pending | ✅ |
 
 ### Open decisions (defaults used in phase 1)
 - **Yearly pricing:** shown as 10× the monthly price ("2 months free") through a single

@@ -1,4 +1,6 @@
 import { BILLING, getPlans } from "@/config/plans";
+import { CURRENCIES, CURRENCY_ORDER } from "@/config/currency";
+import { LOCALES } from "@/i18n/config";
 import { localizedPath } from "@/i18n/routing";
 import { getFormatters, getLocale, getTranslations } from "@/i18n/server";
 import { PricingTable, type PricingCardData } from "./PricingTable";
@@ -11,8 +13,6 @@ export async function Pricing() {
   const plans = await getPlans();
 
   const cards: PricingCardData[] = plans.map((p) => {
-    const yearlyTotal = p.monthlyPrice * BILLING.yearlyMonths;
-    const isFree = p.monthlyPrice === 0;
     const l = p.limits;
     return {
       id: p.id,
@@ -22,18 +22,7 @@ export async function Pricing() {
       badge: p.id === "pro" ? t("plans.pro.badge") : undefined,
       highlighted: p.highlighted,
       href: `${localizedPath(locale, "/register")}?plan=${p.id}`,
-      price: {
-        monthly: {
-          amount: fmt.currency(p.monthlyPrice),
-          suffix: t("price.perMonth"),
-          note: isFree ? t("price.free") : "",
-        },
-        yearly: {
-          amount: fmt.currency(Math.round((yearlyTotal / 12) * 100) / 100),
-          suffix: t("price.perMonth"),
-          note: isFree ? t("price.free") : t("price.billedYearly", { amount: fmt.currency(yearlyTotal) }),
-        },
-      },
+      monthlyPrice: p.monthlyPrice,
       items: [
         t("limits.operations", { count: fmt.number(l.operationsPerMonth) }),
         l.activeWorkflows === null
@@ -51,11 +40,23 @@ export async function Pricing() {
     <>
       <PricingTable
         plans={cards}
+        intlLocale={LOCALES[locale].intl}
+        defaultCurrency={LOCALES[locale].defaultCurrency}
+        yearlyMonths={BILLING.yearlyMonths}
+        currencies={CURRENCY_ORDER.map((code) => ({
+          code,
+          symbol: CURRENCIES[code].symbol,
+          name: t(`currency.names.${code}`),
+        }))}
         labels={{
           monthly: t("billing.monthly"),
           yearly: t("billing.yearly"),
           yearlyBadge: t("billing.yearlyBadge"),
           toggleLabel: t("billing.toggleLabel"),
+          currency: t("currency.label"),
+          perMonth: t("price.perMonth"),
+          free: t("price.free"),
+          billedYearly: t("price.billedYearly"),
         }}
       />
       <p className="mt-8 text-center text-xs text-ink-400">{t("footnote")}</p>
