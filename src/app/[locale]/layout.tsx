@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[locale]">)
   const locale = await getLocale();
   const c = await getTranslations("common");
   return (
-    <html lang={LOCALES[locale].hreflang} dir={LOCALES[locale].dir}>
+    <html lang={LOCALES[locale].hreflang} dir={LOCALES[locale].dir} data-scroll-behavior="smooth">
       <body className="min-h-dvh">
         <a
           href="#main"
