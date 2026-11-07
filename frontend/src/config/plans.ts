@@ -75,7 +75,8 @@ export async function getPlans(): Promise<Plan[]> {
   const api = process.env.TELZYRA_API_URL;
   if (!api) return PLANS;
   try {
-    const res = await fetch(`${api}/v1/plans`);
+    // Short timeout: during the build the API may be unreachable; defaults are used then.
+    const res = await fetch(`${api}/v1/plans`, { signal: AbortSignal.timeout(3000) });
     if (!res.ok) return PLANS;
     return (await res.json()) as Plan[];
   } catch {

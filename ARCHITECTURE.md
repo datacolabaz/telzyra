@@ -57,6 +57,8 @@ phased plan.
 
 ## 2. Component structure
 
+Repository layout: `frontend/` (this Next.js app) and `backend/` (Platform API), deployed as two Railway services. Paths below are inside `frontend/`.
+
 ```
 src/
 ├── app/
