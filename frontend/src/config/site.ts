@@ -1,6 +1,19 @@
+const DEFAULT_SITE_URL = "https://telzyra.com";
+
+/** Accept only a full absolute URL; an empty or half-resolved value ("https://") falls back. */
+function resolveSiteUrl(value: string | undefined): string {
+  if (!value) return DEFAULT_SITE_URL;
+  try {
+    const url = new URL(value);
+    return url.hostname ? url.origin : DEFAULT_SITE_URL;
+  } catch {
+    return DEFAULT_SITE_URL;
+  }
+}
+
 export const SITE = {
   name: "Telzyra",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://telzyra.com",
+  url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   /** Telzyra Platform API. When unset, API-backed features report "unavailable". */
   apiUrl: process.env.TELZYRA_API_URL ?? "",
   contactEmail: "hello@telzyra.com",

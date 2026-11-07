@@ -39,39 +39,37 @@ and the account forms show "service not available yet".
 
 ## Deploy on Railway
 
-One Railway project with two services from the same GitHub repo (`datacolabaz/telzyra`, branch `main`).
+Two Railway services deploy from this GitHub repo (`datacolabaz/telzyra`, branch `main`).
+Settings are configured on each service (Settings tab), not in a config file:
 
-**1. Create the project:** Railway → New Project → Deploy from GitHub repo → `datacolabaz/telzyra`.
+| Setting | backend | frontend |
+|---|---|---|
+| Root Directory | `/backend` | `/frontend` |
+| Build command | `npm run build` | `npm run build` |
+| Start command | `node dist/server.js` | `npm run start` |
+| Healthcheck path | `/health` | `/` |
+| Watch paths | `/backend/**` | `/frontend/**` |
+| Restart policy | On failure, 5 retries | On failure, 5 retries |
 
-**2. Backend service** (Settings):
-- Service name: `backend`
-- Root Directory: `/backend`
-- Config file path: `/backend/railway.json` (Railway does not look inside the root directory for this file on its own)
-- Variables:
-  ```
-  PORT=4000
-  CORS_ORIGINS=https://${{frontend.RAILWAY_PUBLIC_DOMAIN}},https://telzyra.com
-  ```
-- Networking → Generate Domain
+Variables:
 
-**3. Frontend service:** add a second service from the same repo (+ New → GitHub Repo):
-- Service name: `frontend`
-- Root Directory: `/frontend`
-- Config file path: `/frontend/railway.json`
-- Variables:
-  ```
-  TELZYRA_API_URL=https://${{backend.RAILWAY_PUBLIC_DOMAIN}}
-  NEXT_PUBLIC_SITE_URL=https://${{RAILWAY_PUBLIC_DOMAIN}}
-  ```
-- Networking → Generate Domain
+```
+backend:   PORT=4000
+           HOST=0.0.0.0
+           CORS_ORIGINS=https://<frontend domain>,https://telzyra.com
 
-**4. Custom domain (when ready):** frontend → Networking → Custom Domain → `telzyra.com`,
-then add the DNS record Railway shows at your domain registrar. After that, set
-`NEXT_PUBLIC_SITE_URL=https://telzyra.com` (canonical URLs and the sitemap use it),
-and optionally give the backend `api.telzyra.com`.
+frontend:  NEXT_PUBLIC_SITE_URL=https://<frontend domain>
+           TELZYRA_API_URL=https://<backend domain>
+```
 
-Each service rebuilds only when its own folder changes (`watchPatterns` in `railway.json`).
-Every push to `main` deploys automatically.
+Use full literal URLs. `${{service.VAR}}` references only resolve between services in the
+**same** Railway project. If `NEXT_PUBLIC_SITE_URL` is empty or invalid, the site falls back to
+`https://telzyra.com` for canonical URLs.
+
+Each service rebuilds only when its own folder changes. Every push to `main` deploys automatically.
+
+**Custom domain:** frontend → Networking → Custom Domain → `telzyra.com`, add the DNS record
+Railway shows at your registrar, then set `NEXT_PUBLIC_SITE_URL=https://telzyra.com`.
 
 ## Languages
 Switcher order **AZ, RU, TR, EN**. English is the default at `/`; `/az`, `/ru` and `/tr` are prefixed.
