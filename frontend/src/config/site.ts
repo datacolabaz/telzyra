@@ -17,6 +17,10 @@ export const SITE = {
   /** Telzyra Platform API. When unset, API-backed features report "unavailable". */
   apiUrl: process.env.TELZYRA_API_URL ?? "",
   contactEmail: "hello@telzyra.com",
+  support: {
+    /** WhatsApp number in international format, digits only (used in https://wa.me/<number>). */
+    whatsapp: "994503066626",
+  },
   /** Search engine ownership verification (public codes, rendered as <meta> tags). */
   verification: {
     yandex: "61f69b35dd2d7e48",

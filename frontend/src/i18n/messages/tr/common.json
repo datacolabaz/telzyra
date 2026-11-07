@@ -35,13 +35,14 @@
   "footer": {
     "description": "Telzyra, bağımsız bir görsel iş akışı otomasyon platformudur. Uygulamalarınızı bağlayın, iş akışları oluşturun ve her çalıştırmayı takip edin; üstelik kod yazmadan.",
     "product": "Ürün",
-    "company": "Şirket",
     "legal": "Yasal",
+    "support": "Destek",
+    "whatsapp": "WhatsApp'tan yazın",
+    "whatsappMessage": "Merhaba! Telzyra hakkında bir sorum var.",
     "features": "Özellikler",
     "integrations": "Entegrasyonlar",
     "pricing": "Fiyatlandırma",
     "documentation": "Dokümantasyon",
-    "contact": "İletişim",
     "privacy": "Gizlilik Politikası",
     "terms": "Kullanım Koşulları",
     "rights": "© {year} Telzyra. Tüm hakları saklıdır."

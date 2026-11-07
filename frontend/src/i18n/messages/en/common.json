@@ -35,13 +35,14 @@
   "footer": {
     "description": "Telzyra is an independent visual workflow automation platform. Connect your apps, build workflows and monitor every run, without writing code.",
     "product": "Product",
-    "company": "Company",
     "legal": "Legal",
+    "support": "Support",
+    "whatsapp": "Message us on WhatsApp",
+    "whatsappMessage": "Hello! I have a question about Telzyra.",
     "features": "Features",
     "integrations": "Integrations",
     "pricing": "Pricing",
     "documentation": "Documentation",
-    "contact": "Contact",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "rights": "© {year} Telzyra. All rights reserved."

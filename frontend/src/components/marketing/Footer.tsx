@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Mail, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { Badge, Container } from "@/components/ui/primitives";
 import { localizedPath } from "@/i18n/routing";
@@ -17,6 +18,8 @@ export async function Footer() {
   const t = await getTranslations("common");
   const href = (p: string) => localizedPath(locale, p);
   const year = await currentYear();
+
+  const whatsappUrl = `https://wa.me/${SITE.support.whatsapp}?text=${encodeURIComponent(t("footer.whatsappMessage"))}`;
 
   const linkClass = "text-sm text-ink-500 hover:text-ink-950";
 
@@ -37,14 +40,30 @@ export async function Footer() {
           </ul>
         </nav>
 
-        <nav aria-labelledby="footer-company">
-          <h2 id="footer-company" className="text-sm font-semibold text-ink-950">{t("footer.company")}</h2>
+        <nav aria-labelledby="footer-support">
+          <h2 id="footer-support" className="text-sm font-semibold text-ink-950">{t("footer.support")}</h2>
           <ul className="mt-4 space-y-3">
+            <li>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 rounded-lg bg-go-50 px-3 py-2 text-sm font-medium text-go-600 ring-1 ring-inset ring-go-600/15 transition-colors hover:bg-go-600 hover:text-white"
+              >
+                <MessageCircle className="size-4" aria-hidden />
+                {t("footer.whatsapp")}
+              </a>
+            </li>
+            <li>
+              <a className={`${linkClass} inline-flex items-center gap-2`} href={`mailto:${SITE.contactEmail}`}>
+                <Mail className="size-4 text-ink-400" aria-hidden />
+                {SITE.contactEmail}
+              </a>
+            </li>
             <li className="flex items-center gap-2">
               <span className="text-sm text-ink-400">{t("footer.documentation")}</span>
               <Badge>{t("labels.comingSoon")}</Badge>
             </li>
-            <li><a className={linkClass} href={`mailto:${SITE.contactEmail}`}>{t("footer.contact")}</a></li>
           </ul>
         </nav>
 
