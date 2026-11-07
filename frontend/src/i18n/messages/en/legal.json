@@ -1,0 +1,180 @@
+{
+  "updated": "Last updated: {date}",
+  "contents": "Contents",
+  "privacy": {
+    "title": "Privacy Policy",
+    "intro": "This Privacy Policy explains what information Telzyra collects, why we collect it and what rights you have. Telzyra is currently in early access: the public website is live, and user accounts are not open yet. We will update this policy before accounts launch.",
+    "sections": [
+      {
+        "h": "1. Who we are",
+        "p": [
+          "Telzyra (\"Telzyra\", \"we\", \"us\") operates the website telzyra.com and the Telzyra workflow automation platform. For any privacy question, contact us at hello@telzyra.com."
+        ]
+      },
+      {
+        "h": "2. Information we collect today",
+        "p": ["While accounts are not yet open, we only process the following:"],
+        "list": [
+          "Preference cookies: TELZYRA_LOCALE stores your chosen language, and TELZYRA_CURRENCY stores your chosen pricing currency. Both are kept for up to 12 months and are used only to remember your choice.",
+          "Technical logs: when you visit the site, our hosting provider automatically records your IP address, browser type, the page requested and the time. We use these logs only to operate and protect the service.",
+          "Messages you send us: if you contact us by email or WhatsApp, we receive your contact details and the content of your message."
+        ]
+      },
+      {
+        "h": "3. What we do not do",
+        "list": [
+          "We do not use advertising or cross-site tracking cookies.",
+          "We do not currently use analytics tools. If we add them, we will update this policy and ask for consent where the law requires it.",
+          "We do not sell your personal data."
+        ]
+      },
+      {
+        "h": "4. Information we will collect when accounts launch",
+        "p": ["When you create a Telzyra account, we will process:"],
+        "list": [
+          "Account data: your name, email address and password (stored only in hashed form).",
+          "Workspace data: workflows you build, settings and team members you invite.",
+          "Connection credentials: access keys for apps you connect, stored encrypted.",
+          "Execution data: inputs, outputs and logs of your workflow runs, kept for the period set by your plan.",
+          "Billing data: plan and payment status. Card details are handled by our payment provider and never stored by Telzyra."
+        ]
+      },
+      {
+        "h": "5. How and why we use information",
+        "p": [
+          "We use information to provide and secure the service, respond to your requests, improve the product and meet legal obligations. Depending on the situation, we rely on the performance of a contract with you, our legitimate interest in running a safe and reliable service, your consent, or legal requirements."
+        ]
+      },
+      {
+        "h": "6. Service providers",
+        "p": ["We share data only with providers that help us run Telzyra:"],
+        "list": [
+          "Railway: application hosting (servers located in the United States).",
+          "Namecheap: domain and email forwarding.",
+          "WhatsApp (Meta): only if you choose to contact us there."
+        ],
+        "after": "We will list additional providers, such as payment and email delivery services, here before we start using them."
+      },
+      {
+        "h": "7. International transfers",
+        "p": [
+          "Our hosting provider stores data outside Azerbaijan, Türkiye and the European Union. Where required, we rely on appropriate safeguards for such transfers."
+        ]
+      },
+      {
+        "h": "8. How long we keep data",
+        "p": [
+          "Preference cookies expire after 12 months. Technical logs are kept for a limited period for security purposes. Messages are kept as long as needed to handle your request. Account and workflow data will be kept while your account is active and deleted after you close it, unless the law requires us to keep it longer."
+        ]
+      },
+      {
+        "h": "9. Your rights",
+        "p": [
+          "Depending on where you live, you may have the right to access, correct or delete your personal data, to object to or restrict its processing, and to receive a copy of it. To use these rights, email hello@telzyra.com. You may also complain to the data protection authority in your country."
+        ]
+      },
+      {
+        "h": "10. Children",
+        "p": ["Telzyra is not intended for anyone under 16, and we do not knowingly collect their personal data."]
+      },
+      {
+        "h": "11. Changes to this policy",
+        "p": [
+          "We will update this policy as Telzyra develops, in particular before accounts and payments launch. The date at the top always shows the latest version."
+        ]
+      },
+      {
+        "h": "12. Contact",
+        "p": ["Email: hello@telzyra.com. You can also reach us on WhatsApp using the link at the bottom of every page."]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "intro": "These Terms govern your use of the Telzyra website and platform. By using Telzyra, you agree to them. Telzyra is currently in early access, so features and these Terms may change before general availability.",
+    "sections": [
+      {
+        "h": "1. The service",
+        "p": [
+          "Telzyra is an independent workflow automation platform. It lets you connect applications, build workflows in a visual editor and run them on Telzyra's own execution engine. During early access, some features may be limited, change or be unavailable."
+        ]
+      },
+      {
+        "h": "2. Accounts",
+        "p": [
+          "To use the platform, you will need an account. You must provide accurate information, keep your password secure and be at least 16 years old. If you use Telzyra on behalf of an organization, you confirm that you are authorized to accept these Terms for it. You are responsible for activity in your account."
+        ]
+      },
+      {
+        "h": "3. Acceptable use",
+        "p": ["You agree not to use Telzyra to:"],
+        "list": [
+          "break any law or the rights of others;",
+          "send spam or unsolicited messages;",
+          "distribute malware or attack other systems;",
+          "overload the platform or bypass its usage limits;",
+          "access other users' data without permission;",
+          "violate the terms of the third-party services you connect."
+        ]
+      },
+      {
+        "h": "4. Your content",
+        "p": [
+          "You keep all rights to the workflows and data you put into Telzyra. You give us permission to store, process and transmit that content only as needed to provide the service to you."
+        ]
+      },
+      {
+        "h": "5. Third-party services",
+        "p": [
+          "When you connect another application to Telzyra, your use of that application is governed by its own terms. We are not responsible for third-party services or changes to them."
+        ]
+      },
+      {
+        "h": "6. Plans and payments",
+        "p": [
+          "Paid plans are billed in advance for the selected monthly or yearly period, in the currency shown at checkout. Prices exclude applicable taxes. Plan limits are described on the pricing page. We will notify you before any price change takes effect for your plan. You can change or cancel your plan at any time; cancellation takes effect at the end of the current billing period. Refunds are provided where required by law."
+        ]
+      },
+      {
+        "h": "7. Intellectual property",
+        "p": [
+          "The Telzyra name, logo, software and website content belong to Telzyra. These Terms do not give you any right to use them beyond using the service."
+        ]
+      },
+      {
+        "h": "8. Availability and disclaimers",
+        "p": [
+          "We work to keep Telzyra reliable, but we provide the service \"as is\" and \"as available\", especially during early access. We do not guarantee that the service will be uninterrupted or error-free. You are responsible for checking that your workflows work as intended."
+        ]
+      },
+      {
+        "h": "9. Limitation of liability",
+        "p": [
+          "To the extent permitted by law, Telzyra is not liable for indirect or consequential losses, such as lost profits or data. Our total liability for any claim is limited to the amount you paid us in the 12 months before the claim."
+        ]
+      },
+      {
+        "h": "10. Suspension and termination",
+        "p": [
+          "You may stop using Telzyra at any time. We may suspend or close an account that seriously or repeatedly breaks these Terms. Where possible, we will notify you first and give you a chance to export your data."
+        ]
+      },
+      {
+        "h": "11. Governing law",
+        "p": [
+          "These Terms are governed by the laws of the Republic of Azerbaijan. Disputes will be settled by the competent courts of Baku, unless the mandatory consumer protection laws of your country provide otherwise."
+        ]
+      },
+      {
+        "h": "12. Changes",
+        "p": [
+          "We may update these Terms. For significant changes, we will give notice on the website or by email before they take effect. The date at the top always shows the latest version."
+        ]
+      },
+      {
+        "h": "13. Contact",
+        "p": ["Questions about these Terms: hello@telzyra.com."]
+      }
+    ]
+  }
+}

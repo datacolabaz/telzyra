@@ -4,7 +4,16 @@ import { languageAlternates, localizedPath } from "./routing";
 import { getLocale, getTranslations } from "./server";
 import { SITE } from "@/config/site";
 
-type SeoPage = "home" | "pricing" | "features" | "integrations" | "login" | "register";
+type SeoPage =
+  | "home"
+  | "pricing"
+  | "features"
+  | "integrations"
+  | "docs"
+  | "privacy"
+  | "terms"
+  | "login"
+  | "register";
 
 /**
  * Per-locale metadata: title, description, canonical, hreflang alternates, Open Graph.

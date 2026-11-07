@@ -16,6 +16,18 @@
     "title": "Fiyatlandırma",
     "description": "Basit ve şeffaf fiyatlandırma. Ücretsiz başlayın, otomasyonlarınız büyüdükçe Starter, Pro veya Business planına geçin."
   },
+  "docs": {
+    "title": "Dokümantasyon",
+    "description": "Telzyra nasıl çalışır: temel kavramlar, iş akışlarının çalışması ve görsel otomasyon platformunun düğüm başvurusu."
+  },
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "description": "Telzyra'nın bilgilerinizi nasıl topladığı, kullandığı ve koruduğu ile verileriniz üzerindeki haklarınız."
+  },
+  "terms": {
+    "title": "Kullanım Koşulları",
+    "description": "Telzyra web sitesinin ve iş akışı otomasyon platformunun kullanımını düzenleyen koşullar."
+  },
   "login": {
     "title": "Giriş yap",
     "description": "Telzyra çalışma alanınıza giriş yapın."

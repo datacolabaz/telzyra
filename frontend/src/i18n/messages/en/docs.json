@@ -1,0 +1,58 @@
+{
+  "title": "Documentation",
+  "intro": "Learn how Telzyra works: the core concepts, how a workflow runs and which building blocks are available.",
+  "status": "Telzyra is in early access. The visual editor and accounts are being prepared for launch, so this guide describes how the platform works and will grow as features are released.",
+  "contents": "On this page",
+  "overview": {
+    "h": "What is Telzyra?",
+    "p": [
+      "Telzyra is an independent workflow automation platform. You connect the apps you use, describe a process as a workflow in a visual editor, and Telzyra runs it for you on its own execution engine: on a schedule, when an event happens, or when data arrives."
+    ]
+  },
+  "concepts": {
+    "h": "Core concepts",
+    "items": [
+      { "term": "Workspace", "def": "Your team's space in Telzyra. It holds your workflows, connections and members." },
+      { "term": "Workflow", "def": "A sequence of steps that runs automatically. Each workflow starts with one trigger." },
+      { "term": "Trigger", "def": "The event that starts a workflow: an incoming webhook, a schedule or an event in a connected app." },
+      { "term": "Node", "def": "A single step in a workflow, such as an HTTP request, a condition or an AI step. Every node has a fixed technical ID that never changes between languages." },
+      { "term": "Connection", "def": "Saved, encrypted access to an external app. You create it once and reuse it in any workflow." },
+      { "term": "Execution", "def": "One run of a workflow, with its input, output and a log for each step." },
+      { "term": "Operation", "def": "One node executed in one run. Plan limits are counted in operations per month." }
+    ]
+  },
+  "howItRuns": {
+    "h": "How a workflow runs",
+    "list": [
+      "The trigger fires, for example when data is sent to the workflow's webhook URL.",
+      "Telzyra creates an execution and passes the incoming data to the first node.",
+      "Each node runs in order and hands its output to the next one. Conditions and filters decide which path the data takes.",
+      "The result of every step is saved in the execution log, so you can see exactly what happened and where an error occurred."
+    ]
+  },
+  "firstWorkflow": {
+    "h": "Building your first workflow",
+    "list": [
+      "Create a workflow and choose a trigger, for example Webhook or Schedule.",
+      "Add nodes for each step and connect them on the canvas.",
+      "Map data from earlier steps into the fields of later ones.",
+      "Run a test, check the execution log, then activate the workflow."
+    ]
+  },
+  "nodes": {
+    "h": "Node reference",
+    "p": ["These are the core building blocks. The technical ID is what Telzyra stores in your workflow definition."],
+    "idLabel": "ID"
+  },
+  "limits": {
+    "h": "Plans and limits",
+    "p": [
+      "Plans differ by operations per month, the number of active workflows, how often scheduled workflows can run, how long execution history is kept and the number of team members. See the pricing page for the current limits of each plan."
+    ],
+    "cta": "View pricing"
+  },
+  "help": {
+    "h": "Need help?",
+    "p": ["Write to us on WhatsApp or by email at hello@telzyra.com. We read every message."]
+  }
+}

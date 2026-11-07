@@ -1,0 +1,180 @@
+{
+  "updated": "Son güncelleme: {date}",
+  "contents": "İçindekiler",
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "intro": "Bu Gizlilik Politikası, Telzyra'nın hangi bilgileri topladığını, bunları neden topladığını ve hangi haklara sahip olduğunuzu açıklar. Telzyra şu anda erken erişim aşamasındadır: web sitesi yayında, kullanıcı hesapları ise henüz açılmadı. Hesaplar kullanıma açılmadan önce bu politikayı güncelleyeceğiz.",
+    "sections": [
+      {
+        "h": "1. Biz kimiz",
+        "p": [
+          "Telzyra (\"Telzyra\", \"biz\"), telzyra.com web sitesini ve Telzyra iş akışı otomasyon platformunu işletir. Gizlilikle ilgili tüm sorularınız için hello@telzyra.com adresine yazabilirsiniz."
+        ]
+      },
+      {
+        "h": "2. Şu anda topladığımız bilgiler",
+        "p": ["Hesaplar henüz açılmadığı için yalnızca aşağıdakileri işliyoruz:"],
+        "list": [
+          "Tercih çerezleri: TELZYRA_LOCALE seçtiğiniz dili, TELZYRA_CURRENCY ise fiyatlar için seçtiğiniz para birimini saklar. Her ikisi de en fazla 12 ay tutulur ve yalnızca seçiminizi hatırlamak için kullanılır.",
+          "Teknik kayıtlar: Siteyi ziyaret ettiğinizde barındırma sağlayıcımız IP adresinizi, tarayıcı türünüzü, istenen sayfayı ve zamanı otomatik olarak kaydeder. Bu kayıtları yalnızca hizmeti çalıştırmak ve korumak için kullanırız.",
+          "Bize gönderdiğiniz mesajlar: Bizimle e-posta veya WhatsApp üzerinden iletişime geçtiğinizde iletişim bilgilerinizi ve mesajınızın içeriğini alırız."
+        ]
+      },
+      {
+        "h": "3. Yapmadıklarımız",
+        "list": [
+          "Reklam veya siteler arası izleme çerezleri kullanmıyoruz.",
+          "Şu anda analitik araçları kullanmıyoruz. Eklersek bu politikayı güncelleyecek ve yasanın gerektirdiği durumlarda onayınızı isteyeceğiz.",
+          "Kişisel verilerinizi satmıyoruz."
+        ]
+      },
+      {
+        "h": "4. Hesaplar açıldığında toplayacağımız bilgiler",
+        "p": ["Bir Telzyra hesabı oluşturduğunuzda şunları işleyeceğiz:"],
+        "list": [
+          "Hesap bilgileri: adınız, e-posta adresiniz ve şifreniz (yalnızca karma (hash) olarak saklanır).",
+          "Çalışma alanı bilgileri: oluşturduğunuz iş akışları, ayarlar ve davet ettiğiniz ekip üyeleri.",
+          "Bağlantı kimlik bilgileri: bağladığınız uygulamaların erişim anahtarları, şifrelenmiş olarak saklanır.",
+          "Çalıştırma verileri: iş akışı çalıştırmalarınızın girdileri, çıktıları ve kayıtları, planınızda belirtilen süre boyunca saklanır.",
+          "Fatura bilgileri: plan ve ödeme durumu. Kart bilgileri ödeme sağlayıcımız tarafından işlenir ve Telzyra tarafından asla saklanmaz."
+        ]
+      },
+      {
+        "h": "5. Bilgileri nasıl ve neden kullanıyoruz",
+        "p": [
+          "Bilgileri hizmeti sunmak ve güvenliğini sağlamak, taleplerinize yanıt vermek, ürünü geliştirmek ve yasal yükümlülükleri yerine getirmek için kullanırız. Duruma göre sizinle yapılan sözleşmenin ifasına, güvenli ve güvenilir bir hizmet sunma konusundaki meşru menfaatimize, onayınıza veya yasal gerekliliklere dayanırız."
+        ]
+      },
+      {
+        "h": "6. Hizmet sağlayıcılar",
+        "p": ["Verileri yalnızca Telzyra'yı çalıştırmamıza yardımcı olan sağlayıcılarla paylaşırız:"],
+        "list": [
+          "Railway: uygulama barındırma (sunucular ABD'de bulunur).",
+          "Namecheap: alan adı ve e-posta yönlendirme.",
+          "WhatsApp (Meta): yalnızca bizimle orada iletişime geçmeyi seçerseniz."
+        ],
+        "after": "Ödeme ve e-posta gönderim hizmetleri gibi ek sağlayıcıları kullanmaya başlamadan önce burada listeleyeceğiz."
+      },
+      {
+        "h": "7. Uluslararası aktarımlar",
+        "p": [
+          "Barındırma sağlayıcımız verileri Azerbaycan, Türkiye ve Avrupa Birliği dışında saklar. Gerekli olduğu durumlarda bu aktarımlar için uygun güvencelere dayanırız."
+        ]
+      },
+      {
+        "h": "8. Verileri ne kadar süre saklıyoruz",
+        "p": [
+          "Tercih çerezlerinin süresi 12 ay sonra dolar. Teknik kayıtlar güvenlik amacıyla sınırlı bir süre saklanır. Mesajlar talebinizi karşılamak için gerektiği sürece saklanır. Hesap ve iş akışı verileri hesabınız aktif olduğu sürece saklanacak ve yasa daha uzun süre saklamamızı gerektirmedikçe hesabınızı kapattıktan sonra silinecektir."
+        ]
+      },
+      {
+        "h": "9. Haklarınız",
+        "p": [
+          "Yaşadığınız yere bağlı olarak kişisel verilerinize erişme, bunları düzeltme veya silme, işlenmesine itiraz etme veya işlemeyi kısıtlama ve verilerinizin bir kopyasını alma hakkına sahip olabilirsiniz. Bu haklarınızı kullanmak için hello@telzyra.com adresine yazın. Ayrıca ülkenizdeki veri koruma otoritesine şikâyette bulunabilirsiniz."
+        ]
+      },
+      {
+        "h": "10. Çocuklar",
+        "p": ["Telzyra 16 yaşından küçükler için tasarlanmamıştır ve bu kişilerin kişisel verilerini bilerek toplamayız."]
+      },
+      {
+        "h": "11. Bu politikadaki değişiklikler",
+        "p": [
+          "Telzyra geliştikçe, özellikle hesaplar ve ödemeler kullanıma açılmadan önce bu politikayı güncelleyeceğiz. En üstteki tarih her zaman en güncel sürümü gösterir."
+        ]
+      },
+      {
+        "h": "12. İletişim",
+        "p": ["E-posta: hello@telzyra.com. Ayrıca her sayfanın altındaki bağlantı üzerinden bize WhatsApp'tan yazabilirsiniz."]
+      }
+    ]
+  },
+  "terms": {
+    "title": "Kullanım Koşulları",
+    "intro": "Bu Koşullar, Telzyra web sitesinin ve platformunun kullanımını düzenler. Telzyra'yı kullanarak bu Koşulları kabul etmiş olursunuz. Telzyra şu anda erken erişim aşamasındadır; bu nedenle özellikler ve bu Koşullar genel kullanıma açılmadan önce değişebilir.",
+    "sections": [
+      {
+        "h": "1. Hizmet",
+        "p": [
+          "Telzyra bağımsız bir iş akışı otomasyon platformudur. Uygulamaları bağlamanıza, görsel bir düzenleyicide iş akışları oluşturmanıza ve bunları Telzyra'nın kendi çalıştırma motorunda çalıştırmanıza olanak tanır. Erken erişim döneminde bazı özellikler sınırlı olabilir, değişebilir veya kullanılamayabilir."
+        ]
+      },
+      {
+        "h": "2. Hesaplar",
+        "p": [
+          "Platformu kullanmak için bir hesabınız olması gerekecek. Doğru bilgi vermeniz, şifrenizi güvende tutmanız ve en az 16 yaşında olmanız gerekir. Telzyra'yı bir kuruluş adına kullanıyorsanız, bu Koşulları o kuruluş adına kabul etmeye yetkili olduğunuzu onaylarsınız. Hesabınızdaki işlemlerden siz sorumlusunuz."
+        ]
+      },
+      {
+        "h": "3. Kabul edilebilir kullanım",
+        "p": ["Telzyra'yı aşağıdakiler için kullanmayacağınızı kabul edersiniz:"],
+        "list": [
+          "herhangi bir yasayı veya başkalarının haklarını ihlal etmek;",
+          "spam veya istenmeyen mesajlar göndermek;",
+          "kötü amaçlı yazılım dağıtmak veya başka sistemlere saldırmak;",
+          "platformu aşırı yüklemek veya kullanım limitlerini aşmaya çalışmak;",
+          "izin almadan diğer kullanıcıların verilerine erişmek;",
+          "bağladığınız üçüncü taraf hizmetlerin koşullarını ihlal etmek."
+        ]
+      },
+      {
+        "h": "4. İçeriğiniz",
+        "p": [
+          "Telzyra'ya eklediğiniz iş akışları ve veriler üzerindeki tüm haklar sizde kalır. Bu içeriği yalnızca size hizmet sunmak için gerektiği ölçüde saklamamıza, işlememize ve iletmemize izin verirsiniz."
+        ]
+      },
+      {
+        "h": "5. Üçüncü taraf hizmetler",
+        "p": [
+          "Telzyra'ya başka bir uygulama bağladığınızda, o uygulamayı kullanımınız kendi koşullarına tabidir. Üçüncü taraf hizmetlerden ve bunlardaki değişikliklerden sorumlu değiliz."
+        ]
+      },
+      {
+        "h": "6. Planlar ve ödemeler",
+        "p": [
+          "Ücretli planlar, seçilen aylık veya yıllık dönem için ödeme sırasında gösterilen para biriminde peşin olarak faturalandırılır. Fiyatlara geçerli vergiler dahil değildir. Plan limitleri fiyatlandırma sayfasında açıklanmıştır. Planınızın fiyatı değişirse, değişiklik yürürlüğe girmeden önce sizi bilgilendiririz. Planınızı dilediğiniz zaman değiştirebilir veya iptal edebilirsiniz; iptal, mevcut fatura döneminin sonunda geçerli olur. İadeler yasanın gerektirdiği durumlarda yapılır."
+        ]
+      },
+      {
+        "h": "7. Fikri mülkiyet",
+        "p": [
+          "Telzyra adı, logosu, yazılımı ve web sitesi içeriği Telzyra'ya aittir. Bu Koşullar, hizmeti kullanmak dışında bunları kullanma hakkı vermez."
+        ]
+      },
+      {
+        "h": "8. Erişilebilirlik ve sorumluluk reddi",
+        "p": [
+          "Telzyra'nın güvenilir şekilde çalışması için çaba gösteriyoruz; ancak hizmeti, özellikle erken erişim döneminde, \"olduğu gibi\" ve \"mevcut olduğu ölçüde\" sunuyoruz. Hizmetin kesintisiz veya hatasız olacağını garanti etmiyoruz. İş akışlarınızın amaçlandığı gibi çalıştığını kontrol etmek sizin sorumluluğunuzdadır."
+        ]
+      },
+      {
+        "h": "9. Sorumluluğun sınırlandırılması",
+        "p": [
+          "Yasanın izin verdiği ölçüde Telzyra, kâr veya veri kaybı gibi dolaylı zararlardan sorumlu değildir. Herhangi bir talep için toplam sorumluluğumuz, talepten önceki 12 ay içinde bize ödediğiniz tutarla sınırlıdır."
+        ]
+      },
+      {
+        "h": "10. Askıya alma ve fesih",
+        "p": [
+          "Telzyra'yı kullanmayı dilediğiniz zaman bırakabilirsiniz. Bu Koşulları ciddi şekilde veya tekrar tekrar ihlal eden bir hesabı askıya alabilir veya kapatabiliriz. Mümkün olduğunda sizi önceden bilgilendirir ve verilerinizi dışa aktarma fırsatı tanırız."
+        ]
+      },
+      {
+        "h": "11. Uygulanacak hukuk",
+        "p": [
+          "Bu Koşullar Azerbaycan Cumhuriyeti yasalarına tabidir. Ülkenizin zorunlu tüketici koruma yasaları aksini öngörmedikçe, uyuşmazlıklar Bakü'deki yetkili mahkemelerde çözülür."
+        ]
+      },
+      {
+        "h": "12. Değişiklikler",
+        "p": [
+          "Bu Koşulları güncelleyebiliriz. Önemli değişiklikleri yürürlüğe girmeden önce web sitesinde veya e-postayla duyururuz. En üstteki tarih her zaman en güncel sürümü gösterir."
+        ]
+      },
+      {
+        "h": "13. İletişim",
+        "p": ["Bu Koşullarla ilgili sorularınız için: hello@telzyra.com."]
+      }
+    ]
+  }
+}

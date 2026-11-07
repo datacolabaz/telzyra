@@ -1,0 +1,58 @@
+{
+  "title": "Sənədlər",
+  "intro": "Telzyra-nın necə işlədiyini öyrənin: əsas anlayışlar, iş axınının necə icra olunduğu və hansı komponentlərin mövcud olduğu.",
+  "status": "Telzyra erkən giriş mərhələsindədir. Vizual redaktor və hesablar istifadəyə verilməyə hazırlanır, ona görə bu bələdçi platformanın necə işlədiyini izah edir və yeni imkanlar çıxdıqca genişlənəcək.",
+  "contents": "Bu səhifədə",
+  "overview": {
+    "h": "Telzyra nədir?",
+    "p": [
+      "Telzyra müstəqil iş axını avtomatlaşdırma platformasıdır. İstifadə etdiyiniz tətbiqləri qoşursunuz, prosesi vizual redaktorda iş axını kimi təsvir edirsiniz, Telzyra isə onu öz icra mühərrikində sizin əvəzinizə işə salır: cədvəl üzrə, hər hansı hadisə baş verəndə və ya məlumat daxil olanda."
+    ]
+  },
+  "concepts": {
+    "h": "Əsas anlayışlar",
+    "items": [
+      { "term": "İş sahəsi", "def": "Komandanızın Telzyra-dakı məkanı. Burada iş axınlarınız, qoşulmalarınız və komanda üzvləriniz saxlanılır." },
+      { "term": "İş axını", "def": "Avtomatik icra olunan addımlar ardıcıllığı. Hər iş axını bir tətikləyici ilə başlayır." },
+      { "term": "Tətikləyici", "def": "İş axınını başladan hadisə: daxil olan vebhuk, cədvəl və ya qoşulmuş tətbiqdəki hadisə." },
+      { "term": "Node", "def": "İş axınında bir addım, məsələn, HTTP sorğusu, şərt və ya süni intellekt addımı. Hər node-un dillər arasında dəyişməyən sabit texniki identifikatoru var." },
+      { "term": "Qoşulma", "def": "Xarici tətbiqə saxlanılmış, şifrələnmiş giriş. Bir dəfə yaradılır və istənilən iş axınında istifadə olunur." },
+      { "term": "İcra", "def": "İş axınının bir dəfə işə salınması: giriş və çıxış məlumatları və hər addım üçün log." },
+      { "term": "Əməliyyat", "def": "Bir icrada bir node-un yerinə yetirilməsi. Plan limitləri aylıq əməliyyat sayı ilə hesablanır." }
+    ]
+  },
+  "howItRuns": {
+    "h": "İş axını necə icra olunur",
+    "list": [
+      "Tətikləyici işə düşür, məsələn, iş axınının vebhuk ünvanına məlumat göndərildikdə.",
+      "Telzyra icra yaradır və daxil olan məlumatı birinci node-a ötürür.",
+      "Hər node ardıcıl icra olunur və nəticəsini növbətiyə ötürür. Şərtlər və filtrlər məlumatın hansı yolla gedəcəyini müəyyən edir.",
+      "Hər addımın nəticəsi icra loguna yazılır, beləliklə nə baş verdiyini və xətanın harada yarandığını dəqiq görə bilərsiniz."
+    ]
+  },
+  "firstWorkflow": {
+    "h": "İlk iş axınınızı qurmaq",
+    "list": [
+      "İş axını yaradın və tətikləyici seçin, məsələn, Vebhuk və ya Cədvəl.",
+      "Hər addım üçün node əlavə edin və onları lövhədə birləşdirin.",
+      "Əvvəlki addımların məlumatlarını sonrakıların sahələrinə uyğunlaşdırın.",
+      "Sınaq icrası edin, icra loguna baxın, sonra iş axınını aktivləşdirin."
+    ]
+  },
+  "nodes": {
+    "h": "Node-lar üzrə arayış",
+    "p": ["Bunlar əsas komponentlərdir. Texniki identifikator Telzyra-nın iş axını təsvirində saxladığı dəyərdir."],
+    "idLabel": "ID"
+  },
+  "limits": {
+    "h": "Planlar və limitlər",
+    "p": [
+      "Planlar aylıq əməliyyat sayı, aktiv iş axınlarının sayı, cədvəl üzrə iş axınlarının icra tezliyi, icra tarixçəsinin saxlanma müddəti və komanda üzvlərinin sayı ilə fərqlənir. Hər planın cari limitləri qiymətlər səhifəsində göstərilib."
+    ],
+    "cta": "Qiymətlərə bax"
+  },
+  "help": {
+    "h": "Kömək lazımdır?",
+    "p": ["Bizə WhatsApp-da və ya hello@telzyra.com ünvanına e-poçtla yazın. Hər mesajı oxuyuruq."]
+  }
+}

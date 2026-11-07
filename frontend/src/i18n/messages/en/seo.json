@@ -16,6 +16,18 @@
     "title": "Pricing",
     "description": "Simple, transparent pricing. Start free, then upgrade to Starter, Pro or Business as your automations grow."
   },
+  "docs": {
+    "title": "Documentation",
+    "description": "Learn how Telzyra works: core concepts, how workflows run, and the node reference for the visual automation platform."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "How Telzyra collects, uses and protects your information, and the rights you have over your data."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "description": "The terms that govern your use of the Telzyra website and workflow automation platform."
+  },
   "login": {
     "title": "Log in",
     "description": "Log in to your Telzyra workspace."

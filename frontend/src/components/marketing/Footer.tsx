@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Mail, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
-import { Badge, Container } from "@/components/ui/primitives";
+import { Container } from "@/components/ui/primitives";
 import { localizedPath } from "@/i18n/routing";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { SITE } from "@/config/site";
@@ -48,7 +48,7 @@ export async function Footer() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2.5 rounded-lg bg-go-50 px-3 py-2 text-sm font-medium text-go-600 ring-1 ring-inset ring-go-600/15 transition-colors hover:bg-go-600 hover:text-white"
+                className="group inline-flex items-center gap-2.5 whitespace-nowrap rounded-lg bg-go-50 px-3 py-2 text-sm font-medium text-go-600 ring-1 ring-inset ring-go-600/15 transition-colors hover:bg-go-600 hover:text-white"
               >
                 <MessageCircle className="size-4" aria-hidden />
                 {t("footer.whatsapp")}
@@ -60,24 +60,15 @@ export async function Footer() {
                 {SITE.contactEmail}
               </a>
             </li>
-            <li className="flex items-center gap-2">
-              <span className="text-sm text-ink-400">{t("footer.documentation")}</span>
-              <Badge>{t("labels.comingSoon")}</Badge>
-            </li>
+            <li><Link className={linkClass} href={href("/docs")}>{t("footer.documentation")}</Link></li>
           </ul>
         </nav>
 
         <nav aria-labelledby="footer-legal">
           <h2 id="footer-legal" className="text-sm font-semibold text-ink-950">{t("footer.legal")}</h2>
           <ul className="mt-4 space-y-3">
-            <li className="flex items-center gap-2">
-              <span className="text-sm text-ink-400">{t("footer.privacy")}</span>
-              <Badge>{t("labels.comingSoon")}</Badge>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-sm text-ink-400">{t("footer.terms")}</span>
-              <Badge>{t("labels.comingSoon")}</Badge>
-            </li>
+            <li><Link className={linkClass} href={href("/privacy")}>{t("footer.privacy")}</Link></li>
+            <li><Link className={linkClass} href={href("/terms")}>{t("footer.terms")}</Link></li>
           </ul>
         </nav>
       </Container>

@@ -1,0 +1,58 @@
+{
+  "title": "Dokümantasyon",
+  "intro": "Telzyra'nın nasıl çalıştığını öğrenin: temel kavramlar, bir iş akışının nasıl çalıştığı ve hangi yapı taşlarının mevcut olduğu.",
+  "status": "Telzyra erken erişim aşamasındadır. Görsel düzenleyici ve hesaplar kullanıma açılmak üzere hazırlanıyor; bu rehber platformun nasıl çalıştığını anlatır ve yeni özellikler yayınlandıkça genişleyecektir.",
+  "contents": "Bu sayfada",
+  "overview": {
+    "h": "Telzyra nedir?",
+    "p": [
+      "Telzyra bağımsız bir iş akışı otomasyon platformudur. Kullandığınız uygulamaları bağlar, bir süreci görsel düzenleyicide iş akışı olarak tanımlarsınız; Telzyra da onu kendi çalıştırma motorunda sizin yerinize çalıştırır: bir zamanlamaya göre, bir olay gerçekleştiğinde veya veri geldiğinde."
+    ]
+  },
+  "concepts": {
+    "h": "Temel kavramlar",
+    "items": [
+      { "term": "Çalışma alanı", "def": "Ekibinizin Telzyra'daki alanı. İş akışlarınızı, bağlantılarınızı ve üyelerinizi barındırır." },
+      { "term": "İş akışı", "def": "Otomatik olarak çalışan bir adımlar dizisi. Her iş akışı tek bir tetikleyiciyle başlar." },
+      { "term": "Tetikleyici", "def": "Bir iş akışını başlatan olay: gelen bir webhook, bir zamanlama veya bağlı bir uygulamadaki olay." },
+      { "term": "Düğüm", "def": "İş akışındaki tek bir adım; örneğin bir HTTP isteği, bir koşul veya bir yapay zekâ adımı. Her düğümün diller arasında değişmeyen sabit bir teknik kimliği vardır." },
+      { "term": "Bağlantı", "def": "Harici bir uygulamaya kaydedilmiş, şifrelenmiş erişim. Bir kez oluşturulur ve her iş akışında yeniden kullanılır." },
+      { "term": "Çalıştırma", "def": "Bir iş akışının tek bir çalışması; girdisi, çıktısı ve her adım için bir kaydıyla birlikte." },
+      { "term": "İşlem", "def": "Bir çalıştırmada tek bir düğümün yürütülmesi. Plan limitleri aylık işlem sayısıyla hesaplanır." }
+    ]
+  },
+  "howItRuns": {
+    "h": "Bir iş akışı nasıl çalışır",
+    "list": [
+      "Tetikleyici devreye girer; örneğin iş akışının webhook URL'sine veri gönderildiğinde.",
+      "Telzyra bir çalıştırma oluşturur ve gelen veriyi ilk düğüme iletir.",
+      "Her düğüm sırayla çalışır ve çıktısını bir sonrakine aktarır. Koşullar ve filtreler verinin hangi yolu izleyeceğine karar verir.",
+      "Her adımın sonucu çalıştırma kaydına yazılır; böylece tam olarak ne olduğunu ve hatanın nerede oluştuğunu görebilirsiniz."
+    ]
+  },
+  "firstWorkflow": {
+    "h": "İlk iş akışınızı oluşturma",
+    "list": [
+      "Bir iş akışı oluşturun ve bir tetikleyici seçin; örneğin Webhook veya Zamanlama.",
+      "Her adım için düğümler ekleyin ve bunları tuval üzerinde birbirine bağlayın.",
+      "Önceki adımlardaki verileri sonraki adımların alanlarıyla eşleştirin.",
+      "Bir test çalıştırması yapın, çalıştırma kaydını kontrol edin ve ardından iş akışını etkinleştirin."
+    ]
+  },
+  "nodes": {
+    "h": "Düğüm başvurusu",
+    "p": ["Bunlar temel yapı taşlarıdır. Teknik kimlik, Telzyra'nın iş akışı tanımınızda sakladığı değerdir."],
+    "idLabel": "ID"
+  },
+  "limits": {
+    "h": "Planlar ve limitler",
+    "p": [
+      "Planlar; aylık işlem sayısı, aktif iş akışı sayısı, zamanlanmış iş akışlarının çalışma sıklığı, çalıştırma geçmişinin saklanma süresi ve ekip üyesi sayısına göre farklılık gösterir. Her planın güncel limitleri fiyatlandırma sayfasında yer alır."
+    ],
+    "cta": "Fiyatları gör"
+  },
+  "help": {
+    "h": "Yardıma mı ihtiyacınız var?",
+    "p": ["Bize WhatsApp'tan veya hello@telzyra.com adresinden e-postayla yazın. Her mesajı okuyoruz."]
+  }
+}

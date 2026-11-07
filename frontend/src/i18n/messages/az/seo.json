@@ -16,6 +16,18 @@
     "title": "Qiymətlər",
     "description": "Sadə və şəffaf qiymətlər. Pulsuz başlayın, avtomatlaşdırmalarınız böyüdükcə Starter, Pro və ya Business planına keçin."
   },
+  "docs": {
+    "title": "Sənədlər",
+    "description": "Telzyra necə işləyir: əsas anlayışlar, iş axınlarının icrası və vizual avtomatlaşdırma platformasının node arayışı."
+  },
+  "privacy": {
+    "title": "Məxfilik siyasəti",
+    "description": "Telzyra məlumatlarınızı necə toplayır, istifadə edir və qoruyur, həmçinin məlumatlarınızla bağlı hansı hüquqlarınız var."
+  },
+  "terms": {
+    "title": "İstifadə şərtləri",
+    "description": "Telzyra saytından və iş axını avtomatlaşdırma platformasından istifadəni tənzimləyən şərtlər."
+  },
   "login": {
     "title": "Daxil ol",
     "description": "Telzyra iş sahənizə daxil olun."

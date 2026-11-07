@@ -28,7 +28,15 @@ export const SITE = {
 } as const;
 
 /** Public, indexable marketing pages (unlocalized paths). Used by the sitemap. */
-export const PUBLIC_PAGES = ["/", "/features", "/integrations", "/pricing"] as const;
+export const PUBLIC_PAGES = [
+  "/",
+  "/features",
+  "/integrations",
+  "/pricing",
+  "/docs",
+  "/privacy",
+  "/terms",
+] as const;
 
 /** Header navigation: keys map to common.nav.* messages. Text never lives here. */
 export const MAIN_NAV = [
@@ -36,5 +44,5 @@ export const MAIN_NAV = [
   { key: "integrations", href: "/integrations" },
   { key: "useCases", href: "/#use-cases" },
   { key: "pricing", href: "/pricing" },
-  { key: "resources", href: "/#faq" },
+  { key: "resources", href: "/docs" },
 ] as const;

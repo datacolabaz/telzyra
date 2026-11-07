@@ -45,6 +45,7 @@ async function RegisterForm({ searchParams }: { searchParams: Promise<{ plan?: s
 export default async function RegisterPage({ searchParams }: PageProps<"/[locale]/register">) {
   const locale = await getLocale();
   const t = await getTranslations("auth");
+  const c = await getTranslations("common");
 
   return (
     <>
@@ -56,6 +57,14 @@ export default async function RegisterPage({ searchParams }: PageProps<"/[locale
         </Suspense>
       </div>
       <p className="mt-4 text-xs leading-relaxed text-ink-400">{t("register.terms")}</p>
+      <p className="mt-1.5 flex gap-3 text-xs">
+        <Link href={localizedPath(locale, "/terms")} className="text-ink-700 underline underline-offset-2 hover:text-ink-950">
+          {c("footer.terms")}
+        </Link>
+        <Link href={localizedPath(locale, "/privacy")} className="text-ink-700 underline underline-offset-2 hover:text-ink-950">
+          {c("footer.privacy")}
+        </Link>
+      </p>
       <p className="mt-6 text-center text-sm text-ink-500">
         {t("register.hasAccount")}{" "}
         <Link href={localizedPath(locale, "/login")} className="font-medium text-ink-950 underline-offset-4 hover:underline">

@@ -1,0 +1,180 @@
+{
+  "updated": "Son yenilənmə: {date}",
+  "contents": "Mündəricat",
+  "privacy": {
+    "title": "Məxfilik siyasəti",
+    "intro": "Bu Məxfilik siyasəti Telzyra-nın hansı məlumatları topladığını, nə üçün topladığını və sizin hansı hüquqlarınızın olduğunu izah edir. Telzyra hazırda erkən giriş mərhələsindədir: sayt fəaliyyətdədir, istifadəçi hesabları isə hələ açılmayıb. Hesablar istifadəyə verilməzdən əvvəl bu siyasəti yeniləyəcəyik.",
+    "sections": [
+      {
+        "h": "1. Biz kimik",
+        "p": [
+          "Telzyra («Telzyra», «biz») telzyra.com saytını və Telzyra iş axını avtomatlaşdırma platformasını idarə edir. Məxfiliklə bağlı istənilən sual üçün hello@telzyra.com ünvanına yazın."
+        ]
+      },
+      {
+        "h": "2. Hazırda topladığımız məlumatlar",
+        "p": ["Hesablar hələ açılmadığı üçün yalnız aşağıdakıları emal edirik:"],
+        "list": [
+          "Seçim cookie-ləri: TELZYRA_LOCALE seçdiyiniz dili, TELZYRA_CURRENCY isə qiymətlər üçün seçdiyiniz valyutanı yadda saxlayır. Hər ikisi 12 aya qədər saxlanılır və yalnız seçiminizi xatırlamaq üçün istifadə olunur.",
+          "Texniki loglar: sayta daxil olduqda hostinq provayderimiz IP ünvanınızı, brauzer növünü, açılan səhifəni və vaxtı avtomatik qeyd edir. Bu loglardan yalnız xidmətin işləməsi və qorunması üçün istifadə edirik.",
+          "Bizə göndərdiyiniz mesajlar: bizimlə e-poçt və ya WhatsApp vasitəsilə əlaqə saxladıqda əlaqə məlumatlarınızı və mesajınızın məzmununu alırıq."
+        ]
+      },
+      {
+        "h": "3. Nə etmirik",
+        "list": [
+          "Reklam və ya saytlararası izləmə cookie-lərindən istifadə etmirik.",
+          "Hazırda analitika alətlərindən istifadə etmirik. Əlavə etsək, bu siyasəti yeniləyəcək və qanunun tələb etdiyi hallarda razılığınızı soruşacağıq.",
+          "Şəxsi məlumatlarınızı satmırıq."
+        ]
+      },
+      {
+        "h": "4. Hesablar açıldıqdan sonra toplanacaq məlumatlar",
+        "p": ["Telzyra hesabı yaratdıqda aşağıdakı məlumatları emal edəcəyik:"],
+        "list": [
+          "Hesab məlumatları: adınız, e-poçt ünvanınız və şifrəniz (yalnız heşlənmiş formada saxlanılır).",
+          "İş sahəsi məlumatları: qurduğunuz iş axınları, ayarlar və dəvət etdiyiniz komanda üzvləri.",
+          "Qoşulma məlumatları: qoşduğunuz tətbiqlərin giriş açarları, şifrələnmiş şəkildə saxlanılır.",
+          "İcra məlumatları: iş axınlarınızın giriş və çıxış məlumatları və logları, planınızda göstərilən müddət ərzində saxlanılır.",
+          "Ödəniş məlumatları: plan və ödəniş statusu. Kart məlumatlarını ödəniş provayderimiz emal edir, Telzyra onları heç vaxt saxlamır."
+        ]
+      },
+      {
+        "h": "5. Məlumatlardan necə və nə üçün istifadə edirik",
+        "p": [
+          "Məlumatlardan xidməti təqdim etmək və qorumaq, sorğularınıza cavab vermək, məhsulu təkmilləşdirmək və qanuni öhdəlikləri yerinə yetirmək üçün istifadə edirik. Vəziyyətdən asılı olaraq bunu sizinlə bağlanmış müqavilənin icrasına, təhlükəsiz və etibarlı xidmət göstərməkdə qanuni marağımıza, razılığınıza və ya qanun tələblərinə əsaslanaraq edirik."
+        ]
+      },
+      {
+        "h": "6. Xidmət provayderləri",
+        "p": ["Məlumatları yalnız Telzyra-nın işləməsinə kömək edən provayderlərlə bölüşürük:"],
+        "list": [
+          "Railway: tətbiqin hostinqi (serverlər ABŞ-da yerləşir).",
+          "Namecheap: domen və e-poçt yönləndirməsi.",
+          "WhatsApp (Meta): yalnız bizimlə orada əlaqə saxlamağı seçdiyiniz halda."
+        ],
+        "after": "Ödəniş və e-poçt göndərmə kimi əlavə provayderlərdən istifadəyə başlamazdan əvvəl onları burada qeyd edəcəyik."
+      },
+      {
+        "h": "7. Beynəlxalq ötürmə",
+        "p": [
+          "Hostinq provayderimiz məlumatları Azərbaycan, Türkiyə və Avropa İttifaqından kənarda saxlayır. Tələb olunduğu hallarda belə ötürmələr üçün müvafiq qoruma tədbirlərinə əsaslanırıq."
+        ]
+      },
+      {
+        "h": "8. Məlumatları nə qədər saxlayırıq",
+        "p": [
+          "Seçim cookie-lərinin müddəti 12 aydan sonra bitir. Texniki loglar təhlükəsizlik məqsədilə məhdud müddət saxlanılır. Mesajlar sorğunuzu həll etmək üçün lazım olduğu qədər saxlanılır. Hesab və iş axını məlumatları hesabınız aktiv olduğu müddətdə saxlanılacaq və qanun daha uzun saxlamağı tələb etmirsə, hesabı bağladıqdan sonra silinəcək."
+        ]
+      },
+      {
+        "h": "9. Hüquqlarınız",
+        "p": [
+          "Yaşadığınız ölkədən asılı olaraq şəxsi məlumatlarınıza çıxış əldə etmək, onları düzəltmək və ya silmək, emalına etiraz etmək və ya onu məhdudlaşdırmaq, həmçinin onların surətini almaq hüququnuz ola bilər. Bu hüquqlardan istifadə etmək üçün hello@telzyra.com ünvanına yazın. Həmçinin ölkənizdəki məlumatların qorunması üzrə səlahiyyətli quruma şikayət edə bilərsiniz."
+        ]
+      },
+      {
+        "h": "10. Uşaqlar",
+        "p": ["Telzyra 16 yaşından kiçik şəxslər üçün nəzərdə tutulmayıb və biz onların şəxsi məlumatlarını bilərəkdən toplamırıq."]
+      },
+      {
+        "h": "11. Bu siyasətdə dəyişikliklər",
+        "p": [
+          "Telzyra inkişaf etdikcə, xüsusilə hesablar və ödənişlər istifadəyə verilməzdən əvvəl bu siyasəti yeniləyəcəyik. Yuxarıdakı tarix həmişə son versiyanı göstərir."
+        ]
+      },
+      {
+        "h": "12. Əlaqə",
+        "p": ["E-poçt: hello@telzyra.com. Həmçinin hər səhifənin aşağısındakı keçid vasitəsilə bizə WhatsApp-da yaza bilərsiniz."]
+      }
+    ]
+  },
+  "terms": {
+    "title": "İstifadə şərtləri",
+    "intro": "Bu Şərtlər Telzyra saytından və platformasından istifadəni tənzimləyir. Telzyra-dan istifadə etməklə bu Şərtlərlə razılaşırsınız. Telzyra hazırda erkən giriş mərhələsindədir, ona görə ümumi istifadəyə verilənə qədər imkanlar və bu Şərtlər dəyişə bilər.",
+    "sections": [
+      {
+        "h": "1. Xidmət",
+        "p": [
+          "Telzyra müstəqil iş axını avtomatlaşdırma platformasıdır. O, tətbiqləri qoşmağa, vizual redaktorda iş axınları qurmağa və onları Telzyra-nın öz icra mühərrikində işə salmağa imkan verir. Erkən giriş dövründə bəzi imkanlar məhdud ola, dəyişə və ya əlçatan olmaya bilər."
+        ]
+      },
+      {
+        "h": "2. Hesablar",
+        "p": [
+          "Platformadan istifadə etmək üçün hesab lazım olacaq. Düzgün məlumat təqdim etməli, şifrənizi qorumalı və ən azı 16 yaşında olmalısınız. Telzyra-dan təşkilat adından istifadə edirsinizsə, həmin təşkilat adından bu Şərtləri qəbul etməyə səlahiyyətiniz olduğunu təsdiqləyirsiniz. Hesabınızdakı fəaliyyətə görə siz məsuliyyət daşıyırsınız."
+        ]
+      },
+      {
+        "h": "3. Qəbul edilən istifadə",
+        "p": ["Telzyra-dan aşağıdakılar üçün istifadə etməyəcəyinizlə razılaşırsınız:"],
+        "list": [
+          "hər hansı qanunu və ya başqalarının hüquqlarını pozmaq;",
+          "spam və ya istənilməyən mesajlar göndərmək;",
+          "zərərli proqram yaymaq və ya başqa sistemlərə hücum etmək;",
+          "platformanı həddindən artıq yükləmək və ya istifadə limitlərindən yan keçmək;",
+          "icazəsiz digər istifadəçilərin məlumatlarına çıxış əldə etmək;",
+          "qoşduğunuz üçüncü tərəf xidmətlərinin şərtlərini pozmaq."
+        ]
+      },
+      {
+        "h": "4. Sizin məzmununuz",
+        "p": [
+          "Telzyra-ya yerləşdirdiyiniz iş axınları və məlumatlar üzərində bütün hüquqlar sizdə qalır. Bu məzmunu yalnız sizə xidmət göstərmək üçün lazım olduğu qədər saxlamağa, emal etməyə və ötürməyə bizə icazə verirsiniz."
+        ]
+      },
+      {
+        "h": "5. Üçüncü tərəf xidmətləri",
+        "p": [
+          "Telzyra-ya başqa tətbiq qoşduqda həmin tətbiqdən istifadəniz onun öz şərtləri ilə tənzimlənir. Üçüncü tərəf xidmətlərinə və onlardakı dəyişikliklərə görə məsuliyyət daşımırıq."
+        ]
+      },
+      {
+        "h": "6. Planlar və ödənişlər",
+        "p": [
+          "Ödənişli planlar seçilmiş aylıq və ya illik dövr üçün əvvəlcədən, ödəniş zamanı göstərilən valyutada hesablanır. Qiymətlərə tətbiq olunan vergilər daxil deyil. Plan limitləri qiymətlər səhifəsində göstərilib. Planınızın qiyməti dəyişərsə, dəyişiklik qüvvəyə minməzdən əvvəl sizə xəbər verəcəyik. Planınızı istənilən vaxt dəyişə və ya ləğv edə bilərsiniz; ləğvetmə cari ödəniş dövrünün sonunda qüvvəyə minir. Pulun qaytarılması qanunun tələb etdiyi hallarda həyata keçirilir."
+        ]
+      },
+      {
+        "h": "7. Əqli mülkiyyət",
+        "p": [
+          "Telzyra adı, loqosu, proqram təminatı və saytın məzmunu Telzyra-ya məxsusdur. Bu Şərtlər xidmətdən istifadədən başqa onlardan istifadə hüququ vermir."
+        ]
+      },
+      {
+        "h": "8. Əlçatanlıq və məsuliyyətdən imtina",
+        "p": [
+          "Telzyra-nın etibarlı işləməsi üçün çalışırıq, lakin xidməti, xüsusilə erkən giriş dövründə, «olduğu kimi» və «əlçatan olduğu qədər» təqdim edirik. Xidmətin fasiləsiz və ya xətasız işləyəcəyinə zəmanət vermirik. İş axınlarınızın nəzərdə tutulduğu kimi işlədiyini yoxlamaq sizin məsuliyyətinizdədir."
+        ]
+      },
+      {
+        "h": "9. Məsuliyyətin məhdudlaşdırılması",
+        "p": [
+          "Qanunun icazə verdiyi həddə Telzyra itirilmiş gəlir və ya məlumat kimi dolayı zərərlərə görə məsuliyyət daşımır. İstənilən iddia üzrə ümumi məsuliyyətimiz iddiadan əvvəlki 12 ay ərzində bizə ödədiyiniz məbləğlə məhdudlaşır."
+        ]
+      },
+      {
+        "h": "10. Dayandırma və xitam",
+        "p": [
+          "Telzyra-dan istifadəni istənilən vaxt dayandıra bilərsiniz. Bu Şərtləri ciddi şəkildə və ya təkrar pozan hesabı dayandıra və ya bağlaya bilərik. Mümkün olduqda əvvəlcə sizə xəbər verəcək və məlumatlarınızı ixrac etmək imkanı tanıyacağıq."
+        ]
+      },
+      {
+        "h": "11. Tətbiq olunan hüquq",
+        "p": [
+          "Bu Şərtlər Azərbaycan Respublikasının qanunvericiliyi ilə tənzimlənir. Ölkənizin istehlakçı hüquqlarının müdafiəsi üzrə məcburi qanunları başqa qayda nəzərdə tutmursa, mübahisələrə Bakı şəhərinin səlahiyyətli məhkəmələrində baxılır."
+        ]
+      },
+      {
+        "h": "12. Dəyişikliklər",
+        "p": [
+          "Bu Şərtləri yeniləyə bilərik. Əhəmiyyətli dəyişikliklər barədə onlar qüvvəyə minməzdən əvvəl saytda və ya e-poçtla xəbər verəcəyik. Yuxarıdakı tarix həmişə son versiyanı göstərir."
+        ]
+      },
+      {
+        "h": "13. Əlaqə",
+        "p": ["Bu Şərtlərlə bağlı suallar üçün: hello@telzyra.com."]
+      }
+    ]
+  }
+}
