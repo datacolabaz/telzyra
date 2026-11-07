@@ -17,6 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(SITE.url),
     title: { default: SITE.name, template: t("titleTemplate") },
     applicationName: SITE.name,
+    verification: { yandex: SITE.verification.yandex },
   };
 }
 
