@@ -14,6 +14,12 @@ export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const first = pathname.split("/")[1] ?? "";
 
+  // 0. One canonical host: www.telzyra.com/* -> telzyra.com/* (avoids duplicate content).
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (host.startsWith("www.")) {
+    return NextResponse.redirect(`https://${host.slice(4)}${pathname}${search}`, 308);
+  }
+
   // 1. "/en" and "/en/*" -> unprefixed canonical English URL.
   if (first === DEFAULT_LOCALE) {
     const url = request.nextUrl.clone();
