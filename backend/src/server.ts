@@ -8,10 +8,8 @@ import { createApp } from "./app.js";
 const app = createApp({ db: prisma });
 
 // Non-reversible key fingerprint: lets operators confirm the credentials key is stable across deploys.
-logger.info(
-  { keyVersion: env.CREDENTIALS_KEY_VERSION, keyFingerprint: createHash("sha256").update(env.CREDENTIALS_KEY).digest("hex").slice(0, 12) },
-  "credentials key loaded",
-);
+const keyFingerprint = createHash("sha256").update(env.CREDENTIALS_KEY).digest("hex").slice(0, 12);
+logger.info(`credentials key loaded (version ${env.CREDENTIALS_KEY_VERSION}, fingerprint ${keyFingerprint})`);
 
 /**
  * Listen on "::" (IPv6 + IPv4) as Railway requires for private networking;

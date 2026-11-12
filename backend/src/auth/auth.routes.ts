@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { rateLimit } from "express-rate-limit";
+import { ipKeyGenerator, rateLimit } from "express-rate-limit";
 import type { AuditService } from "../audit/audit.service.js";
 import type { Db } from "../db/client.js";
 import { AppError, Errors } from "../lib/errors.js";
@@ -29,8 +29,11 @@ export function authRouter(deps: { db: Db; sessions: SessionService; audit: Audi
       keyGenerator: keyFn,
       handler: (_req, _res, next) => next(Errors.rateLimited()),
     });
-  const loginLimiter = limiter((req) => `${req.ip}:${String(req.body?.email ?? "").toLowerCase()}`);
-  const registerLimiter = limiter((req) => `register:${req.ip}`);
+  // ipKeyGenerator groups IPv6 addresses by /56 subnet, so rotating addresses inside one
+  // allocation does not bypass the limit.
+  const ip = (req: import("express").Request) => ipKeyGenerator(req.ip ?? "unknown");
+  const loginLimiter = limiter((req) => `${ip(req)}:${String(req.body?.email ?? "").toLowerCase()}`);
+  const registerLimiter = limiter((req) => `register:${ip(req)}`);
 
   router.post("/register", registerLimiter, async (req, res, next) => {
     try {
