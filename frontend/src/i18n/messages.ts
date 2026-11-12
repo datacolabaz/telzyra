@@ -12,6 +12,7 @@ import type enValidation from "./messages/en/validation.json";
 import type enNodes from "./messages/en/nodes.json";
 import type enLegal from "./messages/en/legal.json";
 import type enDocs from "./messages/en/docs.json";
+import type enApp from "./messages/en/app.json";
 
 /** English is the reference shape for every locale. */
 export interface Messages {
@@ -26,6 +27,7 @@ export interface Messages {
   nodes: typeof enNodes;
   legal: typeof enLegal;
   docs: typeof enDocs;
+  app: typeof enApp;
 }
 
 export type Namespace = keyof Messages;
@@ -42,6 +44,7 @@ export const NAMESPACES: Namespace[] = [
   "nodes",
   "legal",
   "docs",
+  "app",
 ];
 
 async function importNamespace(locale: AnyLocale, ns: Namespace): Promise<unknown> {

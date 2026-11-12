@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE } from "@/config/site";
 import { Suspense } from "react";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { buildMetadata } from "@/i18n/seo";
@@ -27,6 +28,7 @@ async function RegisterForm({ searchParams }: { searchParams: Promise<{ plan?: s
       <AuthForm
         mode="register"
         locale={locale}
+        apiUrl={SITE.publicApiUrl}
         plan={plan}
         errors={errors}
         labels={{

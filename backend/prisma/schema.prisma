@@ -1,0 +1,247 @@
+// Telzyra Platform API — database schema.
+// Every tenant-owned table carries workspaceId; access goes through the
+// workspace-scoped client (src/tenancy/scoped-db.ts), never raw queries by id alone.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  runtime             = "nodejs"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────────── Identity & tenancy ─────────────────────────────
+
+model User {
+  id              String    @id @default(uuid(7)) @db.Uuid
+  email           String    @unique // stored lowercased
+  name            String
+  passwordHash    String
+  locale          String    @default("en")
+  emailVerifiedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  memberships Membership[]
+  sessions    Session[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships   Membership[]
+  connections   Connection[]
+  subscriptions WebhookSubscription[]
+
+  @@map("workspaces")
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Membership {
+  id          String         @id @default(uuid(7)) @db.Uuid
+  userId      String         @db.Uuid
+  workspaceId String         @db.Uuid
+  role        MembershipRole @default(MEMBER)
+  createdAt   DateTime       @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+  @@index([workspaceId])
+  @@map("memberships")
+}
+
+model Session {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  /// SHA-256 of the session token; the token itself only exists in the user's cookie.
+  tokenHash   String    @unique
+  userId      String    @db.Uuid
+  /// Active workspace for this session.
+  workspaceId String    @db.Uuid
+  ip          String?
+  userAgent   String?
+  expiresAt   DateTime
+  lastSeenAt  DateTime  @default(now())
+  revokedAt   DateTime?
+  createdAt   DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  workspaceId String?  @db.Uuid
+  actorUserId String?  @db.Uuid
+  /// e.g. "auth.login.success", "connection.created", "connection.revoked"
+  action      String
+  targetType  String?
+  targetId    String?
+  ip          String?
+  userAgent   String?
+  /// Never contains secrets; sanitized by AuditService.
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@map("audit_logs")
+}
+
+// ───────────────────────────── Integrations ─────────────────────────────
+
+enum AuthType {
+  OAUTH2
+  API_KEY
+  BOT_TOKEN
+}
+
+enum ConnectionStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+  ERROR
+}
+
+model Connection {
+  id                String           @id @default(uuid(7)) @db.Uuid
+  workspaceId       String           @db.Uuid
+  /// Connector id: "telegram", "google-sheets", "slack", ...
+  provider          String
+  authType          AuthType
+  /// Account id at the provider (Slack team_id, HubSpot portalId, Shopify shop, ...).
+  externalAccountId String?
+  displayName       String
+  status            ConnectionStatus @default(ACTIVE)
+  scopes            String[]
+  /// Last health check result: { ok, latencyMs, checkedAt, error? }
+  health            Json?
+  lastCheckedAt     DateTime?
+  lastError         String?
+  createdById       String           @db.Uuid
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  workspace     Workspace             @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  credential    Credential?
+  subscriptions WebhookSubscription[]
+
+  @@unique([workspaceId, provider, externalAccountId])
+  @@index([provider, externalAccountId])
+  @@map("connections")
+}
+
+model Credential {
+  id                   String    @id @default(uuid(7)) @db.Uuid
+  connectionId         String    @unique @db.Uuid
+  /// AES-256-GCM packed JSON {accessToken, refreshToken, ...}; AAD = credential:<workspaceId>:<connectionId>
+  secret               String
+  keyVersion           Int
+  accessTokenExpiresAt DateTime?
+  refreshedAt          DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  connection Connection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@index([accessTokenExpiresAt])
+  @@map("credentials")
+}
+
+model OAuthState {
+  id           String    @id @default(uuid(7)) @db.Uuid
+  /// SHA-256 of the state parameter sent to the provider.
+  stateHash    String    @unique
+  provider     String
+  userId       String    @db.Uuid
+  workspaceId  String    @db.Uuid
+  sessionId    String    @db.Uuid
+  /// Encrypted PKCE code_verifier (when the provider supports PKCE).
+  codeVerifier String?
+  redirectPath String
+  expiresAt    DateTime
+  usedAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([expiresAt])
+  @@map("oauth_states")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  FAILED
+}
+
+model WebhookSubscription {
+  id            String             @id @default(uuid(7)) @db.Uuid
+  workspaceId   String             @db.Uuid
+  connectionId  String             @db.Uuid
+  provider      String
+  /// Subscription id at the provider (Stripe webhook endpoint id, Shopify subscription gid, ...).
+  externalId    String?
+  eventTypes    String[]
+  /// Unguessable token used in the inbound URL: /webhooks/<provider>/<endpointToken>
+  endpointToken String             @unique
+  /// Encrypted signing secret, when the provider issues one per subscription.
+  signingSecret String?
+  status        SubscriptionStatus @default(ACTIVE)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  workspace  Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  connection Connection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([connectionId])
+  @@map("webhook_subscriptions")
+}
+
+enum WebhookEventStatus {
+  RECEIVED
+  PROCESSING
+  PROCESSED
+  FAILED
+  DEAD
+}
+
+model WebhookEvent {
+  id             String             @id @default(uuid(7)) @db.Uuid
+  provider       String
+  /// Provider event id (or a hash of the body when none exists); unique per provider.
+  dedupeKey      String
+  workspaceId    String?            @db.Uuid
+  connectionId   String?            @db.Uuid
+  subscriptionId String?            @db.Uuid
+  eventType      String?
+  payload        Json
+  status         WebhookEventStatus @default(RECEIVED)
+  attempts       Int                @default(0)
+  nextAttemptAt  DateTime?
+  lastError      String?
+  receivedAt     DateTime           @default(now())
+  processedAt    DateTime?
+
+  @@unique([provider, dedupeKey])
+  @@index([status, nextAttemptAt])
+  @@index([workspaceId, receivedAt])
+  @@map("webhook_events")
+}

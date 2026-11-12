@@ -1,48 +1,82 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { logger } from "hono/logger";
+import express, { type NextFunction, type Request, type Response } from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
+import { pinoHttp } from "pino-http";
+import { env } from "./config/env.js";
+import { logger } from "./lib/logger.js";
+import { AppError } from "./lib/errors.js";
+import type { Db } from "./db/client.js";
+import { AuditService } from "./audit/audit.service.js";
+import { SessionService } from "./auth/session.service.js";
+import { loadSession, originGuard } from "./auth/middleware.js";
+import { authRouter } from "./auth/auth.routes.js";
 import { PLANS } from "./plans.js";
 
-/**
- * Telzyra Platform API.
- *
- * Phase 1 serves only real, working data: health and the plan catalogue.
- * Account endpoints exist so the contract is fixed, but they return
- * 503 "service.unavailable" until user storage and auth land in phase 2.
- * The frontend already shows that code as a localized message.
- */
-export const app = new Hono();
+export interface AppDeps {
+  db: Db;
+  /** Lower limits in tests. */
+  rateLimitMax?: number;
+}
 
-const allowedOrigins = (process.env.CORS_ORIGINS ?? "http://localhost:3000")
-  .split(",")
-  .map((o) => o.trim())
-  .filter(Boolean);
+export function createApp({ db, rateLimitMax }: AppDeps) {
+  const app = express();
+  const sessions = new SessionService(db);
+  const audit = new AuditService(db);
 
-app.use("*", logger());
-app.use("/v1/*", cors({ origin: allowedOrigins, credentials: true }));
+  app.disable("x-powered-by");
+  app.set("trust proxy", env.TRUST_PROXY);
 
-app.get("/", (c) => c.json({ name: "telzyra-api", status: "ok" }));
+  app.use(helmet());
+  app.use(
+    pinoHttp({
+      logger,
+      // Never log bodies; headers are redacted by the logger's redact list.
+      autoLogging: { ignore: (req) => req.url === "/health" },
+      customLogLevel: (_req, res, err) => (err || res.statusCode >= 500 ? "error" : res.statusCode >= 400 ? "warn" : "info"),
+    }),
+  );
 
-app.get("/health", (c) =>
-  c.json({ status: "ok", uptime: Math.round(process.uptime()), version: process.env.RAILWAY_GIT_COMMIT_SHA ?? "dev" }),
-);
-
-app.get("/v1/plans", (c) => {
-  c.header("Cache-Control", "public, max-age=300");
-  return c.json(PLANS);
-});
-
-const notYetAvailable = () =>
-  new Response(JSON.stringify({ code: "service.unavailable" }), {
-    status: 503,
-    headers: { "Content-Type": "application/json", "Retry-After": "3600" },
+  // Health is public and dependency-aware: Railway only routes traffic when the DB is reachable.
+  app.get("/", (_req, res) => res.json({ name: "telzyra-api", status: "ok" }));
+  app.get("/health", async (_req, res) => {
+    try {
+      await db.$queryRaw`SELECT 1`;
+      res.json({ status: "ok", db: "ok", version: process.env.RAILWAY_GIT_COMMIT_SHA ?? "dev" });
+    } catch {
+      res.status(503).json({ status: "degraded", db: "unreachable" });
+    }
   });
 
-app.post("/v1/auth/register", notYetAvailable);
-app.post("/v1/auth/login", notYetAvailable);
+  // ── /v1: JSON API for the web app ─────────────────────────────────────────
+  const v1 = express.Router();
+  v1.use(cors({ origin: env.CORS_ORIGINS, credentials: true }));
+  v1.use(express.json({ limit: "1mb" }));
+  v1.use(cookieParser());
+  v1.use(originGuard);
+  v1.use(loadSession(sessions));
 
-app.notFound((c) => c.json({ code: "not_found" }, 404));
-app.onError((err, c) => {
-  console.error(err);
-  return c.json({ code: "unknown" }, 500);
-});
+  v1.get("/plans", (_req, res) => {
+    res.set("Cache-Control", "public, max-age=300").json(PLANS);
+  });
+  v1.use("/auth", authRouter({ db, sessions, audit, rateLimitMax }));
+
+  app.use("/v1", v1);
+  // Webhook receivers (raw body, signature verification) mount at /webhooks in a later module.
+
+  app.use((_req, res) => res.status(404).json({ code: "not_found" }));
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+    if (err instanceof AppError) {
+      return res.status(err.status).json({ code: err.code, ...(err.details ?? {}) });
+    }
+    if (err instanceof SyntaxError && "body" in err) {
+      return res.status(400).json({ code: "invalid_json" });
+    }
+    req.log?.error({ err }, "unhandled error");
+    res.status(500).json({ code: "unknown" });
+  });
+
+  return app;
+}

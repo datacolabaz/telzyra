@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE } from "@/config/site";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { buildMetadata } from "@/i18n/seo";
 import { localizedPath } from "@/i18n/routing";
@@ -20,6 +21,7 @@ export default async function LoginPage() {
         <AuthForm
           mode="login"
           locale={locale}
+          apiUrl={SITE.publicApiUrl}
           errors={errors}
           labels={{
             submit: t("login.submit"),

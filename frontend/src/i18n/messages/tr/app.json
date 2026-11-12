@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "title": "Hoş geldiniz, {name}",
+    "subtitle": "Telzyra çalışma alanınız hazır.",
+    "account": "Hesap",
+    "name": "Ad",
+    "email": "E-posta",
+    "emailNotVerified": "Henüz doğrulanmadı",
+    "workspace": "Çalışma alanı",
+    "role": "Rol",
+    "roles": {
+      "OWNER": "Sahip",
+      "ADMIN": "Yönetici",
+      "MEMBER": "Üye"
+    },
+    "nextTitle": "Sırada ne var",
+    "nextBody": "Uygulamalarınızı (Telegram, Google Sheets, Slack, Notion ve daha fazlası) bağlamak, yayınlanacak bir sonraki özellik. Tüm bağlantıları bu panelden yönetebileceksiniz.",
+    "logout": "Çıkış yap"
+  }
+}

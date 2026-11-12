@@ -16,6 +16,8 @@ export const SITE = {
   url: resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   /** Telzyra Platform API. When unset, API-backed features report "unavailable". */
   apiUrl: process.env.TELZYRA_API_URL ?? "",
+  /** API origin used by the browser (login, register, logout). Inlined at build time. */
+  publicApiUrl: process.env.NEXT_PUBLIC_API_URL ?? "",
   contactEmail: "hello@telzyra.com",
   support: {
     /** WhatsApp number in international format, digits only (used in https://wa.me/<number>). */

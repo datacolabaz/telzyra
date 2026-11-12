@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "title": "Welcome, {name}",
+    "subtitle": "Your Telzyra workspace is ready.",
+    "account": "Account",
+    "name": "Name",
+    "email": "Email",
+    "emailNotVerified": "Not verified yet",
+    "workspace": "Workspace",
+    "role": "Role",
+    "roles": {
+      "OWNER": "Owner",
+      "ADMIN": "Admin",
+      "MEMBER": "Member"
+    },
+    "nextTitle": "What's next",
+    "nextBody": "Connecting your apps (Telegram, Google Sheets, Slack, Notion and more) is the next feature being released. You will be able to manage every connection from this dashboard.",
+    "logout": "Log out"
+  }
+}

@@ -6,5 +6,7 @@
   "auth.invalid_credentials": "E-posta veya şifre hatalı.",
   "auth.email_taken": "Bu e-posta adresiyle kayıtlı bir hesap zaten var.",
   "service.unavailable": "Hesap hizmetleri henüz kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
-  "unknown": "Bir sorun oluştu. Lütfen tekrar deneyin."
+  "unknown": "Bir sorun oluştu. Lütfen tekrar deneyin.",
+  "rate_limited": "Çok fazla deneme yapıldı. Lütfen birkaç dakika bekleyip tekrar deneyin.",
+  "auth.unauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın."
 }

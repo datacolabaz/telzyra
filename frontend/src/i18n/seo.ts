@@ -12,6 +12,7 @@ type SeoPage =
   | "docs"
   | "privacy"
   | "terms"
+  | "dashboard"
   | "login"
   | "register";
 

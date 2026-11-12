@@ -20,6 +20,17 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(`https://${host.slice(4)}${pathname}${search}`, 308);
   }
 
+  // Private app routes: without a session cookie go straight to the localized login page.
+  // (Optimistic check only; the page itself validates the session with the API.)
+  const localePrefix = isActiveLocale(first) && first !== DEFAULT_LOCALE ? `/${first}` : "";
+  const appPath = localePrefix ? pathname.slice(localePrefix.length) || "/" : pathname;
+  if ((appPath === "/dashboard" || appPath.startsWith("/dashboard/")) && !request.cookies.has("tz_session")) {
+    const url = request.nextUrl.clone();
+    url.pathname = `${localePrefix}/login`;
+    url.search = "";
+    return NextResponse.redirect(url, 307);
+  }
+
   // 1. "/en" and "/en/*" -> unprefixed canonical English URL.
   if (first === DEFAULT_LOCALE) {
     const url = request.nextUrl.clone();

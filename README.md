@@ -29,13 +29,28 @@ npm run dev
 The frontend also runs without the backend. Pricing then uses its built-in defaults,
 and the account forms show "service not available yet".
 
-## Backend endpoints
+## Backend
 
-| Method | Path | Status |
+Express 5 + TypeScript + Prisma 7 (PostgreSQL). Tests: `npm test` (Vitest, real Postgres via `TEST_DATABASE_URL`).
+
+| Method | Path | Notes |
 |---|---|---|
-| GET | `/health` | live: health check used by Railway |
-| GET | `/v1/plans` | live: plan catalogue with per-currency prices |
-| POST | `/v1/auth/register`, `/v1/auth/login` | contract only: returns `503 {"code":"service.unavailable"}` until phase 2 (database + auth) |
+| GET | `/health` | Checks the database; used by Railway's health check |
+| GET | `/v1/plans` | Plan catalogue with per-currency prices |
+| POST | `/v1/auth/register` | Creates user + workspace (OWNER) + session cookie |
+| POST | `/v1/auth/login` | Session cookie; rate-limited per IP + email |
+| POST | `/v1/auth/logout` | Requires session + `x-csrf-token` |
+| GET | `/v1/auth/me` | Current user, workspace, role, CSRF token |
+
+Security model:
+- Passwords: Argon2id. Sessions: random 256-bit token in an `HttpOnly; SameSite=Lax` cookie; only its SHA-256 is stored.
+- CSRF: `x-csrf-token` (HMAC of the session token) on state-changing requests + Origin allowlist.
+- Credentials: AES-256-GCM with per-record IV, AAD bound to workspace + connection, versioned keys (`CREDENTIALS_KEY`, `CREDENTIALS_KEY_VERSION`, `CREDENTIALS_PREVIOUS_KEYS`).
+- Tenant isolation: tenant data is accessed through `forWorkspace(prisma, workspaceId)`, which scopes every query.
+- Logs redact tokens, cookies, passwords, OAuth codes and webhook signatures. Audit log records security events without secrets.
+
+Migrations run on Railway before each deploy (`prisma migrate deploy`), followed by a drift check
+(`prisma migrate diff --exit-code`) that stops the deploy if the database and `schema.prisma` disagree.
 
 ## Deploy on Railway
 

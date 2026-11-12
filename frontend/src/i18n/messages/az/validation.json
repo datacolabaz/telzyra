@@ -6,5 +6,7 @@
   "auth.invalid_credentials": "E-poçt və ya şifrə yanlışdır.",
   "auth.email_taken": "Bu e-poçt ünvanı ilə artıq hesab mövcuddur.",
   "service.unavailable": "Hesab xidmətləri hələ əlçatan deyil. Bir az sonra yenidən cəhd edin.",
-  "unknown": "Xəta baş verdi. Yenidən cəhd edin."
+  "unknown": "Xəta baş verdi. Yenidən cəhd edin.",
+  "rate_limited": "Çox sayda cəhd edildi. Bir neçə dəqiqə gözləyib yenidən cəhd edin.",
+  "auth.unauthorized": "Sessiyanızın müddəti bitib. Yenidən daxil olun."
 }

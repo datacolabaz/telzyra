@@ -35,5 +35,9 @@
   "register": {
     "title": "Create your account",
     "description": "Create a free Telzyra account and build your first workflow."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Your Telzyra workspace."
   }
 }

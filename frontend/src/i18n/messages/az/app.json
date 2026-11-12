@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "title": "Xoş gəlmisiniz, {name}",
+    "subtitle": "Telzyra iş sahəniz hazırdır.",
+    "account": "Hesab",
+    "name": "Ad",
+    "email": "E-poçt",
+    "emailNotVerified": "Hələ təsdiqlənməyib",
+    "workspace": "İş sahəsi",
+    "role": "Rol",
+    "roles": {
+      "OWNER": "Sahib",
+      "ADMIN": "Administrator",
+      "MEMBER": "Üzv"
+    },
+    "nextTitle": "Növbəti addım",
+    "nextBody": "Tətbiqlərinizin (Telegram, Google Sheets, Slack, Notion və digərləri) qoşulması növbəti təqdim olunacaq imkandır. Bütün qoşulmaları bu paneldən idarə edə biləcəksiniz.",
+    "logout": "Çıxış"
+  }
+}

@@ -35,5 +35,9 @@
   "register": {
     "title": "Hesabınızı oluşturun",
     "description": "Ücretsiz bir Telzyra hesabı oluşturun ve ilk iş akışınızı kurun."
+  },
+  "dashboard": {
+    "title": "Kontrol paneli",
+    "description": "Telzyra çalışma alanınız."
   }
 }
