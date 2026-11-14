@@ -104,7 +104,9 @@ if ! grep -q '^GOOGLE_CLIENT_SECRET=..*' "$ENV"; then
   unset GSECRET
   echo "  saved to backend/.env"
 fi
-printf 'NEXT_PUBLIC_SITE_URL=%s\nTELZYRA_API_URL=http://localhost:4000\nNEXT_PUBLIC_API_URL=http://localhost:4000\n' "$APP_URL" > frontend/.env.local
+# Same-origin API proxy: the browser talks only to the web app's port (some embedded browsers block
+# cross-port requests to localhost); Next.js forwards /api/v1/* to the API on :4000.
+printf 'NEXT_PUBLIC_SITE_URL=%s\nTELZYRA_API_URL=http://localhost:4000\nNEXT_PUBLIC_API_URL=%s/api\nTELZYRA_API_PROXY=1\n' "$APP_URL" "$APP_URL" > frontend/.env.local
 
 PIDS=()
 cleanup() {
