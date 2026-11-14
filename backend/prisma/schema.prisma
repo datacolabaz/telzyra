@@ -42,6 +42,7 @@ model Workspace {
   memberships   Membership[]
   connections   Connection[]
   subscriptions WebhookSubscription[]
+  workflows     Workflow[]
 
   @@map("workspaces")
 }
@@ -174,6 +175,8 @@ model OAuthState {
   userId       String    @db.Uuid
   workspaceId  String    @db.Uuid
   sessionId    String    @db.Uuid
+  /// Set when re-authorizing an existing connection.
+  connectionId String?   @db.Uuid
   /// Encrypted PKCE code_verifier (when the provider supports PKCE).
   codeVerifier String?
   redirectPath String
@@ -244,4 +247,79 @@ model WebhookEvent {
   @@index([status, nextAttemptAt])
   @@index([workspaceId, receivedAt])
   @@map("webhook_events")
+}
+
+// ───────────────────────────── Workflows ─────────────────────────────
+
+enum WorkflowStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+}
+
+enum ExecutionStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+model Workflow {
+  id                  String         @id @default(uuid(7)) @db.Uuid
+  workspaceId         String         @db.Uuid
+  name                String
+  status              WorkflowStatus @default(DRAFT)
+  /// { trigger: { connector, trigger, connectionId, config }, steps: [{ id, connector, action, connectionId, input }] }
+  definition          Json
+  /// Denormalized trigger fields for fast dispatch of incoming events.
+  triggerConnector    String?
+  triggerKey          String?
+  triggerConnectionId String?        @db.Uuid
+  createdById         String         @db.Uuid
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  workspace    Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  executions   WorkflowExecution[]
+  triggerState TriggerState?
+
+  @@index([workspaceId])
+  @@index([triggerConnectionId, triggerKey, status])
+  @@map("workflows")
+}
+
+model WorkflowExecution {
+  id          String          @id @default(uuid(7)) @db.Uuid
+  workspaceId String          @db.Uuid
+  workflowId  String          @db.Uuid
+  status      ExecutionStatus @default(QUEUED)
+  /// "manual" | "test" | "webhook" | "poll"
+  source      String
+  triggerData Json
+  /// [{ stepId, connector, action, status, output?, error?, startedAt, durationMs }]
+  steps       Json            @default("[]")
+  error       String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  createdAt   DateTime        @default(now())
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId, createdAt])
+  @@index([workspaceId, createdAt])
+  @@map("workflow_executions")
+}
+
+/// Persistent checkpoint for polling triggers (Google Sheets, Gmail, Notion fallback).
+model TriggerState {
+  id           String    @id @default(uuid(7)) @db.Uuid
+  workflowId   String    @unique @db.Uuid
+  cursor       Json?
+  lastPolledAt DateTime?
+  lastError    String?
+  updatedAt    DateTime  @updatedAt
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@map("trigger_states")
 }

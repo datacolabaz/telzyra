@@ -32,6 +32,31 @@ const schema = z.object({
   /** Older keys kept only to decrypt during rotation: "1:<hex>,2:<hex>". */
   CREDENTIALS_PREVIOUS_KEYS: z.string().optional(),
 
+  /** Public origin of this API (OAuth redirect URIs, webhook URLs), e.g. https://api.telzyra.com */
+  PUBLIC_API_URL: z.string().url().default("http://localhost:4000"),
+  /** Run queue workers in this process (webhooks, workflow executions, polling). */
+  RUN_WORKERS: z
+    .enum(["true", "false"])
+    .default("true")
+    .transform((v) => v === "true"),
+
+  // ── Provider apps (all optional: a provider without credentials shows as "not configured") ──
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  SLACK_CLIENT_ID: z.string().optional(),
+  SLACK_CLIENT_SECRET: z.string().optional(),
+  SLACK_SIGNING_SECRET: z.string().optional(),
+  NOTION_CLIENT_ID: z.string().optional(),
+  NOTION_CLIENT_SECRET: z.string().optional(),
+  /** Token Notion sends once to the webhook endpoint; used to verify X-Notion-Signature. */
+  NOTION_WEBHOOK_VERIFICATION_TOKEN: z.string().optional(),
+  HUBSPOT_CLIENT_ID: z.string().optional(),
+  HUBSPOT_CLIENT_SECRET: z.string().optional(),
+  HUBSPOT_APP_ID: z.string().optional(),
+  SHOPIFY_CLIENT_ID: z.string().optional(),
+  SHOPIFY_CLIENT_SECRET: z.string().optional(),
+  SHOPIFY_API_VERSION: z.string().default("2026-10"),
+
   SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
   /** Number of reverse proxies in front of the app (Railway edge = 1). */
   TRUST_PROXY: z.coerce.number().int().min(0).default(1),

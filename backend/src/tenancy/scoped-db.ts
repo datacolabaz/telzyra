@@ -11,7 +11,7 @@ import type { Db } from "../db/client.js";
  * Feature code that handles tenant data must use this client. Looking a record up by id
  * alone can therefore never return another workspace's row.
  */
-export const TENANT_MODELS = ["Membership", "Connection", "WebhookSubscription"] as const;
+export const TENANT_MODELS = ["Membership", "Connection", "WebhookSubscription", "Workflow", "WorkflowExecution"] as const;
 type TenantModel = (typeof TENANT_MODELS)[number];
 
 const WHERE_OPS = new Set([
