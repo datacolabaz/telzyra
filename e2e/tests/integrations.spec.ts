@@ -72,6 +72,7 @@ test("Google Sheets: OAuth round trip through the real callback", async () => {
   await expect(page).toHaveURL(/\/dashboard\/integrations\?status=connected&connection=/);
   await expect(page.getByRole("status")).toContainText("Connected successfully.");
   await expect(page.getByTestId("connection-google-sheets")).toContainText("sheets.e2e@example.com");
+  await page.screenshot({ path: "screenshots/1-connections.png", fullPage: true });
 });
 
 test("OAuth state cannot be replayed", async () => {
@@ -170,6 +171,7 @@ test("execution history shows trigger data and step outputs", async () => {
   await expect(runs).toContainText("save");
   await expect(runs).toContainText("updated_range");
   await expect(runs).toContainText("message_id");
+  await page.screenshot({ path: "screenshots/2-workflow-run.png", fullPage: true });
 });
 
 test("manual test run with sample data records a failure clearly", async () => {
