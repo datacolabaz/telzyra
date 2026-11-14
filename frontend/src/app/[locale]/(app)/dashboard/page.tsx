@@ -4,7 +4,7 @@ import { Building2, Mail, Plug, ShieldCheck, UserRound } from "lucide-react";
 import { buildMetadata } from "@/i18n/seo";
 import { getLocale, getTranslations } from "@/i18n/server";
 import { localizedPath } from "@/i18n/routing";
-import { Badge, Card, Container, IconTile } from "@/components/ui/primitives";
+import { Badge, ButtonLink, Card, Container, IconTile } from "@/components/ui/primitives";
 import { LogoutButton } from "@/components/app/LogoutButton";
 import { getCurrentSession } from "@/lib/auth/session";
 import { SITE } from "@/config/site";
@@ -68,6 +68,9 @@ async function DashboardContent() {
           </IconTile>
           <h2 className="mt-4 text-sm font-semibold text-ink-950">{t("dashboard.nextTitle")}</h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-500">{t("dashboard.nextBody")}</p>
+          <ButtonLink href={localizedPath(locale, "/dashboard/integrations")} className="mt-4">
+            {t("dashboard.nextCta")}
+          </ButtonLink>
         </Card>
       </div>
     </Container>

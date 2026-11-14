@@ -13,8 +13,183 @@
       "ADMIN": "Administrator",
       "MEMBER": "Üzv"
     },
-    "nextTitle": "Növbəti addım",
-    "nextBody": "Tətbiqlərinizin (Telegram, Google Sheets, Slack, Notion və digərləri) qoşulması növbəti təqdim olunacaq imkandır. Bütün qoşulmaları bu paneldən idarə edə biləcəksiniz.",
-    "logout": "Çıxış"
+    "nextTitle": "Tətbiqlərinizi qoşun",
+    "nextBody": "Telegram, Google Sheets, Slack, Notion və digər tətbiqləri qoşun, sonra Telzyra-da işləyən iş axınları qurun.",
+    "logout": "Çıxış",
+    "nextCta": "İnteqrasiyaları aç"
+  },
+  "nav": {
+    "dashboard": "İdarə paneli",
+    "integrations": "İnteqrasiyalar",
+    "workflows": "İş axınları"
+  },
+  "integrations": {
+    "title": "İnteqrasiyalar",
+    "subtitle": "İş axınlarınızın istifadə etdiyi tətbiqləri qoşun. Giriş məlumatları şifrələnir və bir daha göstərilmir.",
+    "tabs": {
+      "marketplace": "Bütün tətbiqlər",
+      "connections": "Bağlantılarım"
+    },
+    "search": "Tətbiq axtar",
+    "categories": {
+      "communication": "Ünsiyyət",
+      "productivity": "Məhsuldarlıq",
+      "crm": "CRM",
+      "payments": "Ödənişlər",
+      "commerce": "E-ticarət",
+      "core": "Daxili"
+    },
+    "auth": {
+      "oauth2": "Provayder hesabı ilə giriş",
+      "bot_token": "Bot tokeni",
+      "api_key": "API açarı",
+      "none": "Hesab tələb olunmur"
+    },
+    "card": {
+      "actions": "{count} əməliyyat",
+      "triggers": "{count} trigger",
+      "connect": "Qoş",
+      "notConfigured": "Bu serverdə hələ konfiqurasiya olunmayıb",
+      "builtIn": "Daxili",
+      "adminOnly": "Tətbiqləri yalnız sahiblər və adminlər qoşa bilər."
+    },
+    "connect": {
+      "title": "{name} qoşulması",
+      "secretLabel": "{label}",
+      "secretHelp": "Buraya yapışdırın. Telzyra yadda saxlamazdan əvvəl onu {name} ilə yoxlayır.",
+      "shopLabel": "Mağaza domeni",
+      "shopHelp": "Məsələn: my-store.myshopify.com",
+      "submit": "Qoş",
+      "cancel": "Ləğv et",
+      "redirecting": "{name} səhifəsinə yönləndirilir…",
+      "verifying": "Yoxlanılır…"
+    },
+    "connections": {
+      "empty": "Hələ bağlantı yoxdur. Siyahıdan tətbiq qoşun.",
+      "account": "Hesab",
+      "status": "Status",
+      "lastChecked": "Son yoxlama",
+      "never": "Heç vaxt",
+      "usedBy": "İstifadə edən",
+      "notUsed": "İş axınlarında istifadə olunmur",
+      "test": "Yoxla",
+      "reauthorize": "Yenidən qoş",
+      "disconnect": "Ayır",
+      "delete": "Sil",
+      "confirmDisconnect": "{name} ayrılsın? Ondan istifadə edən iş axınları dayandırılacaq.",
+      "confirmDelete": "Bu bağlantı birdəfəlik silinsin?",
+      "testOk": "Bağlantı işləyir ({ms} ms)",
+      "testFailed": "Yoxlama uğursuz oldu: {error}"
+    },
+    "status": {
+      "ACTIVE": "Aktiv",
+      "EXPIRED": "Yenidən qoşulmalıdır",
+      "REVOKED": "Ayrılıb",
+      "ERROR": "Xəta"
+    },
+    "result": {
+      "connected": "Uğurla qoşuldu.",
+      "error": "Qoşulma alınmadı: {reason}"
+    },
+    "errors": {
+      "generic": "Nəsə səhv getdi. Yenidən cəhd edin.",
+      "oauth.denied": "İcazə verilmədi.",
+      "oauth.invalid_state": "Giriş linkinin vaxtı bitib və ya artıq istifadə olunub. Yenidən cəhd edin.",
+      "oauth.state_expired": "Giriş linkinin vaxtı bitib. Yenidən cəhd edin.",
+      "oauth.session_mismatch": "Başqa hesabla daxil olmusunuz. Yenidən cəhd edin.",
+      "oauth.exchange_failed": "Provayder girişi qəbul etmədi. Yenidən cəhd edin.",
+      "oauth.scopes_missing": "Bəzi tələb olunan icazələr verilmədi.",
+      "oauth.account_mismatch": "Əvvəlki hesabla yenidən qoşulun.",
+      "oauth.invalid_grant": "Giriş ləğv edilib. Yenidən qoşulun.",
+      "oauth.invalid_request": "Yanlış sorğu.",
+      "connection.in_use": "Bu bağlantı iş axınlarında istifadə olunur. Əvvəlcə onlardan çıxarın.",
+      "auth.forbidden": "Bunu etməyə icazəniz yoxdur.",
+      "AUTH_REVOKED": "Provayder giriş məlumatlarını rədd etdi.",
+      "AUTH_EXPIRED": "Girişin vaxtı bitib. Yenidən qoşulun.",
+      "PERMISSION_DENIED": "Provayder bu əməliyyat üçün icazə vermədi.",
+      "NOT_FOUND": "Provayderdə tapılmadı.",
+      "VALIDATION": "Provayder daxil edilən məlumatı qəbul etmədi.",
+      "RATE_LIMITED": "Provayder sorğuları məhdudlaşdırır. Bir azdan yenidən cəhd edin.",
+      "PROVIDER_UNAVAILABLE": "Provayder müvəqqəti əlçatan deyil.",
+      "TIMEOUT": "Provayder vaxtında cavab vermədi.",
+      "CIRCUIT_OPEN": "Təkrarlanan xətalara görə dayandırılıb. Bir dəqiqədən sonra yenidən cəhd edin.",
+      "NOT_CONFIGURED": "Bu inteqrasiya serverdə hələ konfiqurasiya olunmayıb.",
+      "BLOCKED_DESTINATION": "Bu ünvana icazə verilmir.",
+      "UNKNOWN": "Gözlənilməz xəta."
+    }
+  },
+  "workflows": {
+    "title": "İş axınları",
+    "subtitle": "Trigger işə düşəndə Telzyra-da icra olunan avtomatlaşdırmalar.",
+    "new": "Yeni iş axını",
+    "empty": "Hələ iş axını yoxdur.",
+    "name": "Ad",
+    "untitled": "Adsız iş axını",
+    "status": {
+      "DRAFT": "Qaralama",
+      "ACTIVE": "Aktiv",
+      "PAUSED": "Dayandırılıb"
+    },
+    "list": {
+      "steps": "{count} addım",
+      "open": "Aç"
+    },
+    "builder": {
+      "trigger": "Trigger",
+      "when": "Bu baş verəndə",
+      "app": "Tətbiq",
+      "event": "Hadisə",
+      "connection": "Bağlantı",
+      "selectConnection": "Bağlantı seçin",
+      "noConnection": "Bu tətbiq üçün hələ bağlantı yoxdur — onu İnteqrasiyalar səhifəsində qoşun.",
+      "manual": "Əl ilə başlatma",
+      "steps": "Sonra bunu et",
+      "addStep": "Addım əlavə et",
+      "removeStep": "Sil",
+      "stepId": "Addımın adı",
+      "action": "Əməliyyat",
+      "input": "Giriş məlumatı",
+      "templatesHint": "Əvvəlki addımların məlumatından istifadə edin: {{trigger.text}}, {{steps.<addımın adı>.<sahə>}}",
+      "json": "JSON dəyəri",
+      "required": "məcburi",
+      "testStep": "Addımı yoxla",
+      "save": "Yadda saxla",
+      "saved": "Yadda saxlanıldı",
+      "activate": "Aktivləşdir",
+      "pause": "Dayandır",
+      "run": "Test icrası",
+      "delete": "Sil",
+      "confirmDelete": "Bu iş axını silinsin?",
+      "pollingNote": "Bir neçə dəqiqədən bir yoxlanılır.",
+      "webhookNote": "Tətbiq hadisə göndərən kimi dərhal başlayır.",
+      "sampleData": "Nümunə trigger məlumatı (JSON)",
+      "back": "Bütün iş axınları"
+    },
+    "runs": {
+      "title": "İcralar",
+      "empty": "Hələ icra yoxdur.",
+      "source": {
+        "manual": "Əl ilə",
+        "test": "Test",
+        "webhook": "Hadisə",
+        "poll": "Sorğu (polling)"
+      },
+      "status": {
+        "QUEUED": "Növbədə",
+        "RUNNING": "İcra olunur",
+        "SUCCEEDED": "Uğurlu",
+        "FAILED": "Uğursuz"
+      },
+      "input": "Trigger məlumatı",
+      "output": "Nəticə",
+      "error": "Xəta",
+      "skipped": "Ötürüldü",
+      "duration": "{ms} ms"
+    },
+    "errors": {
+      "workflow.invalid": "İş axınında problemlər var: {issues}",
+      "workflow.trigger_registration_failed": "Tətbiq trigger qeydiyyatını qəbul etmədi.",
+      "invalidJson": "{field} sahəsində yanlış JSON."
+    }
   }
 }

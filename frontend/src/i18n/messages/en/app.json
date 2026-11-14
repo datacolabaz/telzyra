@@ -13,8 +13,183 @@
       "ADMIN": "Admin",
       "MEMBER": "Member"
     },
-    "nextTitle": "What's next",
-    "nextBody": "Connecting your apps (Telegram, Google Sheets, Slack, Notion and more) is the next feature being released. You will be able to manage every connection from this dashboard.",
-    "logout": "Log out"
+    "nextTitle": "Connect your apps",
+    "nextBody": "Connect Telegram, Google Sheets, Slack, Notion and more, then build workflows that run on Telzyra.",
+    "logout": "Log out",
+    "nextCta": "Open integrations"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "integrations": "Integrations",
+    "workflows": "Workflows"
+  },
+  "integrations": {
+    "title": "Integrations",
+    "subtitle": "Connect the apps your workflows use. Credentials are encrypted and never shown again.",
+    "tabs": {
+      "marketplace": "All apps",
+      "connections": "My connections"
+    },
+    "search": "Search apps",
+    "categories": {
+      "communication": "Communication",
+      "productivity": "Productivity",
+      "crm": "CRM",
+      "payments": "Payments",
+      "commerce": "E-commerce",
+      "core": "Built-in"
+    },
+    "auth": {
+      "oauth2": "Sign in with the provider",
+      "bot_token": "Bot token",
+      "api_key": "API key",
+      "none": "No account needed"
+    },
+    "card": {
+      "actions": "{count} actions",
+      "triggers": "{count} triggers",
+      "connect": "Connect",
+      "notConfigured": "Not configured on this server",
+      "builtIn": "Built in",
+      "adminOnly": "Only owners and admins can connect apps."
+    },
+    "connect": {
+      "title": "Connect {name}",
+      "secretLabel": "{label}",
+      "secretHelp": "Paste it here. Telzyra verifies it with {name} before saving.",
+      "shopLabel": "Shop domain",
+      "shopHelp": "For example: my-store.myshopify.com",
+      "submit": "Connect",
+      "cancel": "Cancel",
+      "redirecting": "Redirecting to {name}…",
+      "verifying": "Verifying…"
+    },
+    "connections": {
+      "empty": "No connections yet. Connect an app from the list.",
+      "account": "Account",
+      "status": "Status",
+      "lastChecked": "Last checked",
+      "never": "Never",
+      "usedBy": "Used by",
+      "notUsed": "Not used in workflows",
+      "test": "Test",
+      "reauthorize": "Reconnect",
+      "disconnect": "Disconnect",
+      "delete": "Delete",
+      "confirmDisconnect": "Disconnect {name}? Workflows using it will be paused.",
+      "confirmDelete": "Delete this connection permanently?",
+      "testOk": "Connection works ({ms} ms)",
+      "testFailed": "Test failed: {error}"
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "EXPIRED": "Needs reconnect",
+      "REVOKED": "Disconnected",
+      "ERROR": "Error"
+    },
+    "result": {
+      "connected": "Connected successfully.",
+      "error": "Connection failed: {reason}"
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "oauth.denied": "Access was not granted.",
+      "oauth.invalid_state": "The sign-in link expired or was already used. Please try again.",
+      "oauth.state_expired": "The sign-in link expired. Please try again.",
+      "oauth.session_mismatch": "You were signed in with a different account. Please try again.",
+      "oauth.exchange_failed": "The provider did not accept the sign-in. Please try again.",
+      "oauth.scopes_missing": "Some required permissions were not granted.",
+      "oauth.account_mismatch": "Please reconnect with the same account as before.",
+      "oauth.invalid_grant": "Access was revoked. Please reconnect.",
+      "oauth.invalid_request": "Invalid request.",
+      "connection.in_use": "This connection is used by workflows. Remove it from them first.",
+      "auth.forbidden": "You don't have permission to do this.",
+      "AUTH_REVOKED": "The credentials were rejected by the provider.",
+      "AUTH_EXPIRED": "Access expired. Please reconnect.",
+      "PERMISSION_DENIED": "The provider denied permission for this action.",
+      "NOT_FOUND": "Not found at the provider.",
+      "VALIDATION": "The provider rejected the input.",
+      "RATE_LIMITED": "The provider is rate limiting requests. Try again shortly.",
+      "PROVIDER_UNAVAILABLE": "The provider is temporarily unavailable.",
+      "TIMEOUT": "The provider did not respond in time.",
+      "CIRCUIT_OPEN": "Paused after repeated provider failures. Try again in a minute.",
+      "NOT_CONFIGURED": "This integration is not configured on the server yet.",
+      "BLOCKED_DESTINATION": "This address is not allowed.",
+      "UNKNOWN": "Unexpected error."
+    }
+  },
+  "workflows": {
+    "title": "Workflows",
+    "subtitle": "Automations that run on Telzyra when a trigger fires.",
+    "new": "New workflow",
+    "empty": "No workflows yet.",
+    "name": "Name",
+    "untitled": "Untitled workflow",
+    "status": {
+      "DRAFT": "Draft",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused"
+    },
+    "list": {
+      "steps": "{count} steps",
+      "open": "Open"
+    },
+    "builder": {
+      "trigger": "Trigger",
+      "when": "When this happens",
+      "app": "App",
+      "event": "Event",
+      "connection": "Connection",
+      "selectConnection": "Select a connection",
+      "noConnection": "No connection for this app yet — connect it on the Integrations page.",
+      "manual": "Manual start",
+      "steps": "Then do this",
+      "addStep": "Add step",
+      "removeStep": "Remove",
+      "stepId": "Step name",
+      "action": "Action",
+      "input": "Input",
+      "templatesHint": "Use data from earlier steps: {{trigger.text}}, {{steps.<step name>.<field>}}",
+      "json": "JSON value",
+      "required": "required",
+      "testStep": "Test step",
+      "save": "Save",
+      "saved": "Saved",
+      "activate": "Activate",
+      "pause": "Pause",
+      "run": "Run test",
+      "delete": "Delete",
+      "confirmDelete": "Delete this workflow?",
+      "pollingNote": "Checked every few minutes.",
+      "webhookNote": "Starts instantly when the app sends an event.",
+      "sampleData": "Sample trigger data (JSON)",
+      "back": "All workflows"
+    },
+    "runs": {
+      "title": "Runs",
+      "empty": "No runs yet.",
+      "source": {
+        "manual": "Manual",
+        "test": "Test",
+        "webhook": "Event",
+        "poll": "Polling"
+      },
+      "status": {
+        "QUEUED": "Queued",
+        "RUNNING": "Running",
+        "SUCCEEDED": "Succeeded",
+        "FAILED": "Failed"
+      },
+      "input": "Trigger data",
+      "output": "Output",
+      "error": "Error",
+      "skipped": "Skipped",
+      "duration": "{ms} ms"
+    },
+    "errors": {
+      "workflow.invalid": "The workflow has problems: {issues}",
+      "workflow.trigger_registration_failed": "The app did not accept the trigger registration.",
+      "invalidJson": "Invalid JSON in {field}."
+    }
   }
 }

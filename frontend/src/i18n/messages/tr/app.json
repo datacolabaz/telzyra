@@ -13,8 +13,183 @@
       "ADMIN": "Yönetici",
       "MEMBER": "Üye"
     },
-    "nextTitle": "Sırada ne var",
-    "nextBody": "Uygulamalarınızı (Telegram, Google Sheets, Slack, Notion ve daha fazlası) bağlamak, yayınlanacak bir sonraki özellik. Tüm bağlantıları bu panelden yönetebileceksiniz.",
-    "logout": "Çıkış yap"
+    "nextTitle": "Uygulamalarınızı bağlayın",
+    "nextBody": "Telegram, Google Sheets, Slack, Notion ve daha fazlasını bağlayın, ardından Telzyra'da çalışan iş akışları oluşturun.",
+    "logout": "Çıkış yap",
+    "nextCta": "Entegrasyonları aç"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "integrations": "Entegrasyonlar",
+    "workflows": "İş akışları"
+  },
+  "integrations": {
+    "title": "Entegrasyonlar",
+    "subtitle": "İş akışlarınızın kullandığı uygulamaları bağlayın. Kimlik bilgileri şifrelenir ve bir daha gösterilmez.",
+    "tabs": {
+      "marketplace": "Tüm uygulamalar",
+      "connections": "Bağlantılarım"
+    },
+    "search": "Uygulama ara",
+    "categories": {
+      "communication": "İletişim",
+      "productivity": "Verimlilik",
+      "crm": "CRM",
+      "payments": "Ödemeler",
+      "commerce": "E-ticaret",
+      "core": "Yerleşik"
+    },
+    "auth": {
+      "oauth2": "Sağlayıcı hesabıyla giriş",
+      "bot_token": "Bot jetonu",
+      "api_key": "API anahtarı",
+      "none": "Hesap gerekmez"
+    },
+    "card": {
+      "actions": "{count} eylem",
+      "triggers": "{count} tetikleyici",
+      "connect": "Bağla",
+      "notConfigured": "Bu sunucuda henüz yapılandırılmadı",
+      "builtIn": "Yerleşik",
+      "adminOnly": "Uygulamaları yalnızca sahipler ve yöneticiler bağlayabilir."
+    },
+    "connect": {
+      "title": "{name} bağlantısı",
+      "secretLabel": "{label}",
+      "secretHelp": "Buraya yapıştırın. Telzyra kaydetmeden önce {name} ile doğrular.",
+      "shopLabel": "Mağaza alan adı",
+      "shopHelp": "Örneğin: my-store.myshopify.com",
+      "submit": "Bağla",
+      "cancel": "İptal",
+      "redirecting": "{name} sayfasına yönlendiriliyor…",
+      "verifying": "Doğrulanıyor…"
+    },
+    "connections": {
+      "empty": "Henüz bağlantı yok. Listeden bir uygulama bağlayın.",
+      "account": "Hesap",
+      "status": "Durum",
+      "lastChecked": "Son kontrol",
+      "never": "Hiç",
+      "usedBy": "Kullanan",
+      "notUsed": "İş akışlarında kullanılmıyor",
+      "test": "Test et",
+      "reauthorize": "Yeniden bağla",
+      "disconnect": "Bağlantıyı kes",
+      "delete": "Sil",
+      "confirmDisconnect": "{name} bağlantısı kesilsin mi? Onu kullanan iş akışları duraklatılacak.",
+      "confirmDelete": "Bu bağlantı kalıcı olarak silinsin mi?",
+      "testOk": "Bağlantı çalışıyor ({ms} ms)",
+      "testFailed": "Test başarısız: {error}"
+    },
+    "status": {
+      "ACTIVE": "Etkin",
+      "EXPIRED": "Yeniden bağlanmalı",
+      "REVOKED": "Bağlantı kesildi",
+      "ERROR": "Hata"
+    },
+    "result": {
+      "connected": "Başarıyla bağlandı.",
+      "error": "Bağlantı kurulamadı: {reason}"
+    },
+    "errors": {
+      "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+      "oauth.denied": "Erişim izni verilmedi.",
+      "oauth.invalid_state": "Giriş bağlantısının süresi doldu veya zaten kullanıldı. Lütfen tekrar deneyin.",
+      "oauth.state_expired": "Giriş bağlantısının süresi doldu. Lütfen tekrar deneyin.",
+      "oauth.session_mismatch": "Farklı bir hesapla oturum açtınız. Lütfen tekrar deneyin.",
+      "oauth.exchange_failed": "Sağlayıcı girişi kabul etmedi. Lütfen tekrar deneyin.",
+      "oauth.scopes_missing": "Gerekli izinlerin bir kısmı verilmedi.",
+      "oauth.account_mismatch": "Lütfen önceki hesapla yeniden bağlanın.",
+      "oauth.invalid_grant": "Erişim iptal edildi. Lütfen yeniden bağlanın.",
+      "oauth.invalid_request": "Geçersiz istek.",
+      "connection.in_use": "Bu bağlantı iş akışlarında kullanılıyor. Önce oradan kaldırın.",
+      "auth.forbidden": "Bu işlem için yetkiniz yok.",
+      "AUTH_REVOKED": "Sağlayıcı kimlik bilgilerini reddetti.",
+      "AUTH_EXPIRED": "Erişim süresi doldu. Lütfen yeniden bağlanın.",
+      "PERMISSION_DENIED": "Sağlayıcı bu işleme izin vermedi.",
+      "NOT_FOUND": "Sağlayıcıda bulunamadı.",
+      "VALIDATION": "Sağlayıcı girilen verileri reddetti.",
+      "RATE_LIMITED": "Sağlayıcı istekleri sınırlıyor. Biraz sonra tekrar deneyin.",
+      "PROVIDER_UNAVAILABLE": "Sağlayıcı geçici olarak kullanılamıyor.",
+      "TIMEOUT": "Sağlayıcı zamanında yanıt vermedi.",
+      "CIRCUIT_OPEN": "Tekrarlanan sağlayıcı hataları nedeniyle duraklatıldı. Bir dakika sonra tekrar deneyin.",
+      "NOT_CONFIGURED": "Bu entegrasyon sunucuda henüz yapılandırılmadı.",
+      "BLOCKED_DESTINATION": "Bu adrese izin verilmiyor.",
+      "UNKNOWN": "Beklenmeyen hata."
+    }
+  },
+  "workflows": {
+    "title": "İş akışları",
+    "subtitle": "Bir tetikleyici çalıştığında Telzyra'da yürütülen otomasyonlar.",
+    "new": "Yeni iş akışı",
+    "empty": "Henüz iş akışı yok.",
+    "name": "Ad",
+    "untitled": "Adsız iş akışı",
+    "status": {
+      "DRAFT": "Taslak",
+      "ACTIVE": "Etkin",
+      "PAUSED": "Duraklatıldı"
+    },
+    "list": {
+      "steps": "{count} adım",
+      "open": "Aç"
+    },
+    "builder": {
+      "trigger": "Tetikleyici",
+      "when": "Bu olduğunda",
+      "app": "Uygulama",
+      "event": "Olay",
+      "connection": "Bağlantı",
+      "selectConnection": "Bağlantı seçin",
+      "noConnection": "Bu uygulama için henüz bağlantı yok — Entegrasyonlar sayfasından bağlayın.",
+      "manual": "Elle başlatma",
+      "steps": "Sonra şunu yap",
+      "addStep": "Adım ekle",
+      "removeStep": "Kaldır",
+      "stepId": "Adım adı",
+      "action": "Eylem",
+      "input": "Girdi",
+      "templatesHint": "Önceki adımların verilerini kullanın: {{trigger.text}}, {{steps.<adım adı>.<alan>}}",
+      "json": "JSON değeri",
+      "required": "zorunlu",
+      "testStep": "Adımı test et",
+      "save": "Kaydet",
+      "saved": "Kaydedildi",
+      "activate": "Etkinleştir",
+      "pause": "Duraklat",
+      "run": "Test çalıştırması",
+      "delete": "Sil",
+      "confirmDelete": "Bu iş akışı silinsin mi?",
+      "pollingNote": "Birkaç dakikada bir kontrol edilir.",
+      "webhookNote": "Uygulama bir olay gönderdiğinde hemen başlar.",
+      "sampleData": "Örnek tetikleyici verisi (JSON)",
+      "back": "Tüm iş akışları"
+    },
+    "runs": {
+      "title": "Çalıştırmalar",
+      "empty": "Henüz çalıştırma yok.",
+      "source": {
+        "manual": "Elle",
+        "test": "Test",
+        "webhook": "Olay",
+        "poll": "Yoklama"
+      },
+      "status": {
+        "QUEUED": "Sırada",
+        "RUNNING": "Çalışıyor",
+        "SUCCEEDED": "Başarılı",
+        "FAILED": "Başarısız"
+      },
+      "input": "Tetikleyici verisi",
+      "output": "Çıktı",
+      "error": "Hata",
+      "skipped": "Atlandı",
+      "duration": "{ms} ms"
+    },
+    "errors": {
+      "workflow.invalid": "İş akışında sorunlar var: {issues}",
+      "workflow.trigger_registration_failed": "Uygulama tetikleyici kaydını kabul etmedi.",
+      "invalidJson": "{field} alanında geçersiz JSON."
+    }
   }
 }
