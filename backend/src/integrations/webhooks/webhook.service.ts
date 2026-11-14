@@ -105,6 +105,29 @@ export class WebhookService {
     return { status: 200, body: { received: true, accepted, duplicates: items.length - accepted } };
   }
 
+  /**
+   * Shopify mandatory compliance webhooks (customers/data_request, customers/redact, shop/redact).
+   * Telzyra stores no Shopify customer records outside workflow run history; shop/redact removes
+   * the shop's connections and credentials (48 hours after uninstall, per Shopify).
+   */
+  async shopifyCompliance(raw: RawWebhookRequest): Promise<IngestResult> {
+    const def = getConnector("shopify");
+    if (!def?.webhook?.verify(raw)) return { status: 401, body: { code: "webhook.invalid_signature" } };
+    const topic = raw.headers["x-shopify-topic"] ?? "";
+    const shop = raw.headers["x-shopify-shop-domain"] ?? "";
+    if (topic === "shop/redact" && shop) {
+      const conns = await this.db.connection.findMany({ where: { provider: "shopify", externalAccountId: shop }, select: { id: true } });
+      const ids = conns.map((c) => c.id);
+      await this.db.$transaction([
+        this.db.credential.deleteMany({ where: { connectionId: { in: ids } } }),
+        this.db.webhookSubscription.deleteMany({ where: { connectionId: { in: ids } } }),
+        this.db.connection.updateMany({ where: { id: { in: ids } }, data: { status: "REVOKED", lastError: "Shop data redacted" } }),
+      ]);
+    }
+    logger.info({ topic, connectionsAffected: topic === "shop/redact" }, "shopify compliance webhook");
+    return { status: 200, body: { received: true } };
+  }
+
   async process(eventId: string) {
     const event = await this.db.webhookEvent.findUnique({ where: { id: eventId } });
     if (!event || event.status === "PROCESSED" || event.status === "DEAD") return;

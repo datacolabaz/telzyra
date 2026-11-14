@@ -109,10 +109,10 @@ export function webhooksRouter(s: Services, opts: { rateLimitMax?: number } = {}
       keyGenerator: (req) => `${req.params.provider ?? ""}:${ipKeyGenerator(req.ip ?? "unknown")}`,
     }),
   );
-  const receive = h(async (req, res) => {
+  const toRaw = (req: Request): RawWebhookRequest => {
     const headers: Record<string, string | undefined> = {};
     for (const [k, v] of Object.entries(req.headers)) headers[k.toLowerCase()] = Array.isArray(v) ? v.join(",") : v;
-    const raw: RawWebhookRequest = {
+    return {
       headers,
       rawBody: Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0),
       method: req.method,
@@ -120,6 +120,13 @@ export function webhooksRouter(s: Services, opts: { rateLimitMax?: number } = {}
       params: req.params as Record<string, string>,
       query: Object.fromEntries(Object.entries(req.query).filter(([, v]) => typeof v === "string")) as Record<string, string>,
     };
+  };
+  r.post("/shopify/compliance", h(async (req, res) => {
+    const result = await s.webhooks.shopifyCompliance(toRaw(req));
+    res.status(result.status).json(result.body);
+  }));
+  const receive = h(async (req, res) => {
+    const raw = toRaw(req);
     const result = await s.webhooks.ingest(String(req.params.provider), req.params.endpointToken ? String(req.params.endpointToken) : undefined, raw);
     res.status(result.status).json(result.body);
   });

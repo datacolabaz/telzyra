@@ -25,6 +25,8 @@ export interface HttpRequest {
   idempotencyKey?: string;
   retryNonIdempotent?: boolean;
   maxRetries?: number;
+  /** "manual" returns 3xx responses instead of following them (SSRF-guarded destinations). */
+  redirect?: "follow" | "manual";
 }
 
 export interface HttpResponse<T = unknown> {
@@ -114,7 +116,7 @@ export class HttpClient {
       const started = Date.now();
       let error: ConnectorError;
       try {
-        const res = await fetch(url, { method, headers, body: body as BodyInit | undefined, signal: AbortSignal.timeout(req.timeoutMs ?? 20_000) });
+        const res = await fetch(url, { method, headers, body: body as BodyInit | undefined, redirect: req.redirect ?? "follow", signal: AbortSignal.timeout(req.timeoutMs ?? 20_000) });
         const text = await res.text();
         const data = (text ? safeJson(text) : null) as T;
         const response: HttpResponse<T> = { status: res.status, headers: res.headers, data };

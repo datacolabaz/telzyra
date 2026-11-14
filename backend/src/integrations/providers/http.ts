@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ConnectorError, codeForStatus } from "../core/errors.js";
 import { assertPublicUrl } from "../core/ssrf.js";
 import type { ConnectorDefinition } from "../core/types.js";
 
@@ -15,6 +16,10 @@ export const httpRequest: ConnectorDefinition = {
   category: "core",
   auth: { type: "none" },
   rateLimit: { note: "Depends on the destination API; 429 with Retry-After is honoured." },
+  mapError: (res) =>
+    res.status >= 300 && res.status < 400
+      ? new ConnectorError("BLOCKED_DESTINATION", "Redirects are not followed", { provider: "http", status: res.status })
+      : new ConnectorError(codeForStatus(res.status), `HTTP ${res.status}`, { provider: "http", status: res.status }),
 
   async test() {
     return { accountName: "HTTP" };
@@ -44,6 +49,7 @@ export const httpRequest: ConnectorDefinition = {
           ...(i.body === undefined ? {} : typeof i.body === "string" ? { body: i.body } : { json: i.body }),
           timeoutMs: i.timeout_ms,
           maxRetries: i.method === "GET" ? 2 : 0,
+          redirect: "manual", // never follow: a redirect could point to an internal address (3xx fails the step)
         });
         return { status: res.status, content_type: res.headers.get("content-type"), body: res.data };
       },

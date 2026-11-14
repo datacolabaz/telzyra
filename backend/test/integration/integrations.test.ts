@@ -356,6 +356,20 @@ describe("app-level webhooks (Slack) and per-connection (Stripe)", () => {
   });
 });
 
+describe("Shopify compliance webhooks", () => {
+  it("verifies the HMAC and removes a redacted shop's credentials", async () => {
+    const { shopifyWebhookHmac } = await import("../../src/integrations/providers/shopify.js");
+    const conn = await seedOAuthConnection(h.services, owner, "shopify", { accountId: "demo.myshopify.com", expiresAt: null });
+    const body = JSON.stringify({ shop_id: 1, shop_domain: "demo.myshopify.com" });
+    const headers = { "Content-Type": "application/json", "X-Shopify-Topic": "shop/redact", "X-Shopify-Shop-Domain": "demo.myshopify.com" };
+    expect((await request(h.app).post("/webhooks/shopify/compliance").set({ ...headers, "X-Shopify-Hmac-Sha256": "bad" }).send(body)).status).toBe(401);
+    const ok = await request(h.app).post("/webhooks/shopify/compliance").set({ ...headers, "X-Shopify-Hmac-Sha256": shopifyWebhookHmac("test-shopify-secret", body) }).send(body);
+    expect(ok.status).toBe(200);
+    expect(await prisma.credential.count({ where: { connectionId: conn.id } })).toBe(0);
+    expect((await prisma.connection.findUniqueOrThrow({ where: { id: conn.id } })).status).toBe("REVOKED");
+  });
+});
+
 describe("polling triggers (Google Sheets new row)", () => {
   it("sets a baseline first, then starts one run per new row and saves the checkpoint", async () => {
     const sheets = await seedOAuthConnection(h.services, owner, "google-sheets");

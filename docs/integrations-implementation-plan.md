@@ -59,3 +59,21 @@ Vitest against real Postgres; provider APIs mocked with MSW. Categories: unit (c
 ## 6. Deployment considerations
 
 Additive migration only; new env vars per provider (all optional — a provider without credentials is shown as "not configured"); `PUBLIC_API_URL` for OAuth redirect URIs and webhook URLs. Production deploy and merge to `main` require explicit approval (see `docs/integrations-deployment.md`).
+
+## 7. Status (2026-11-14)
+
+Implemented on `feature/integrations`: modules 2–7, security review, tests, docs. See
+`integrations-architecture.md`, `provider-setup-guide.md`, `integrations-security.md`,
+`integrations-testing.md`, `integrations-deployment.md`.
+
+| Provider | Code | Tests | Live |
+|---|---|---|---|
+| Telegram | done | mocked, incl. end-to-end workflow | not tested against Telegram |
+| Google Sheets | done | mocked (OAuth, refresh, actions, polling) | needs Google OAuth app |
+| Slack | done | mocked (signature, challenge, routing) | needs Slack app |
+| Notion | done | mocked (signature) | needs Notion public integration |
+| Gmail | done | mocked (MIME, header injection) | needs Google app + CASA for read scope |
+| HubSpot | done | mocked (signature v3) | needs HubSpot app |
+| Stripe | done | mocked (endpoint, signature, DLQ/replay) | needs restricted test key |
+| Shopify | done | mocked (HMAC, compliance) | needs Shopify app + protected data access |
+| HTTP Request | done | mocked (SSRF, redirects) | n/a |

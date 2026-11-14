@@ -103,6 +103,16 @@ describe("SSRF guard", () => {
   });
 });
 
+describe("HTTP Request step", () => {
+  it("does not follow redirects (could lead to internal addresses)", async () => {
+    const { httpRequest } = await import("../../src/integrations/providers/http.js");
+    mockServer.use(http.get("https://1.1.1.1/redirect", () => new HttpResponse(null, { status: 302, headers: { Location: "http://169.254.169.254/latest/meta-data" } })));
+    const ctx = { credentials: {}, connection: { id: "none", workspaceId: "w", externalAccountId: null }, http: new HttpClient({ provider: "http", breakerKey: "http:t", mapError: httpRequest.mapError }), publicApiUrl: "" };
+    const input = httpRequest.actions.request!.input.parse({ url: "https://1.1.1.1/redirect" });
+    await expect(httpRequest.actions.request!.run(ctx as never, input)).rejects.toMatchObject({ code: "BLOCKED_DESTINATION" });
+  });
+});
+
 describe("templates", () => {
   const scope = { trigger: { chat: { id: 42 }, text: "hi", items: [{ n: 1 }] }, steps: { a: { range: "Sheet1!A2:B2" } } };
   it("keeps the type of a single-template value and interpolates text", () => {
