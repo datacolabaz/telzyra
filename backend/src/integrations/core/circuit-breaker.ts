@@ -29,6 +29,10 @@ export class CircuitBreaker {
     return s;
   }
 
+  reset() {
+    this.states.clear();
+  }
+
   /** Returns false when the circuit is open (caller must fail fast). */
   canRequest(key: string): boolean {
     const s = this.get(key);

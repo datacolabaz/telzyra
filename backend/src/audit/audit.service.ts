@@ -14,7 +14,11 @@ export type AuditAction =
   | "connection.revoked"
   | "connection.deleted"
   | "webhook.subscription.created"
-  | "webhook.event.replayed";
+  | "webhook.event.replayed"
+  | "workflow.created"
+  | "workflow.activated"
+  | "workflow.paused"
+  | "workflow.deleted";
 
 export interface AuditEntry {
   action: AuditAction;

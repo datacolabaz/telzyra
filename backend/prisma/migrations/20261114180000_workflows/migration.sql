@@ -5,6 +5,9 @@ CREATE TYPE "WorkflowStatus" AS ENUM ('DRAFT', 'ACTIVE', 'PAUSED');
 CREATE TYPE "ExecutionStatus" AS ENUM ('QUEUED', 'RUNNING', 'SUCCEEDED', 'FAILED');
 
 -- AlterTable
+ALTER TABLE "webhook_events" ADD COLUMN "accountId" TEXT;
+
+-- AlterTable
 ALTER TABLE "oauth_states" ADD COLUMN     "connectionId" UUID;
 
 -- CreateTable
@@ -31,6 +34,7 @@ CREATE TABLE "workflow_executions" (
     "workflowId" UUID NOT NULL,
     "status" "ExecutionStatus" NOT NULL DEFAULT 'QUEUED',
     "source" TEXT NOT NULL,
+    "triggerEventId" TEXT,
     "triggerData" JSONB NOT NULL,
     "steps" JSONB NOT NULL DEFAULT '[]',
     "error" TEXT,
@@ -64,6 +68,9 @@ CREATE INDEX "workflow_executions_workflowId_createdAt_idx" ON "workflow_executi
 
 -- CreateIndex
 CREATE INDEX "workflow_executions_workspaceId_createdAt_idx" ON "workflow_executions"("workspaceId", "createdAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "workflow_executions_workflowId_triggerEventId_key" ON "workflow_executions"("workflowId", "triggerEventId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "trigger_states_workflowId_key" ON "trigger_states"("workflowId");

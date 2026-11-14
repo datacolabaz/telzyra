@@ -2,10 +2,20 @@ import { createHash } from "node:crypto";
 import type { Server } from "node:http";
 import { env } from "./config/env.js";
 import { logger } from "./lib/logger.js";
-import { prisma } from "./db/client.js";
+import { cipher, prisma } from "./db/client.js";
 import { createApp } from "./app.js";
+import { createServices, jobHandlers } from "./container.js";
+import { PgBossQueue } from "./queue/queue.js";
 
-const app = createApp({ db: prisma });
+const queue = new PgBossQueue(env.DATABASE_URL);
+const services = createServices(prisma, cipher, queue);
+const app = createApp({ db: prisma, services });
+
+// Queue workers (webhook processing, workflow execution, polling). RUN_WORKERS=false keeps
+// this instance API-only, e.g. when a separate worker service is added later.
+queue
+  .start(jobHandlers(services), env.RUN_WORKERS)
+  .catch((err) => logger.error({ err: err instanceof Error ? err.message : "unknown" }, "queue failed to start"));
 
 // Non-reversible key fingerprint: lets operators confirm the credentials key is stable across deploys.
 const keyFingerprint = createHash("sha256").update(env.CREDENTIALS_KEY).digest("hex").slice(0, 12);
@@ -33,6 +43,7 @@ let current = start(env.HOST);
 async function shutdown(signal: string) {
   logger.info({ signal }, "shutting down");
   current.close(async () => {
+    await queue.stop().catch(() => undefined);
     await prisma.$disconnect();
     process.exit(0);
   });

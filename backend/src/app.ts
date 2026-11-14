@@ -12,17 +12,29 @@ import { SessionService } from "./auth/session.service.js";
 import { loadSession, originGuard } from "./auth/middleware.js";
 import { authRouter } from "./auth/auth.routes.js";
 import { PLANS } from "./plans.js";
+import { createServices, type Services } from "./container.js";
+import { cipher as defaultCipher } from "./db/client.js";
+import { InlineQueue } from "./queue/queue.js";
+import { integrationsRouter, webhooksRouter } from "./integrations/integrations.routes.js";
 
 export interface AppDeps {
   db: Db;
   /** Lower limits in tests. */
   rateLimitMax?: number;
+  /** Integration services (queue-backed in production; tests pass their own). */
+  services?: Services;
 }
 
-export function createApp({ db, rateLimitMax }: AppDeps) {
+/** Never log query strings (OAuth code/state) or webhook endpoint tokens. */
+export function safeLogUrl(url: string | undefined) {
+  return (url ?? "").split("?")[0]!.replace(/^\/webhooks\/([^/]+)\/[^/]+/, "/webhooks/$1/[token]");
+}
+
+export function createApp({ db, rateLimitMax, services }: AppDeps) {
   const app = express();
   const sessions = new SessionService(db);
   const audit = new AuditService(db);
+  const s = services ?? createServices(db, defaultCipher, new InlineQueue());
 
   app.disable("x-powered-by");
   app.set("trust proxy", env.TRUST_PROXY);
@@ -33,6 +45,7 @@ export function createApp({ db, rateLimitMax }: AppDeps) {
       logger,
       // Never log bodies; headers are redacted by the logger's redact list.
       autoLogging: { ignore: (req) => req.url === "/health" },
+      serializers: { req: (req: { id?: unknown; method?: string; url?: string }) => ({ id: req.id, method: req.method, url: safeLogUrl(req.url) }) },
       customLogLevel: (_req, res, err) => (err || res.statusCode >= 500 ? "error" : res.statusCode >= 400 ? "warn" : "info"),
     }),
   );
@@ -60,9 +73,11 @@ export function createApp({ db, rateLimitMax }: AppDeps) {
     res.set("Cache-Control", "public, max-age=300").json(PLANS);
   });
   v1.use("/auth", authRouter({ db, sessions, audit, rateLimitMax }));
+  v1.use(integrationsRouter(s));
 
   app.use("/v1", v1);
-  // Webhook receivers (raw body, signature verification) mount at /webhooks in a later module.
+  // Webhook receivers: raw body for signature verification, no session/CORS.
+  app.use("/webhooks", webhooksRouter(s));
 
   app.use((_req, res) => res.status(404).json({ code: "not_found" }));
 

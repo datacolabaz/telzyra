@@ -10,7 +10,8 @@
     "test": "vitest run",
     "db:migrate": "prisma migrate deploy",
     "db:check": "prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "notion:verification-token": "tsx scripts/notion-verification-token.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

@@ -28,7 +28,8 @@ function v4ToInt(ip: string): number {
 export function isBlockedAddress(ip: string): boolean {
   if (isIP(ip) === 4) {
     const n = v4ToInt(ip);
-    return BLOCKED_V4.some(([net, bits]) => (n & (~0 << (32 - bits)) >>> 0) === net);
+    // `>>> 0` keeps the masked value unsigned (bitwise & yields a signed 32-bit int).
+    return BLOCKED_V4.some(([net, bits]) => ((n & (~0 << (32 - bits))) >>> 0) === net);
   }
   const v6 = ip.toLowerCase();
   if (v6 === "::" || v6 === "::1") return true;

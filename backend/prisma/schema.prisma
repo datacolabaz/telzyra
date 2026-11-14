@@ -234,6 +234,8 @@ model WebhookEvent {
   workspaceId    String?            @db.Uuid
   connectionId   String?            @db.Uuid
   subscriptionId String?            @db.Uuid
+  /// Provider account (Slack team, HubSpot portal, Notion workspace) for app-level webhooks.
+  accountId      String?
   eventType      String?
   payload        Json
   status         WebhookEventStatus @default(RECEIVED)
@@ -294,7 +296,9 @@ model WorkflowExecution {
   workflowId  String          @db.Uuid
   status      ExecutionStatus @default(QUEUED)
   /// "manual" | "test" | "webhook" | "poll"
-  source      String
+  source         String
+  /// Provider event id that started this run; unique per workflow so an event never runs twice.
+  triggerEventId String?
   triggerData Json
   /// [{ stepId, connector, action, status, output?, error?, startedAt, durationMs }]
   steps       Json            @default("[]")
@@ -305,6 +309,7 @@ model WorkflowExecution {
 
   workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
 
+  @@unique([workflowId, triggerEventId])
   @@index([workflowId, createdAt])
   @@index([workspaceId, createdAt])
   @@map("workflow_executions")
