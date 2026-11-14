@@ -92,7 +92,7 @@ for _ in $(seq 1 60); do grep -q "PostgreSQL running" "$LOGS/db.log" 2>/dev/null
 grep -q "PostgreSQL running" "$LOGS/db.log" || die "PostgreSQL did not start (see $LOGS/db.log)"
 
 say "Database migrations + schema drift check"
-(cd backend && npx prisma migrate deploy 2>&1 | tail -3)
+(cd backend && npx prisma migrate deploy)
 (cd backend && npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code >/dev/null 2>&1 && echo "  ✓ schema matches migrations (no drift)") || die "Schema drift detected"
 
 say "Pre-flight check"
