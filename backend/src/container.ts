@@ -11,12 +11,14 @@ import { WebhookService } from "./integrations/webhooks/webhook.service.js";
 import { QUEUES, type Handlers, type JobQueue } from "./queue/queue.js";
 import { WorkflowEngine } from "./workflows/engine.js";
 import { TriggerPoller } from "./workflows/poller.js";
+import { RetentionService } from "./maintenance/retention.js";
+import type { PgCircuitBreaker } from "./integrations/core/shared-breaker.js";
 import { WorkflowService } from "./workflows/workflow.service.js";
 
 export type Services = ReturnType<typeof createServices>;
 
 /** Wires the integration services. One instance per process (and per test). */
-export function createServices(db: Db, cipher: CredentialCipher, queue: JobQueue, opts: { http?: ConstructorParameters<typeof ConnectorRuntime>[2] } = {}) {
+export function createServices(db: Db, cipher: CredentialCipher, queue: JobQueue, opts: { http?: ConstructorParameters<typeof ConnectorRuntime>[2]; breaker?: PgCircuitBreaker } = {}) {
   registerBuiltInConnectors();
   const audit = new AuditService(db);
   const credentials = new CredentialService(db, cipher);
@@ -27,7 +29,8 @@ export function createServices(db: Db, cipher: CredentialCipher, queue: JobQueue
   const workflows = new WorkflowService(db, cipher, runtime, engine, audit, env.PUBLIC_API_URL);
   const poller = new TriggerPoller(db, runtime, engine, queue);
   const webhooks = new WebhookService(db, cipher, queue, engine, audit);
-  return { db, audit, credentials, runtime, oauth, connections, engine, workflows, poller, webhooks, queue };
+  const retention = new RetentionService(db, { executionDays: env.EXECUTION_RETENTION_DAYS, webhookEventDays: env.WEBHOOK_EVENT_RETENTION_DAYS });
+  return { db, audit, credentials, runtime, oauth, connections, engine, workflows, poller, webhooks, retention, breaker: opts.breaker, queue };
 }
 
 /** Job handlers for the queue workers. */
@@ -40,6 +43,10 @@ export function jobHandlers(s: Services): Handlers {
     [QUEUES.executeDead]: (d) => s.engine.markDead(id(d, "executionId")),
     [QUEUES.pollTick]: async () => void (await s.poller.tick()),
     [QUEUES.poll]: (d) => s.poller.poll(id(d, "workflowId")),
-    [QUEUES.maintenance]: () => s.oauth.purgeExpired(),
+    [QUEUES.maintenance]: async () => {
+      await s.oauth.purgeExpired();
+      await s.retention.run();
+      await s.breaker?.prune();
+    },
   };
 }

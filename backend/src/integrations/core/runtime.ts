@@ -5,6 +5,7 @@ import { forWorkspace } from "../../tenancy/scoped-db.js";
 import type { CredentialService } from "../connections/credential.service.js";
 import { ConnectorError } from "./errors.js";
 import { HttpClient, type HttpClientOptions } from "./http.js";
+import { ssrfSafeFetch } from "./ssrf.js";
 import { getConnector } from "./registry.js";
 import type { ConnectorContext, ConnectorDefinition, Credentials } from "./types.js";
 
@@ -28,7 +29,7 @@ export class ConnectorRuntime {
     private readonly db: Db,
     private readonly credentials: CredentialService,
     /** Retry timing overrides (tests use near-zero delays). */
-    private readonly httpOptions: Pick<HttpClientOptions, "baseDelayMs" | "maxDelayMs" | "sleep"> = {},
+    private readonly httpOptions: Pick<HttpClientOptions, "baseDelayMs" | "maxDelayMs" | "sleep" | "fetchImpl"> = {},
   ) {}
 
   connector(id: string): ConnectorDefinition {
@@ -38,7 +39,7 @@ export class ConnectorRuntime {
   }
 
   async context(workspaceId: string, def: ConnectorDefinition, connectionId: string | null | undefined, opts: { idempotencyKey?: string; forceRefresh?: boolean } = {}): Promise<ConnectorContext> {
-    const http = (key: string) => new HttpClient({ ...this.httpOptions, provider: def.id, breakerKey: key, mapError: def.mapError, isErrorBody: def.isErrorBody });
+    const http = (key: string) => new HttpClient({ ...this.httpOptions, provider: def.id, breakerKey: key, mapError: def.mapError, isErrorBody: def.isErrorBody, ...(def.userSuppliedDestinations ? { fetchImpl: ssrfSafeFetch } : {}) });
     if (def.auth.type === "none") {
       return { credentials: {}, connection: { id: "none", workspaceId, externalAccountId: null }, http: http(`${def.id}:${workspaceId}`), idempotencyKey: opts.idempotencyKey, publicApiUrl: env.PUBLIC_API_URL };
     }

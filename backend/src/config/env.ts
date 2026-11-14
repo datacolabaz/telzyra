@@ -65,6 +65,10 @@ const schema = z.object({
   /** Default minutes between polls for polling triggers. */
   POLL_INTERVAL_MINUTES: z.coerce.number().int().min(1).max(60).default(5),
 
+  /** Retention (days) for workflow run history and raw webhook payloads. 0 = keep forever. Audit logs are never purged. */
+  EXECUTION_RETENTION_DAYS: z.coerce.number().int().min(0).max(3650).default(30),
+  WEBHOOK_EVENT_RETENTION_DAYS: z.coerce.number().int().min(0).max(3650).default(30),
+
   SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
   /** Number of reverse proxies in front of the app (Railway edge = 1). */
   TRUST_PROXY: z.coerce.number().int().min(0).default(1),

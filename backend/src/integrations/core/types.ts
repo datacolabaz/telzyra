@@ -120,6 +120,8 @@ export interface WebhookSpec {
 }
 
 export interface ConnectorDefinition {
+  /** Destinations are user-supplied: use the SSRF-safe transport (connect-time DNS check, no proxy). */
+  userSuppliedDestinations?: boolean;
   id: string;
   name: string;
   description: string;

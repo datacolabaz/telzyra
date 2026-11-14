@@ -6,9 +6,14 @@ import { cipher, prisma } from "./db/client.js";
 import { createApp } from "./app.js";
 import { createServices, jobHandlers } from "./container.js";
 import { PgBossQueue } from "./queue/queue.js";
+import { setDefaultBreaker } from "./integrations/core/http.js";
+import { PgCircuitBreaker } from "./integrations/core/shared-breaker.js";
 
+// Circuit-breaker state is shared by all instances through Postgres.
+const breaker = new PgCircuitBreaker(prisma);
+setDefaultBreaker(breaker);
 const queue = new PgBossQueue(env.DATABASE_URL);
-const services = createServices(prisma, cipher, queue);
+const services = createServices(prisma, cipher, queue, { breaker });
 const app = createApp({ db: prisma, services });
 
 // Queue workers (webhook processing, workflow execution, polling). RUN_WORKERS=false keeps

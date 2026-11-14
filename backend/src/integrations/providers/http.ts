@@ -5,7 +5,8 @@ import type { ConnectorDefinition } from "../core/types.js";
 
 /**
  * Core "HTTP Request" step: calls any public REST API. The destination is checked by the SSRF
- * guard (public addresses, http/https, ports 80/443 only); redirects are not followed.
+ * guard twice: before the request (assertPublicUrl) and at connect time (ssrfSafeFetch: the socket may
+ * only open to addresses that passed the check — DNS rebinding safe). No proxy, no redirects.
  */
 const HEADER_DENY = /^(host|content-length|connection|transfer-encoding|cookie|x-forwarded-.*)$/i;
 
@@ -15,6 +16,7 @@ export const httpRequest: ConnectorDefinition = {
   description: "Call any public REST API.",
   category: "core",
   auth: { type: "none" },
+  userSuppliedDestinations: true,
   rateLimit: { note: "Depends on the destination API; 429 with Retry-After is honoured." },
   mapError: (res) =>
     res.status >= 300 && res.status < 400

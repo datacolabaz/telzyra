@@ -46,7 +46,7 @@ export class PgBossQueue implements JobQueue {
       });
     }
     await this.boss.schedule(QUEUES.pollTick, "* * * * *");
-    await this.boss.schedule(QUEUES.maintenance, "17 3 * * *");
+    await this.boss.schedule(QUEUES.maintenance, "17 * * * *"); // hourly: retention batches stay small
     logger.info("queue workers started");
   }
 

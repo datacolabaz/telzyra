@@ -5,13 +5,21 @@
  *  half-open  → after `openMs`, one probe request is allowed; success closes, failure re-opens
  * Only provider-side failures (5xx, timeouts, network) count; 4xx caller errors do not.
  */
+/** Breaker contract shared by the in-memory and the Postgres-backed (multi-instance) implementation. */
+export interface Breaker {
+  canRequest(key: string): boolean | Promise<boolean>;
+  success(key: string): void | Promise<void>;
+  failure(key: string): void | Promise<void>;
+}
+
 interface State {
   failures: number;
   openedAt: number | null;
   probing: boolean;
 }
 
-export class CircuitBreaker {
+/** Per-process breaker: used in tests and as the fallback when the shared store is unavailable. */
+export class CircuitBreaker implements Breaker {
   private readonly states = new Map<string, State>();
 
   constructor(

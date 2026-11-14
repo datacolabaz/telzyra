@@ -1,0 +1,52 @@
+name: backend-ci
+
+on:
+  push:
+    branches: ["main", "feature/**"]
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  migrations-and-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: telzyra
+          POSTGRES_PASSWORD: telzyra
+          POSTGRES_DB: telzyra_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U telzyra" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      # Throwaway CI-only values; no real secrets are used in CI.
+      DATABASE_URL: postgresql://telzyra:telzyra@localhost:5432/telzyra_ci
+      TEST_DATABASE_URL: postgresql://telzyra:telzyra@localhost:5432/telzyra_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - name: Create test databases
+        run: |
+          PGPASSWORD=telzyra psql -h localhost -U telzyra -d telzyra_ci -c "CREATE DATABASE telzyra_test" -c "CREATE DATABASE telzyra_check"
+      - name: Apply migrations (same command as the Railway pre-deploy step)
+        run: npx prisma migrate deploy
+      - name: Schema drift check (migrations vs schema.prisma)
+        run: npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
+      - name: Migration safety on production-like data (baseline = production state)
+        run: node scripts/check-migration-safety.mjs postgresql://telzyra:telzyra@localhost:5432/telzyra_check 20261112200000_init
+      - run: npx tsc --noEmit
+      - run: npm test

@@ -13,6 +13,8 @@ import { cipher, prisma } from "../../src/db/client.js";
 import { createApp } from "../../src/app.js";
 import { createServices, jobHandlers } from "../../src/container.js";
 import { PgBossQueue } from "../../src/queue/queue.js";
+import { setDefaultBreaker } from "../../src/integrations/core/http.js";
+import { PgCircuitBreaker } from "../../src/integrations/core/shared-breaker.js";
 import { createFakeState, fakeProviderHandlers, pushTelegramMessage } from "./fake-providers.js";
 
 if (env.NODE_ENV !== "test" || !/e2e/.test(new URL(env.DATABASE_URL).pathname)) {
@@ -23,8 +25,10 @@ let state = createFakeState();
 const mock = setupServer(...fakeProviderHandlers(state));
 mock.listen({ onUnhandledRequest: "error" });
 
+const breaker = new PgCircuitBreaker(prisma);
+setDefaultBreaker(breaker);
 const queue = new PgBossQueue(env.DATABASE_URL);
-const services = createServices(prisma, cipher, queue);
+const services = createServices(prisma, cipher, queue, { breaker });
 await queue.start(jobHandlers(services), true);
 createApp({ db: prisma, services }).listen(env.PORT, "127.0.0.1", () => logger.info({ port: env.PORT }, "e2e api listening"));
 

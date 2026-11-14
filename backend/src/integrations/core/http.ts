@@ -1,5 +1,5 @@
 import { logger } from "../../lib/logger.js";
-import { CircuitBreaker } from "./circuit-breaker.js";
+import { CircuitBreaker, type Breaker } from "./circuit-breaker.js";
 import { codeForStatus, ConnectorError, type ConnectorErrorCode } from "./errors.js";
 
 /**
@@ -39,7 +39,7 @@ export interface RequestMetric {
   provider: string;
   method: string;
   host: string;
-  status: number | "network_error" | "timeout" | "circuit_open";
+  status: number | "network_error" | "timeout" | "circuit_open" | "blocked";
   attempt: number;
   durationMs: number;
 }
@@ -56,9 +56,16 @@ export interface HttpClientOptions {
   onMetric?: (m: RequestMetric) => void;
   baseDelayMs?: number;
   maxDelayMs?: number;
+  /** Transport. User-supplied destinations use ssrfSafeFetch (validated connect-time DNS, no proxy). */
+  fetchImpl?: typeof fetch;
 }
 
+/** Default breaker; server.ts replaces it with the Postgres-backed shared breaker (setDefaultBreaker). */
 export const sharedBreaker = new CircuitBreaker();
+let defaultBreaker: Breaker = sharedBreaker;
+export function setDefaultBreaker(b: Breaker) {
+  defaultBreaker = b;
+}
 export const metrics: RequestMetric[] = [];
 const MAX_METRICS = 1000;
 function recordMetric(m: RequestMetric) {
@@ -80,7 +87,7 @@ export class HttpClient {
   private readonly sleep: (ms: number) => Promise<void>;
   constructor(
     private readonly opts: HttpClientOptions,
-    private readonly breaker: CircuitBreaker = sharedBreaker,
+    private readonly breaker: Breaker = defaultBreaker,
   ) {
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
   }
@@ -109,14 +116,14 @@ export class HttpClient {
     const cap = this.opts.maxDelayMs ?? 30_000;
 
     for (let attempt = 1; ; attempt++) {
-      if (!this.breaker.canRequest(this.opts.breakerKey)) {
+      if (!(await this.breaker.canRequest(this.opts.breakerKey))) {
         this.metric(method, url, "circuit_open", attempt, 0);
         throw new ConnectorError("CIRCUIT_OPEN", "Provider temporarily paused after repeated failures", { provider: this.opts.provider });
       }
       const started = Date.now();
       let error: ConnectorError;
       try {
-        const res = await fetch(url, { method, headers, body: body as BodyInit | undefined, redirect: req.redirect ?? "follow", signal: AbortSignal.timeout(req.timeoutMs ?? 20_000) });
+        const res = await (this.opts.fetchImpl ?? fetch)(url, { method, headers, body: body as BodyInit | undefined, redirect: req.redirect ?? "follow", signal: AbortSignal.timeout(req.timeoutMs ?? 20_000) });
         const text = await res.text();
         const data = (text ? safeJson(text) : null) as T;
         const response: HttpResponse<T> = { status: res.status, headers: res.headers, data };
@@ -124,7 +131,7 @@ export class HttpClient {
 
         const bodyError = res.ok && this.opts.isErrorBody?.(data);
         if (res.ok && !bodyError) {
-          this.breaker.success(this.opts.breakerKey);
+          await this.breaker.success(this.opts.breakerKey);
           return response;
         }
         error =
@@ -134,12 +141,17 @@ export class HttpClient {
           const ra = parseRetryAfter(res.headers.get("retry-after"));
           if (ra !== undefined) error.details.retryAfterMs = ra;
         }
-        if (res.status >= 500) this.breaker.failure(this.opts.breakerKey);
-        else this.breaker.success(this.opts.breakerKey);
+        if (res.status >= 500) await this.breaker.failure(this.opts.breakerKey);
+        else await this.breaker.success(this.opts.breakerKey);
       } catch (err) {
+        if (err instanceof ConnectorError) {
+          // Raised by the transport itself (e.g. SSRF guard at connect time): never retried, not a provider failure.
+          this.metric(method, url, "blocked", attempt, Date.now() - started);
+          throw err;
+        }
         const timeout = err instanceof Error && (err.name === "TimeoutError" || err.name === "AbortError");
         this.metric(method, url, timeout ? "timeout" : "network_error", attempt, Date.now() - started);
-        this.breaker.failure(this.opts.breakerKey);
+        await this.breaker.failure(this.opts.breakerKey);
         const code: ConnectorErrorCode = timeout ? "TIMEOUT" : "PROVIDER_UNAVAILABLE";
         error = new ConnectorError(code, timeout ? "Request timed out" : "Network error", { provider: this.opts.provider });
       }
