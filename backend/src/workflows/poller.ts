@@ -1,4 +1,5 @@
 import type { Db } from "../db/client.js";
+import { env } from "../config/env.js";
 import { logger } from "../lib/logger.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { ConnectorError } from "../integrations/core/errors.js";
@@ -19,18 +20,26 @@ export class TriggerPoller {
     private readonly runtime: ConnectorRuntime,
     private readonly engine: WorkflowEngine,
     private readonly queue: JobQueue,
-    private readonly intervalMinutes = Number(process.env.POLL_INTERVAL_MINUTES ?? 5),
+    private readonly intervalMinutes = env.POLL_INTERVAL_MINUTES,
   ) {}
 
   async tick() {
-    const due = new Date(Date.now() - this.intervalMinutes * 60_000);
+    // Candidates: everything not polled in the last minute; each trigger's own interval is applied below.
+    const now = Date.now();
     const states = await this.db.triggerState.findMany({
-      where: { workflow: { status: "ACTIVE" }, OR: [{ lastPolledAt: null }, { lastPolledAt: { lt: due } }] },
-      select: { workflowId: true },
-      take: 500,
+      where: { workflow: { status: "ACTIVE" }, OR: [{ lastPolledAt: null }, { lastPolledAt: { lt: new Date(now - 55_000) } }] },
+      select: { workflowId: true, lastPolledAt: true, workflow: { select: { definition: true } } },
+      take: 1000,
     });
-    for (const s of states) await this.queue.send(QUEUES.poll, { workflowId: s.workflowId }, { singletonKey: s.workflowId });
-    return states.length;
+    let queued = 0;
+    for (const s of states) {
+      const def = s.workflow.definition as unknown as WorkflowDefinition;
+      const minutes = getConnector(def.trigger.connector)?.triggers[def.trigger.trigger]?.pollIntervalMinutes ?? this.intervalMinutes;
+      if (s.lastPolledAt && now - s.lastPolledAt.getTime() < minutes * 60_000 - 5_000) continue;
+      await this.queue.send(QUEUES.poll, { workflowId: s.workflowId }, { singletonKey: s.workflowId });
+      queued++;
+    }
+    return queued;
   }
 
   async poll(workflowId: string) {

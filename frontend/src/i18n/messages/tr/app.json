@@ -160,7 +160,7 @@
       "run": "Test çalıştırması",
       "delete": "Sil",
       "confirmDelete": "Bu iş akışı silinsin mi?",
-      "pollingNote": "Birkaç dakikada bir kontrol edilir.",
+      "pollingNote": "{minutes} dakikada bir kontrol edilir.",
       "webhookNote": "Uygulama bir olay gönderdiğinde hemen başlar.",
       "sampleData": "Örnek tetikleyici verisi (JSON)",
       "back": "Tüm iş akışları"
@@ -189,7 +189,8 @@
     "errors": {
       "workflow.invalid": "İş akışında sorunlar var: {issues}",
       "workflow.trigger_registration_failed": "Uygulama tetikleyici kaydını kabul etmedi.",
-      "invalidJson": "{field} alanında geçersiz JSON."
+      "invalidJson": "{field} alanında geçersiz JSON.",
+      "workflow.trigger_in_use": "Bu botun mesajlarını zaten başka bir etkin iş akışı kullanıyor. Önce onu duraklatın (yerel yoklama modunda bot başına bir tane)."
     }
   }
 }

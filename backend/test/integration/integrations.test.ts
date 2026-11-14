@@ -409,6 +409,46 @@ describe("polling triggers (Google Sheets new row)", () => {
   });
 });
 
+describe("Telegram polling delivery (local development without a public URL)", () => {
+  it("chooses polling for localhost and webhook for public HTTPS", async () => {
+    const { telegramTriggerMode } = await import("../../src/integrations/providers/telegram.js");
+    expect(telegramTriggerMode({ TELEGRAM_TRIGGER_MODE: "auto", PUBLIC_API_URL: "http://localhost:4000" })).toBe("polling");
+    expect(telegramTriggerMode({ TELEGRAM_TRIGGER_MODE: "auto", PUBLIC_API_URL: "https://api.telzyra.com" })).toBe("webhook");
+    expect(telegramTriggerMode({ TELEGRAM_TRIGGER_MODE: "polling", PUBLIC_API_URL: "https://api.telzyra.com" })).toBe("polling");
+  });
+
+  it("removes a leftover webhook, ignores stale updates on the first poll and advances the offset", async () => {
+    const { telegram } = await import("../../src/integrations/providers/telegram.js");
+    const conn = await connectTelegram();
+    const now = Math.floor(Date.now() / 1000);
+    let webhookSet = true;
+    const offsets: unknown[] = [];
+    mockServer.use(
+      http.post(`${TG}/deleteWebhook`, () => {
+        webhookSet = false;
+        return HttpResponse.json({ ok: true, result: true });
+      }),
+      http.post(`${TG}/getUpdates`, async ({ request }) => {
+        if (webhookSet) return HttpResponse.json({ ok: false, error_code: 409, description: "Conflict: can't use getUpdates method while webhook is active" }, { status: 409 });
+        const body = (await request.json()) as { offset?: number };
+        offsets.push(body.offset);
+        const all = [
+          { update_id: 10, message: { message_id: 1, date: now - 3600, text: "old", chat: { id: 5, type: "private" } } },
+          { update_id: 11, message: { message_id: 2, date: now - 5, text: "fresh", chat: { id: 5, type: "private" }, from: { id: 5, is_bot: false, username: "u" } } },
+        ];
+        return HttpResponse.json({ ok: true, result: all.filter((u) => body.offset === undefined || u.update_id >= body.offset) });
+      }),
+    );
+    const ctx = await h.services.runtime.context(owner.workspaceId, telegram, conn.id);
+    const first = await telegram.triggers.new_message!.poll!(ctx, {}, undefined);
+    expect(first.events.map((e) => (e.data as { text: string }).text)).toEqual(["fresh"]);
+    expect(first.cursor).toEqual({ offset: 12 });
+    const second = await telegram.triggers.new_message!.poll!(ctx, {}, first.cursor);
+    expect(second.events).toEqual([]);
+    expect(offsets).toEqual([undefined, 12]);
+  });
+});
+
 describe("workflow validation", () => {
   it("rejects unknown actions, bad trigger config and foreign connections", async () => {
     const other = await signUp(h.app, "other");

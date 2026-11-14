@@ -61,15 +61,30 @@ interface Props {
   messages: Messages["app"];
   dateLocale: string;
   integrationsHref: string;
+  /** Workflow to open from the URL (?id=…), so a reload keeps the builder open. */
+  initialOpenId?: string;
 }
 
-export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integrationsHref }: Props) {
+export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integrationsHref, initialOpenId }: Props) {
   const t = useMemo(() => createTranslator(messages, "app"), [messages]);
   const api = useMemo(() => createApi(apiUrl, csrfToken), [apiUrl, csrfToken]);
   const [connectors, setConnectors] = useState<ConnectorInfo[]>([]);
   const [connections, setConnections] = useState<ConnectionInfo[]>([]);
   const [list, setList] = useState<WorkflowSummary[] | null>(null);
-  const [openId, setOpenId] = useState<string | "new" | null>(null);
+  const [openId, setOpenId] = useState<string | "new" | null>(initialOpenId ?? null);
+  // Remount the builder only when the user opens a workflow, not when a new one gets its id on first save.
+  const [openKey, setOpenKey] = useState(0);
+  const syncUrl = (id: string | null) => {
+    const u = new URL(window.location.href);
+    if (id) u.searchParams.set("id", id);
+    else u.searchParams.delete("id");
+    window.history.replaceState(null, "", u);
+  };
+  const open = (id: string | "new") => {
+    setOpenId(id);
+    setOpenKey((k) => k + 1);
+    syncUrl(id === "new" ? null : id);
+  };
   const [error, setError] = useState<string | null>(null);
 
   const errorText = useCallback(
@@ -111,7 +126,7 @@ export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integra
   if (openId) {
     return (
       <Builder
-        key={openId}
+        key={openKey}
         id={openId === "new" ? null : openId}
         api={api}
         t={t}
@@ -122,9 +137,13 @@ export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integra
         errorText={errorText}
         onBack={() => {
           setOpenId(null);
+          syncUrl(null);
           void load();
         }}
-        onCreated={(id) => setOpenId(id)}
+        onCreated={(id) => {
+          setOpenId(id);
+          syncUrl(id);
+        }}
       />
     );
   }
@@ -133,7 +152,7 @@ export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integra
   return (
     <div>
       <div className="mb-6 flex justify-end">
-        <button type="button" className={buttonClass("primary")} onClick={() => setOpenId("new")}>
+        <button type="button" className={buttonClass("primary")} onClick={() => open("new")}>
           <Plus className="size-4" aria-hidden />
           {t("workflows.new")}
         </button>
@@ -148,7 +167,7 @@ export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integra
       ) : (
         <div className="space-y-3">
           {list.map((w) => (
-            <button key={w.id} type="button" onClick={() => setOpenId(w.id)} className="block w-full text-left">
+            <button key={w.id} type="button" onClick={() => open(w.id)} className="block w-full text-left">
               <Card className="!p-5 transition-colors hover:border-ink-200">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
@@ -176,7 +195,7 @@ export function WorkflowsView({ apiUrl, csrfToken, messages, dateLocale, integra
 const emptyDefinition = (): Definition => ({ trigger: { ...MANUAL, connectionId: null, config: {} }, steps: [] });
 
 function Builder({
-  id,
+  id: initialId,
   api,
   t,
   connectors,
@@ -198,6 +217,7 @@ function Builder({
   onBack: () => void;
   onCreated: (id: string) => void;
 }) {
+  const [id, setId] = useState(initialId);
   const [name, setName] = useState("");
   const [status, setStatus] = useState<Workflow["status"]>("DRAFT");
   const [def, setDef] = useState<Definition>(emptyDefinition);
@@ -211,22 +231,23 @@ function Builder({
     if (id) setRuns(await api.get<Execution[]>(`/workflows/${id}/executions`));
   }, [api, id]);
 
+  // Load once for an existing workflow (a newly created one already has its state in memory).
   useEffect(() => {
-    if (!id) return;
+    if (!initialId) return;
     void (async () => {
       try {
-        const w = await api.get<Workflow>(`/workflows/${id}`);
+        const w = await api.get<Workflow>(`/workflows/${initialId}`);
         setName(w.name);
         setStatus(w.status);
         setDef(w.definition);
-        await loadRuns();
+        setRuns(await api.get<Execution[]>(`/workflows/${initialId}/executions`));
       } catch (err) {
         setMessage({ tone: "warn", text: errorText(err) });
       } finally {
         setLoading(false);
       }
     })();
-  }, [api, id, loadRuns, errorText]);
+  }, [api, initialId, errorText]);
 
   const withBusy = async (key: string, fn: () => Promise<void>) => {
     setBusy(key);
@@ -248,6 +269,8 @@ function Builder({
         setStatus(w.status);
       } else {
         const w = await api.send<Workflow>("POST", "/workflows", body);
+        setId(w.id);
+        setStatus(w.status);
         onCreated(w.id);
       }
       setMessage({ tone: "go", text: t("workflows.builder.saved") });
@@ -259,6 +282,11 @@ function Builder({
 
   if (loading) return <Loader2 className="size-4 animate-spin text-ink-400" aria-label="…" />;
 
+  /** Pre-selects the connection when the app has exactly one. */
+  const onlyConnection = (provider: string) => {
+    const list = connections.filter((c) => c.provider === provider);
+    return list.length === 1 ? list[0]!.id : null;
+  };
   const setTrigger = (patch: Partial<Definition["trigger"]>) => setDef((d) => ({ ...d, trigger: { ...d.trigger, ...patch } }));
   const setStep = (i: number, patch: Partial<Step>) => setDef((d) => ({ ...d, steps: d.steps.map((s, j) => (j === i ? { ...s, ...patch } : s)) }));
 
@@ -321,10 +349,10 @@ function Builder({
       <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
         <div className="space-y-4">
           {/* Trigger */}
-          <Card>
+          <Card testId="trigger-card">
             <p className="text-xs font-semibold uppercase tracking-wide text-ink-400">{t("workflows.builder.when")}</p>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              <Select label={t("workflows.builder.app")} value={def.trigger.connector} onChange={(v) => setTrigger(v === "manual" ? { ...MANUAL, connectionId: null, config: {} } : { connector: v, trigger: connectors.find((c) => c.id === v)!.triggers[0]!.key, connectionId: null, config: {} })} options={[{ value: "manual", label: t("workflows.builder.manual") }, ...appsWithTriggers.map((c) => ({ value: c.id, label: c.name }))]} />
+              <Select label={t("workflows.builder.app")} value={def.trigger.connector} onChange={(v) => setTrigger(v === "manual" ? { ...MANUAL, connectionId: null, config: {} } : { connector: v, trigger: connectors.find((c) => c.id === v)!.triggers[0]!.key, connectionId: onlyConnection(v), config: {} })} options={[{ value: "manual", label: t("workflows.builder.manual") }, ...appsWithTriggers.map((c) => ({ value: c.id, label: c.name }))]} />
               {triggerConnector && (
                 <Select label={t("workflows.builder.event")} value={def.trigger.trigger} onChange={(v) => setTrigger({ trigger: v, config: {} })} options={triggerConnector.triggers.map((tr) => ({ value: tr.key, label: tr.name }))} />
               )}
@@ -333,7 +361,7 @@ function Builder({
               <>
                 <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-500">
                   {trigger.mode === "webhook" ? <Webhook className="size-3.5" aria-hidden /> : <Clock className="size-3.5" aria-hidden />}
-                  {trigger.description} {trigger.mode === "webhook" ? t("workflows.builder.webhookNote") : t("workflows.builder.pollingNote")}
+                  {trigger.description} {trigger.mode === "webhook" ? t("workflows.builder.webhookNote") : t("workflows.builder.pollingNote", { minutes: trigger.pollIntervalMinutes ?? 5 })}
                 </p>
                 <ConnectionSelect t={t} provider={def.trigger.connector} connections={connections} value={def.trigger.connectionId ?? ""} onChange={(v) => setTrigger({ connectionId: v || null })} integrationsHref={integrationsHref} />
                 <SchemaFields t={t} schema={trigger.configSchema} value={def.trigger.config} onChange={(config) => setTrigger({ config })} />
@@ -347,7 +375,7 @@ function Builder({
             const action = connector?.actions.find((a) => a.key === step.action);
             const test = stepTests[i];
             return (
-              <Card key={i}>
+              <Card key={i} testId={`step-card-${i}`}>
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-ink-400">
                     {i + 1}. {t("workflows.builder.steps")}
@@ -358,7 +386,7 @@ function Builder({
                 </div>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   <TextField label={t("workflows.builder.stepId")} value={step.id} onChange={(v) => setStep(i, { id: v.toLowerCase().replace(/[^a-z0-9_]/g, "_").slice(0, 40) })} mono />
-                  <Select label={t("workflows.builder.app")} value={step.connector} onChange={(v) => setStep(i, { connector: v, action: connectors.find((c) => c.id === v)!.actions[0]!.key, connectionId: null, input: {} })} options={connectors.filter((c) => c.actions.length).map((c) => ({ value: c.id, label: c.name }))} />
+                  <Select label={t("workflows.builder.app")} value={step.connector} onChange={(v) => setStep(i, { connector: v, action: connectors.find((c) => c.id === v)!.actions[0]!.key, connectionId: onlyConnection(v), input: {} })} options={connectors.filter((c) => c.actions.length).map((c) => ({ value: c.id, label: c.name }))} />
                   {connector && <Select label={t("workflows.builder.action")} value={step.action} onChange={(v) => setStep(i, { action: v, input: {} })} options={connector.actions.map((a) => ({ value: a.key, label: a.name }))} />}
                 </div>
                 {action && <p className="mt-2 text-xs text-ink-500">{action.description}</p>}
@@ -366,7 +394,9 @@ function Builder({
                 {action && <SchemaFields t={t} schema={action.inputSchema} value={step.input} onChange={(input) => setStep(i, { input })} />}
                 <div className="mt-4 flex items-center gap-3">
                   <button type="button" disabled={busy === `step-${i}`} className={buttonClass("secondary")} onClick={() => withBusy(`step-${i}`, async () => {
-                    const r = await api.send<{ ok: boolean; output?: unknown; error?: { code: string; message: string } }>("POST", "/workflows/test-step", { connector: step.connector, action: step.action, connectionId: step.connectionId, input: step.input });
+                    // Earlier steps' test outputs and the trigger's sample data fill {{…}} templates, as in a real run.
+                    const steps = Object.fromEntries(def.steps.slice(0, i).map((s, j) => [s.id, stepTests[j]?.ok ? stepTests[j]!.output : undefined]));
+                    const r = await api.send<{ ok: boolean; output?: unknown; error?: { code: string; message: string } }>("POST", "/workflows/test-step", { connector: step.connector, action: step.action, connectionId: step.connectionId, input: step.input, triggerData: trigger?.sample ?? {}, steps });
                     setStepTests((s) => ({ ...s, [i]: r }));
                   })}>
                     {busy === `step-${i}` ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <FlaskConical className="size-4" aria-hidden />}
@@ -385,7 +415,7 @@ function Builder({
             onClick={() => {
               const first = connectors.find((c) => c.actions.length > 0);
               if (!first) return;
-              setDef((d) => ({ ...d, steps: [...d.steps, { id: `step_${d.steps.length + 1}`, connector: first.id, action: first.actions[0]!.key, connectionId: null, input: {} }] }));
+              setDef((d) => ({ ...d, steps: [...d.steps, { id: `step_${d.steps.length + 1}`, connector: first.id, action: first.actions[0]!.key, connectionId: onlyConnection(first.id), input: {} }] }));
             }}
           >
             <Plus className="size-4" aria-hidden />
@@ -396,7 +426,7 @@ function Builder({
 
         {/* Runs */}
         <div>
-          <Card className="!p-5">
+          <Card className="!p-5" testId="runs-card">
             <h2 className="text-sm font-semibold text-ink-950">{t("workflows.runs.title")}</h2>
             {runs.length === 0 ? (
               <p className="mt-3 text-sm text-ink-500">{t("workflows.runs.empty")}</p>

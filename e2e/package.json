@@ -1,0 +1,15 @@
+{
+  "name": "telzyra-e2e",
+  "version": "1.0.0",
+  "description": "Browser end-to-end tests for Telzyra (Playwright)",
+  "scripts": {
+    "test": "./run-local-e2e.sh",
+    "test:headed": "./run-local-e2e.sh --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "pg": "^8.23.1"
+  },
+  "private": true,
+  "type": "module"
+}

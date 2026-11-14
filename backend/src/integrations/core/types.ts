@@ -73,6 +73,10 @@ export interface TriggerDefinition<C = any> {
   matches?(event: TriggerEvent, config: C): boolean;
   /** Polling mode: fetch new items since `cursor`. First call (cursor undefined) only sets a baseline. */
   poll?(ctx: ConnectorContext, config: C, cursor: unknown): Promise<PollResult>;
+  /** Polling mode: minimum minutes between polls (default POLL_INTERVAL_MINUTES). */
+  pollIntervalMinutes?: number;
+  /** Polling mode: only one active workflow per connection may consume this trigger (e.g. Telegram getUpdates). */
+  exclusivePerConnection?: boolean;
   /** Example output, shown in the builder so users can map fields before the first real event. */
   sample?: Record<string, unknown>;
 }

@@ -160,7 +160,7 @@
       "run": "Run test",
       "delete": "Delete",
       "confirmDelete": "Delete this workflow?",
-      "pollingNote": "Checked every few minutes.",
+      "pollingNote": "Checked every {minutes} min.",
       "webhookNote": "Starts instantly when the app sends an event.",
       "sampleData": "Sample trigger data (JSON)",
       "back": "All workflows"
@@ -189,7 +189,8 @@
     "errors": {
       "workflow.invalid": "The workflow has problems: {issues}",
       "workflow.trigger_registration_failed": "The app did not accept the trigger registration.",
-      "invalidJson": "Invalid JSON in {field}."
+      "invalidJson": "Invalid JSON in {field}.",
+      "workflow.trigger_in_use": "Another active workflow already uses this bot's messages. Pause it first (local polling mode allows one per bot)."
     }
   }
 }

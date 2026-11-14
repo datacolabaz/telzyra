@@ -92,9 +92,9 @@ export function Badge({ children, tone = "neutral" }: { children: ReactNode; ton
   );
 }
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Card({ children, className = "", testId }: { children: ReactNode; className?: string; testId?: string }) {
   return (
-    <div className={`rounded-[var(--radius-card)] border border-ink-100 bg-white p-6 shadow-[var(--shadow-card)] ${className}`}>
+    <div data-testid={testId} className={`rounded-[var(--radius-card)] border border-ink-100 bg-white p-6 shadow-[var(--shadow-card)] ${className}`}>
       {children}
     </div>
   );

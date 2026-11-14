@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ConnectorError } from "../core/errors.js";
 import type { ConnectorContext, ConnectorDefinition, TriggerEvent } from "../core/types.js";
 import { safeEqual } from "../../security/crypto.js";
+import { env } from "../../config/env.js";
 
 /**
  * Telegram Bot API — https://core.telegram.org/bots/api
@@ -38,6 +39,15 @@ interface TgMessage {
 
 const messageResult = (m: TgMessage) => ({ message_id: m.message_id, chat_id: m.chat.id, date: m.date });
 
+/** Webhooks need a public HTTPS URL; on localhost Telzyra polls getUpdates instead. */
+export function telegramTriggerMode(e: { TELEGRAM_TRIGGER_MODE: string; PUBLIC_API_URL: string } = env): "webhook" | "polling" {
+  if (e.TELEGRAM_TRIGGER_MODE === "webhook" || e.TELEGRAM_TRIGGER_MODE === "polling") return e.TELEGRAM_TRIGGER_MODE;
+  const u = new URL(e.PUBLIC_API_URL);
+  const local = ["localhost", "127.0.0.1", "[::1]"].includes(u.hostname) || u.hostname.endsWith(".local");
+  return u.protocol === "https:" && !local ? "webhook" : "polling";
+}
+const MODE = telegramTriggerMode();
+
 const UPDATE_TYPES = ["message", "edited_message", "channel_post", "edited_channel_post", "callback_query", "my_chat_member"] as const;
 
 function messageData(updateId: number, m: TgMessage) {
@@ -51,6 +61,45 @@ function messageData(updateId: number, m: TgMessage) {
       ? { id: m.from.id, is_bot: m.from.is_bot, username: m.from.username ?? null, first_name: m.from.first_name ?? null, last_name: m.from.last_name ?? null, language_code: m.from.language_code ?? null }
       : null,
   };
+}
+
+interface TgUpdate {
+  update_id: number;
+  [k: string]: unknown;
+}
+
+/**
+ * Polling delivery (getUpdates). The offset confirms updates at Telegram, so only one workflow per
+ * bot may consume them (enforced on activation). The first poll ignores updates older than 2 minutes.
+ */
+async function pollUpdates(ctx: ConnectorContext, cursor: unknown): Promise<{ updates: TgUpdate[]; cursor: { offset: number } }> {
+  const c = cursor as { offset?: number } | undefined;
+  const params = { offset: c?.offset, timeout: 0, limit: 100, allowed_updates: [...UPDATE_TYPES] };
+  let updates: TgUpdate[];
+  try {
+    updates = await call<TgUpdate[]>(ctx, "getUpdates", params);
+  } catch (err) {
+    // 409: a webhook is still registered for this bot; remove it and retry once.
+    if (err instanceof ConnectorError && err.details.status === 409) {
+      await call(ctx, "deleteWebhook", { drop_pending_updates: false });
+      updates = await call<TgUpdate[]>(ctx, "getUpdates", params);
+    } else throw err;
+  }
+  const last = updates.at(-1)?.update_id;
+  const next = { offset: last !== undefined ? last + 1 : (c?.offset ?? 0) };
+  if (c?.offset === undefined) {
+    const since = Math.floor(Date.now() / 1000) - 120;
+    updates = updates.filter((u) => {
+      const m = (u.message ?? u.edited_message ?? u.channel_post) as { date?: number } | undefined;
+      return m?.date !== undefined && m.date >= since;
+    });
+  }
+  return { updates, cursor: next };
+}
+
+function updateEvents(u: TgUpdate): TriggerEvent[] {
+  const type = Object.keys(u).find((k) => k !== "update_id") ?? "unknown";
+  return telegram.webhook!.toEvents(u, type);
 }
 
 export const telegram: ConnectorDefinition = {
@@ -138,7 +187,13 @@ export const telegram: ConnectorDefinition = {
       key: "new_message",
       name: "New incoming message",
       description: "Starts when someone sends a message to your bot.",
-      mode: "webhook",
+      mode: MODE,
+      pollIntervalMinutes: 1,
+      exclusivePerConnection: true,
+      async poll(ctx, _config, cursor) {
+        const r = await pollUpdates(ctx, cursor);
+        return { events: r.updates.flatMap(updateEvents).filter((e) => e.trigger === "new_message"), cursor: r.cursor };
+      },
       config: z.object({ chat_id: chatId.optional(), text_contains: z.string().max(200).optional() }),
       matches(event, config) {
         const d = event.data as ReturnType<typeof messageData>;
@@ -152,7 +207,13 @@ export const telegram: ConnectorDefinition = {
       key: "bot_update",
       name: "Bot update",
       description: "Starts on selected update types (edited messages, channel posts, button callbacks, membership changes).",
-      mode: "webhook",
+      mode: MODE,
+      pollIntervalMinutes: 1,
+      exclusivePerConnection: true,
+      async poll(ctx, _config, cursor) {
+        const r = await pollUpdates(ctx, cursor);
+        return { events: r.updates.flatMap(updateEvents).filter((e) => e.trigger === "bot_update"), cursor: r.cursor };
+      },
       config: z.object({ types: z.array(z.enum(UPDATE_TYPES)).min(1).default(["message"]) }),
       matches: (event, config) => config.types.includes((event.data as { type: (typeof UPDATE_TYPES)[number] }).type),
       sample: { type: "callback_query", update: { update_id: 2, callback_query: { id: "1", data: "yes" } } },

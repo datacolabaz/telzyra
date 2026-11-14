@@ -110,7 +110,7 @@ export function IntegrationsView({ apiUrl, csrfToken, canManage, messages, dateL
           {!canManage && <p className="mb-4 text-sm text-ink-500">{t("integrations.card.adminOnly")}</p>}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((c) => (
-              <Card key={c.id} className="flex flex-col">
+              <Card key={c.id} className="flex flex-col" testId={`connector-${c.id}`}>
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-sm font-semibold text-ink-950">{c.name}</h3>
                   <Badge tone="neutral">{t(`integrations.categories.${c.category}` as never)}</Badge>
@@ -142,7 +142,7 @@ export function IntegrationsView({ apiUrl, csrfToken, canManage, messages, dateL
       ) : (
         <div className="space-y-3">
           {connections?.map((c) => (
-            <Card key={c.id} className="!p-5">
+            <Card key={c.id} className="!p-5" testId={`connection-${c.provider}`}>
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">

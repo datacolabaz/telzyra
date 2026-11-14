@@ -13,6 +13,7 @@ import type { ConnectorRuntime } from "../integrations/core/runtime.js";
 import { getConnector } from "../integrations/core/registry.js";
 import { MANUAL_TRIGGER, triggerMode, validateDefinition, type WorkflowDefinition } from "./definition.js";
 import type { WorkflowEngine } from "./engine.js";
+import { resolveTemplates } from "./templates.js";
 
 export const subscriptionSecretAad = (subscriptionId: string) => `webhook-subscription:${subscriptionId}`;
 
@@ -94,6 +95,13 @@ export class WorkflowService {
   private async ensureTrigger(ctx: AuthContext, workflowId: string, def: WorkflowDefinition) {
     const mode = triggerMode(def);
     if (mode === "polling") {
+      const t = getConnector(def.trigger.connector)?.triggers[def.trigger.trigger];
+      if (t?.exclusivePerConnection && def.trigger.connectionId) {
+        const others = await this.db.workflow.count({
+          where: { workspaceId: ctx.workspaceId, id: { not: workflowId }, status: "ACTIVE", triggerConnectionId: def.trigger.connectionId, triggerConnector: def.trigger.connector },
+        });
+        if (others > 0) throw new AppError(409, "workflow.trigger_in_use");
+      }
       await this.db.triggerState.upsert({ where: { workflowId }, create: { workflowId }, update: {} });
       return;
     }
@@ -142,14 +150,20 @@ export class WorkflowService {
   }
 
   /** "Test node": runs one action with the given input, outside any workflow. */
-  async testStep(ctx: AuthContext, input: { connector?: unknown; action?: unknown; connectionId?: unknown; input?: unknown }, req?: Request) {
+  async testStep(ctx: AuthContext, input: { connector?: unknown; action?: unknown; connectionId?: unknown; input?: unknown; triggerData?: unknown; steps?: unknown }, req?: Request) {
     try {
+      // Templates are resolved like in a real run, using the given (sample) trigger data and step outputs.
+      const scope = {
+        trigger: input.triggerData && typeof input.triggerData === "object" ? input.triggerData : {},
+        steps: input.steps && typeof input.steps === "object" ? input.steps : {},
+        now: new Date().toISOString(),
+      };
       const output = await this.runtime.executeAction({
         workspaceId: ctx.workspaceId,
         connectorId: String(input.connector ?? ""),
         actionKey: String(input.action ?? ""),
         connectionId: input.connectionId ? String(input.connectionId) : null,
-        input: input.input ?? {},
+        input: resolveTemplates(input.input ?? {}, scope),
       });
       await this.audit.record({ action: "connection.tested", workspaceId: ctx.workspaceId, actorUserId: ctx.userId, metadata: { connector: input.connector, action: input.action, ok: true } }, req);
       return { ok: true, output };

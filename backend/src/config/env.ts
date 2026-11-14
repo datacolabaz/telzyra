@@ -57,6 +57,14 @@ const schema = z.object({
   SHOPIFY_CLIENT_SECRET: z.string().optional(),
   SHOPIFY_API_VERSION: z.string().default("2026-10"),
 
+  /**
+   * Telegram triggers: "webhook" (needs a public HTTPS PUBLIC_API_URL), "polling" (getUpdates; works
+   * on localhost) or "auto" = webhook when PUBLIC_API_URL is public HTTPS, otherwise polling.
+   */
+  TELEGRAM_TRIGGER_MODE: z.enum(["auto", "webhook", "polling"]).default("auto"),
+  /** Default minutes between polls for polling triggers. */
+  POLL_INTERVAL_MINUTES: z.coerce.number().int().min(1).max(60).default(5),
+
   SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
   /** Number of reverse proxies in front of the app (Railway edge = 1). */
   TRUST_PROXY: z.coerce.number().int().min(0).default(1),

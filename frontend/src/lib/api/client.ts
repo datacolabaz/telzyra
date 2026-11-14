@@ -61,7 +61,7 @@ export interface ConnectorInfo {
   configured: boolean;
   rateLimit: { note: string };
   actions: Array<{ key: string; name: string; description: string; inputSchema: JsonSchema }>;
-  triggers: Array<{ key: string; name: string; description: string; mode: "webhook" | "polling"; configSchema: JsonSchema; sample?: unknown }>;
+  triggers: Array<{ key: string; name: string; description: string; mode: "webhook" | "polling"; pollIntervalMinutes: number | null; configSchema: JsonSchema; sample?: unknown }>;
 }
 
 export interface ConnectionInfo {

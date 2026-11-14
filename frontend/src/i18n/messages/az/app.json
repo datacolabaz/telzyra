@@ -160,7 +160,7 @@
       "run": "Test icrası",
       "delete": "Sil",
       "confirmDelete": "Bu iş axını silinsin?",
-      "pollingNote": "Bir neçə dəqiqədən bir yoxlanılır.",
+      "pollingNote": "Hər {minutes} dəqiqədən bir yoxlanılır.",
       "webhookNote": "Tətbiq hadisə göndərən kimi dərhal başlayır.",
       "sampleData": "Nümunə trigger məlumatı (JSON)",
       "back": "Bütün iş axınları"
@@ -189,7 +189,8 @@
     "errors": {
       "workflow.invalid": "İş axınında problemlər var: {issues}",
       "workflow.trigger_registration_failed": "Tətbiq trigger qeydiyyatını qəbul etmədi.",
-      "invalidJson": "{field} sahəsində yanlış JSON."
+      "invalidJson": "{field} sahəsində yanlış JSON.",
+      "workflow.trigger_in_use": "Bu botun mesajlarından artıq başqa aktiv iş axını istifadə edir. Əvvəlcə onu dayandırın (lokal polling rejimində hər bot üçün biri mümkündür)."
     }
   }
 }

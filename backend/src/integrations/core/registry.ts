@@ -53,6 +53,7 @@ export function describeConnector(def: ConnectorDefinition) {
       name: t.name,
       description: t.description,
       mode: t.mode,
+      pollIntervalMinutes: t.mode === "polling" ? (t.pollIntervalMinutes ?? Number(process.env.POLL_INTERVAL_MINUTES ?? 5)) : null,
       configSchema: schemaOf(t.config),
       sample: t.sample ?? null,
     })),

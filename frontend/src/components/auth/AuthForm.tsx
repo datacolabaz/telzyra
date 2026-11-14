@@ -115,8 +115,9 @@ export function AuthForm({
     );
   };
 
+  // method="post": if the form is submitted before hydration, credentials must never end up in the URL.
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-4">
+    <form method="post" onSubmit={onSubmit} noValidate className="space-y-4">
       {formError && (
         <p role="alert" className="flex gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />

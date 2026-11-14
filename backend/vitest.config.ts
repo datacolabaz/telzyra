@@ -20,6 +20,7 @@ export default defineConfig({
       APP_URL: "http://localhost:3000",
       PUBLIC_API_URL: "https://api.test.telzyra.local",
       RUN_WORKERS: "false",
+      TELEGRAM_TRIGGER_MODE: "webhook",
       GOOGLE_CLIENT_ID: "test-google-client",
       GOOGLE_CLIENT_SECRET: "test-google-secret",
       SLACK_CLIENT_ID: "test-slack-client",
