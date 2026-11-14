@@ -20,7 +20,14 @@ die() { printf "\n\033[31m✗ %s\033[0m\n" "$1" >&2; exit 1; }
 
 command -v git >/dev/null || die "git is required"
 command -v node >/dev/null || die "Node.js 22+ is required (https://nodejs.org)"
-[ "$(node -p 'process.versions.node.split(".")[0]')" -ge 22 ] || die "Node.js 22+ is required (found $(node -v))"
+NODE_MAJOR=$(node -p 'process.versions.node.split(".")[0]')
+[ "$NODE_MAJOR" -ge 22 ] || die "Node.js 22+ is required (found $(node -v))"
+[ "$NODE_MAJOR" = 22 ] || [ "$NODE_MAJOR" = 24 ] || echo "  note: tested with Node 22/24, you have $(node -v) (usually fine)"
+FREE_GB=$(df -Pk "$HOME" | awk 'NR==2 {printf "%d", $4/1048576}')
+if [ "$FREE_GB" -lt 3 ]; then
+  die "Only ${FREE_GB} GB free on disk; at least 3 GB is needed (dependencies + database). Free some space and run again.
+  Biggest folders in your home:  du -sh ~/* ~/.[!.]* 2>/dev/null | sort -h | tail -15"
+fi
 for p in 3000 4000 54329; do
   if lsof -nP -iTCP:$p -sTCP:LISTEN >/dev/null 2>&1; then
     die "Port $p is in use. Stop the program using it (lsof -nP -iTCP:$p -sTCP:LISTEN) and run again."
@@ -45,25 +52,30 @@ say "Installing dependencies (first run takes a few minutes)"
 
 say "Configuring backend/.env"
 ENV=backend/.env
-if [ ! -f "$ENV" ]; then
-  umask 077
-  KEY=$(node -e "process.stdout.write(require('crypto').randomBytes(32).toString('hex'))")
-  cat > "$ENV" <<EOF
-NODE_ENV=development
-DATABASE_URL=postgresql://telzyra:telzyra@localhost:54329/telzyra_dev
-CREDENTIALS_KEY=$KEY
-CREDENTIALS_KEY_VERSION=1
-APP_URL=http://localhost:3000
-CORS_ORIGINS=http://localhost:3000
-COOKIE_DOMAIN=
-PUBLIC_API_URL=http://localhost:4000
-TELEGRAM_TRIGGER_MODE=polling
-LOG_LEVEL=info
-TRUST_PROXY=0
-EOF
-  unset KEY
-  echo "  created (new local encryption key generated)"
+umask 077
+touch "$ENV"
+# set_default KEY VALUE — only when KEY is missing or empty (existing values are kept)
+set_default() {
+  if ! grep -q "^$1=..*" "$ENV"; then
+    grep -v "^$1=" "$ENV" > "$ENV.tmp" || true
+    printf '%s=%s\n' "$1" "$2" >> "$ENV.tmp"
+    mv "$ENV.tmp" "$ENV"
+  fi
+}
+set_default NODE_ENV development
+set_default DATABASE_URL postgresql://telzyra:telzyra@localhost:54329/telzyra_dev
+if ! grep -q '^CREDENTIALS_KEY=[0-9a-f]\{64\}$' "$ENV"; then
+  set_default CREDENTIALS_KEY "$(node -e "process.stdout.write(require('crypto').randomBytes(32).toString('hex'))")"
+  echo "  new local encryption key generated"
 fi
+set_default CREDENTIALS_KEY_VERSION 1
+set_default APP_URL http://localhost:3000
+set_default CORS_ORIGINS http://localhost:3000
+set_default PUBLIC_API_URL http://localhost:4000
+set_default TELEGRAM_TRIGGER_MODE polling
+set_default LOG_LEVEL info
+set_default TRUST_PROXY 0
+grep -q '^COOKIE_DOMAIN=..*' "$ENV" && die "COOKIE_DOMAIN must be empty for localhost (edit backend/.env)"
 chmod 600 "$ENV"
 if ! grep -q '^GOOGLE_CLIENT_SECRET=..*' "$ENV"; then
   echo "  Google OAuth client (Google Cloud → Clients → your Web client)."
