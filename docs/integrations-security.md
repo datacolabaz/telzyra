@@ -28,15 +28,20 @@ webhook signatures, tenant isolation, audit logging.
 
 ## Residual risks / follow-ups
 
-1. **DNS rebinding (HTTP step):** the address is checked before `fetch`, which resolves again. A
-   pinned-IP agent (undici `connect.lookup`) would close the window. Medium.
-2. **Run history contains personal data** (trigger payloads, step outputs). Add a retention job
-   (e.g. delete executions older than 30/90 days per plan) and mention it in the privacy policy. Medium.
-3. **Webhook payloads** are stored unencrypted in `webhook_events.payload` (needed for replay). Same
-   retention job should purge processed events after N days. Medium.
+1. ~~DNS rebinding (HTTP step)~~ **Resolved:** the HTTP step uses a dedicated undici agent whose
+   connect-time `lookup` re-validates every address (the socket can only open to a checked address),
+   ignores HTTP(S)_PROXY, and redirects are not followed. IPv6 forms that embed IPv4 (mapped,
+   compatible, NAT64, 6to4, Teredo) are classified. Tests include a real rebinding attempt against a
+   local server (`test/unit/ssrf.test.ts`).
+2. ~~Run history retention~~ **Resolved:** `EXECUTION_RETENTION_DAYS` (default 30) deletes finished runs
+   hourly in batches. Mention the 30-day period in the privacy policy.
+3. ~~Webhook payload retention~~ **Resolved:** `WEBHOOK_EVENT_RETENTION_DAYS` (default 30) deletes
+   PROCESSED/FAILED/DEAD events; pending ones are kept. Payloads are still stored unencrypted for those
+   30 days (needed for replay). Audit logs are never purged by this job.
 4. **Workspace members** (not only admins) may build workflows that use workspace connections. This is
    intended (connections are workspace resources) but should be stated in docs/UI. Low.
-5. **Circuit breaker/metrics are per process.** Fine for one replica. Low.
+5. ~~Circuit breaker per process~~ **Resolved:** state is shared through Postgres (`circuit_breakers`);
+   one half-open probe across instances; fails open if the DB is unavailable. Metrics remain per process.
 6. **App-level webhooks for an account connected in several workspaces** start workflows in each of
    them (by design, each workspace authorized that account); the event row is not attributed to a
    single workspace, so it is not listed in the UI. Low.

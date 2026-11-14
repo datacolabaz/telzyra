@@ -24,6 +24,8 @@ marked 🔒: generate or paste them directly in Railway and never send them in c
 | `RUN_WORKERS` | NEW, optional | `true` | `false` makes the instance API-only |
 | `TELEGRAM_TRIGGER_MODE` | NEW, optional | `auto` | `auto` → webhook in production (public https) |
 | `POLL_INTERVAL_MINUTES` | NEW, optional | `5` | Sheets/Gmail/Notion polling |
+| `EXECUTION_RETENTION_DAYS` | NEW, optional | `30` | Finished workflow runs are deleted after N days (0 = keep) |
+| `WEBHOOK_EVENT_RETENTION_DAYS` | NEW, optional | `30` | Settled webhook payloads are deleted after N days (0 = keep) |
 | `GOOGLE_CLIENT_ID` | NEW, for Google | from Google Cloud → Credentials | Not secret, but keep in Railway |
 | `GOOGLE_CLIENT_SECRET` 🔒 | NEW, for Google | from Google Cloud → Credentials | Redirect URI: `https://api.telzyra.com/v1/oauth/google/callback` |
 | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET` 🔒, `SLACK_SIGNING_SECRET` 🔒 | later | Slack app | |
