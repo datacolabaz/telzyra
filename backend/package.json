@@ -11,7 +11,9 @@
     "db:migrate": "prisma migrate deploy",
     "db:check": "prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code",
     "postinstall": "prisma generate",
-    "notion:verification-token": "tsx scripts/notion-verification-token.ts"
+    "notion:verification-token": "tsx scripts/notion-verification-token.ts",
+    "db:local": "node scripts/local-db.mjs",
+    "doctor": "tsx --env-file=.env scripts/doctor.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

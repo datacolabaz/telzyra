@@ -26,3 +26,6 @@ yarn-error.log*
 
 # Prisma client is generated at build time
 backend/src/generated/
+
+# local embedded Postgres data
+backend/.local-pg/
