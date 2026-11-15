@@ -77,4 +77,5 @@ Implemented on `feature/integrations`: modules 2–7, security review, tests, do
 | HubSpot | done | mocked (signature v3) | needs HubSpot app |
 | Stripe | done | mocked (endpoint, signature, DLQ/replay) | needs restricted test key |
 | Shopify | done | mocked (HMAC, compliance) | needs Shopify app + protected data access |
-| HTTP Request | done | mocked (SSRF, redirects) | n/a |
+| HTTP Request | done | mocked (SSRF, redirects) | ✅ real on 2026-11-15: POST to httpbin.org from a webhook-triggered workflow, response used in the next step |
+| Webhook (inbound trigger) | done (2026-11-15): per-workflow secret URL `/webhooks/hook/<token>`, rotate, idempotency key | 8 integration tests | ✅ real on 2026-11-15: internet → Cloudflare tunnel → gateway → workflow → HTTP Request → Slack |

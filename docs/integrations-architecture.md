@@ -87,3 +87,12 @@ trigger columns), `WorkflowExecution` (unique `[workflowId, triggerEventId]`, st
 - Circuit breaker per `<provider>:<connection>`: 5 consecutive provider failures open it for 30 s.
 - Inbound webhooks: 1 200 requests/min per provider and IP, 1 MB body limit.
 - Breakers and metrics are per process (in memory). With several API replicas each has its own breaker.
+
+## Inbound Webhook trigger (generic)
+
+Connector `webhook`, trigger `catch_hook`. On activation each workflow gets its own URL
+`{PUBLIC_WEBHOOK_URL}/webhooks/hook/<token>` (192-bit token; `workflow_hooks` stores its SHA-256 for lookup and an
+encrypted copy to show it to the owner). `POST`/`PUT` with JSON, form or text (≤ 1 MB) starts an execution with
+`{ method, body, query, headers, received_at }` — authorization, cookie and proxy/CDN headers are dropped.
+`Idempotency-Key` or `X-Request-Id` → at most one execution per key. Paused or unknown → 404. `POST
+/v1/workflows/:id/webhook/rotate` replaces the URL. Logs show `/webhooks/hook/[token]`. Code: `backend/src/workflows/hooks.ts`.
