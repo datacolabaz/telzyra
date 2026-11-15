@@ -9,6 +9,9 @@
 # prompt and written only to backend/.env (mode 600). Nothing secret is printed or committed.
 # Stop everything with Ctrl+C.
 #
+# TELZYRA_PROVIDERS="meta slack notion hubspot shopify"  asks (hidden input) for the app credentials
+#                   of these providers when they are not in backend/.env yet. Values never leave
+#                   your machine and are not printed.
 # TELZYRA_TUNNEL=1  also opens a free Cloudflare quick tunnel (HTTPS) so providers can deliver
 #                   webhooks (Telegram webhook mode, Slack, Notion, HubSpot, Shopify, Stripe). Only
 #                   POST /webhooks/* is reachable through it (scripts/webhook-gateway.mjs); OAuth and
