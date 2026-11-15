@@ -8,5 +8,11 @@
   "service.unavailable": "Hesap hizmetleri henüz kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
   "unknown": "Bir sorun oluştu. Lütfen tekrar deneyin.",
   "rate_limited": "Çok fazla deneme yapıldı. Lütfen birkaç dakika bekleyip tekrar deneyin.",
-  "auth.unauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın."
+  "auth.unauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+  "google_denied": "Google ile giriş iptal edildi.",
+  "google_invalid_state": "Google giriş bağlantısının süresi doldu veya başka bir tarayıcıda açıldı. Lütfen tekrar deneyin.",
+  "google_exchange_failed": "Google ile giriş başarısız oldu. Lütfen tekrar deneyin.",
+  "google_email_unverified": "Google e-posta adresiniz doğrulanmamış, bu nedenle giriş için kullanılamaz.",
+  "google_unavailable": "Google ile giriş şu anda kullanılamıyor.",
+  "google_no_workspace": "Hesabınızın çalışma alanı yok. Lütfen destekle iletişime geçin."
 }

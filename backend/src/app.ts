@@ -72,7 +72,7 @@ export function createApp({ db, rateLimitMax, services }: AppDeps) {
   v1.get("/plans", (_req, res) => {
     res.set("Cache-Control", "public, max-age=300").json(PLANS);
   });
-  v1.use("/auth", authRouter({ db, sessions, audit, rateLimitMax }));
+  v1.use("/auth", authRouter({ db, sessions, audit, cipher: defaultCipher, rateLimitMax }));
   v1.use(integrationsRouter(s));
 
   app.use("/v1", v1);

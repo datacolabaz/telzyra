@@ -5,7 +5,8 @@ import { randomToken } from "../security/crypto.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { burnPasswordCheck, hashPassword, needsRehash, PASSWORD_MAX, PASSWORD_MIN, verifyPassword } from "./password.js";
 
-const LOCALES = ["en", "az", "ru", "tr"] as const;
+export const LOCALES = ["en", "az", "ru", "tr"] as const;
+export type Locale = (typeof LOCALES)[number];
 
 /** Default workspace name in the user's language. */
 const WORKSPACE_NAME: Record<(typeof LOCALES)[number], (first: string) => string> = {
@@ -69,11 +70,30 @@ export class AuthService {
   /** Creates the user, their first workspace and an OWNER membership in one transaction. */
   async register(input: z.infer<typeof registerSchema>) {
     const passwordHash = await hashPassword(input.password);
+    return this.createAccount({ email: input.email, name: input.name, locale: input.locale, workspaceName: input.workspaceName, passwordHash });
+  }
+
+  /**
+   * Shared by password sign-up and Google sign-up. `identity` links an external sign-in in the same
+   * transaction; `emailVerifiedAt` is set when the provider has verified the address.
+   */
+  async createAccount(input: {
+    email: string;
+    name: string;
+    locale: Locale;
+    workspaceName?: string;
+    passwordHash: string | null;
+    emailVerifiedAt?: Date;
+    identity?: { provider: string; subject: string };
+  }) {
     try {
       return await this.db.$transaction(async (tx) => {
         const user = await tx.user.create({
-          data: { email: input.email, name: input.name, passwordHash, locale: input.locale },
+          data: { email: input.email, name: input.name, passwordHash: input.passwordHash, locale: input.locale, emailVerifiedAt: input.emailVerifiedAt ?? null },
         });
+        if (input.identity) {
+          await tx.userIdentity.create({ data: { userId: user.id, provider: input.identity.provider, subject: input.identity.subject, email: input.email } });
+        }
         const workspaceName = input.workspaceName ?? WORKSPACE_NAME[input.locale](input.name.split(" ")[0]!);
         const workspace = await tx.workspace.create({ data: { name: workspaceName, slug: slugify(workspaceName) } });
         await tx.membership.create({ data: { userId: user.id, workspaceId: workspace.id, role: "OWNER" } });
@@ -85,10 +105,17 @@ export class AuthService {
     }
   }
 
+  /** The user's default (oldest) workspace, or null if they have none. */
+  async defaultWorkspace(userId: string) {
+    const membership = await this.db.membership.findFirst({ where: { userId }, orderBy: { createdAt: "asc" }, include: { workspace: true } });
+    return membership?.workspace ?? null;
+  }
+
   /** Returns the user and their default workspace, or throws invalid credentials. */
   async login(input: z.infer<typeof loginSchema>) {
     const user = await this.db.user.findUnique({ where: { email: input.email } });
-    if (!user) {
+    if (!user || !user.passwordHash) {
+      // Unknown email, or a Google-only account: same timing and error as a wrong password.
       await burnPasswordCheck(input.password);
       throw Errors.invalidCredentials();
     }

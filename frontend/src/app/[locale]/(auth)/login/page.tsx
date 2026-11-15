@@ -30,6 +30,8 @@ export default async function LoginPage() {
             email: t("fields.email"),
             password: t("fields.password"),
             passwordHint: t("fields.passwordHint"),
+            google: t("social.google"),
+            or: t("social.or"),
           }}
         />
       </div>

@@ -37,7 +37,7 @@ describe("POST /v1/auth/register", () => {
     expect(cookie).toMatch(/SameSite=Lax/i);
 
     const user = await prisma.user.findUniqueOrThrow({ where: { email: "telman@example.com" } });
-    expect(user.passwordHash.startsWith("$argon2id$")).toBe(true);
+    expect(user.passwordHash!.startsWith("$argon2id$")).toBe(true);
     expect(await prisma.membership.count({ where: { userId: user.id, role: "OWNER" } })).toBe(1);
 
     const session = await prisma.session.findFirstOrThrow({ where: { userId: user.id } });

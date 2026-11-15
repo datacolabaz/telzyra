@@ -70,7 +70,8 @@ Implemented on `feature/integrations`: modules 2–7, security review, tests, do
 |---|---|---|---|
 | Telegram | done | mocked, incl. end-to-end workflow | ✅ real Bot API (polling mode) on 2026-11-15; webhook mode pending |
 | Google Sheets | done | mocked (OAuth, refresh, actions, polling) | ✅ real OAuth + append/read on 2026-11-15 (test project) |
-| Slack | done | mocked (signature, challenge, routing) | needs Slack app |
+| Slack | done | mocked (signature, challenge, routing) | ✅ real on 2026-11-15 (test app, local + tunnel): OAuth v2, Events URL verified, list_channels, send_channel_message, not_in_channel error, Slack message → workflow → thread reply (no loop). Note: connect in a normal browser — the Claude desktop pane blocks the tunnel → localhost callback |
+| Continue with Google (sign-in) | done | mocked Google token/userinfo; real state, linking, sessions (12 tests) | pending real Google test (needs redirect URI added in Google Cloud) |
 | Notion | done | mocked (signature) | needs Notion public integration |
 | Gmail | done | mocked (MIME, header injection) | needs Google app + CASA for read scope |
 | HubSpot | done | mocked (signature v3) | needs HubSpot app |

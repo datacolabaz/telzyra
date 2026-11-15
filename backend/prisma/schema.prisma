@@ -20,7 +20,8 @@ model User {
   id              String    @id @default(uuid(7)) @db.Uuid
   email           String    @unique // stored lowercased
   name            String
-  passwordHash    String
+  /// Null for accounts that only sign in with Google (no password set).
+  passwordHash    String?
   locale          String    @default("en")
   emailVerifiedAt DateTime?
   createdAt       DateTime  @default(now())
@@ -28,8 +29,24 @@ model User {
 
   memberships Membership[]
   sessions    Session[]
+  identities  UserIdentity[]
 
   @@map("users")
+}
+
+/// External sign-in identities (e.g. Google). `subject` is the provider's stable user id.
+model UserIdentity {
+  id        String   @id @default(uuid(7)) @db.Uuid
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider  String
+  subject   String
+  email     String
+  createdAt DateTime @default(now())
+
+  @@unique([provider, subject])
+  @@index([userId])
+  @@map("user_identities")
 }
 
 model Workspace {

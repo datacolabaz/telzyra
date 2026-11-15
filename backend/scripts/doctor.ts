@@ -3,6 +3,7 @@
  *   npm run doctor
  * Prints only variable NAMES and derived URLs — never secret values.
  */
+import { googleLoginRedirectUri } from "../src/auth/google-login.js";
 import pg from "pg";
 import { env, webhookBaseUrl } from "../src/config/env.js";
 import { redirectUriFor } from "../src/integrations/oauth/oauth.service.js";
@@ -50,11 +51,13 @@ const mode = telegramTriggerMode();
 ok(`trigger delivery: ${mode}${mode === "polling" ? " (getUpdates every minute; works without a public URL)" : ` (webhook at ${webhookBaseUrl()}/webhooks/telegram/<token>)`}`);
 ok("bot token is entered in the UI (Integrations → Telegram), not in .env");
 
-console.log("\nGoogle (Sheets/Gmail)");
+console.log("\nGoogle (Sheets/Gmail + Continue with Google)");
 if (env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET) {
   ok("GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set");
   if (!/\.apps\.googleusercontent\.com$/.test(env.GOOGLE_CLIENT_ID)) warn("GOOGLE_CLIENT_ID does not look like a Google OAuth client id");
-  console.log(`    Authorized redirect URI to register in Google Cloud: ${redirectUriFor("google")}`);
+  console.log("    Authorized redirect URIs to register in Google Cloud (both):");
+  console.log(`      ${redirectUriFor("google")}   (Sheets/Gmail connections)`);
+  console.log(`      ${googleLoginRedirectUri()}   (Continue with Google sign-in)`);
 } else bad("GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET missing — Google Sheets will show “Not configured”");
 
 console.log("\nOutbound network");

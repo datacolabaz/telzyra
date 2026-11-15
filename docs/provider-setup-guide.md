@@ -47,6 +47,23 @@ shown as "Not configured" in the UI and cannot be connected.
    security assessment (CASA)**. Option: ship Gmail send-only first (remove `gmail.readonly` and the
    read/search/trigger features) to avoid the assessment.
 
+## Continue with Google (sign-in to Telzyra)
+
+Uses the same Google OAuth client as Sheets/Gmail — no new secrets. Add a second **Authorized redirect URI** to that client:
+
+| Environment | Redirect URI |
+|---|---|
+| Local | `http://localhost:4000/v1/auth/google/callback` |
+| Production | `https://api.telzyra.com/v1/auth/google/callback` |
+
+Scopes: `openid email profile` only (non-sensitive, no Google verification needed for these). The button appears on
+/login and /register when `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are set (`GET /v1/auth/providers`).
+
+Behaviour: a linked Google identity signs in; otherwise an account with the same **Google-verified** email is linked
+(if that account's email was never verified, its password is removed and its sessions are revoked — protects against
+pre-registered look-alike accounts); otherwise a new account + workspace is created without a password. Google tokens
+are used once to read the profile and are not stored. Code: `backend/src/auth/google-login.ts`.
+
 ## Slack
 
 1. https://api.slack.com/apps → **Create New App** → From scratch.

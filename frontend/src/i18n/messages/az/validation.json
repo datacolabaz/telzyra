@@ -8,5 +8,11 @@
   "service.unavailable": "Hesab xidmətləri hələ əlçatan deyil. Bir az sonra yenidən cəhd edin.",
   "unknown": "Xəta baş verdi. Yenidən cəhd edin.",
   "rate_limited": "Çox sayda cəhd edildi. Bir neçə dəqiqə gözləyib yenidən cəhd edin.",
-  "auth.unauthorized": "Sessiyanızın müddəti bitib. Yenidən daxil olun."
+  "auth.unauthorized": "Sessiyanızın müddəti bitib. Yenidən daxil olun.",
+  "google_denied": "Google ilə giriş ləğv edildi.",
+  "google_invalid_state": "Google giriş linkinin vaxtı bitib və ya başqa brauzerdə açılıb. Yenidən cəhd edin.",
+  "google_exchange_failed": "Google ilə giriş alınmadı. Yenidən cəhd edin.",
+  "google_email_unverified": "Google e-poçt ünvanınız təsdiqlənməyib, ona görə onunla daxil olmaq mümkün deyil.",
+  "google_unavailable": "Google ilə giriş hazırda əlçatan deyil.",
+  "google_no_workspace": "Hesabınızın iş sahəsi yoxdur. Dəstək ilə əlaqə saxlayın."
 }

@@ -8,5 +8,11 @@
   "service.unavailable": "Account services are not available yet. Please try again later.",
   "unknown": "Something went wrong. Please try again.",
   "rate_limited": "Too many attempts. Please wait a few minutes and try again.",
-  "auth.unauthorized": "Your session has expired. Please log in again."
+  "auth.unauthorized": "Your session has expired. Please log in again.",
+  "google_denied": "Google sign-in was cancelled.",
+  "google_invalid_state": "The Google sign-in link expired or was opened in another browser. Please try again.",
+  "google_exchange_failed": "Google sign-in failed. Please try again.",
+  "google_email_unverified": "Your Google email address is not verified, so it cannot be used to sign in.",
+  "google_unavailable": "Google sign-in is not available right now.",
+  "google_no_workspace": "Your account has no workspace. Please contact support."
 }
