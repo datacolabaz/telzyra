@@ -21,13 +21,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-dvh bg-ink-50/60">
       <header className="border-b border-ink-100 bg-white">
         <Container className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-6">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-6">
             <Link href={localizedPath(locale, "/dashboard")} aria-label="Telzyra">
               <Logo />
             </Link>
-            <nav aria-label="App" className="hidden items-center gap-1 sm:flex">
+            <nav aria-label="App" className="flex items-center gap-0.5 sm:gap-1">
               {nav.map((n) => (
-                <Link key={n.href} href={localizedPath(locale, n.href)} className="rounded-md px-2.5 py-1.5 text-sm font-medium text-ink-600 hover:bg-ink-50 hover:text-ink-950">
+                <Link key={n.href} href={localizedPath(locale, n.href)} className="rounded-md px-1.5 py-1.5 text-xs font-medium text-ink-600 hover:bg-ink-50 hover:text-ink-950 sm:px-2.5 sm:text-sm">
                   {n.label}
                 </Link>
               ))}

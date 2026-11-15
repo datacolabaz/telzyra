@@ -68,8 +68,8 @@ Implemented on `feature/integrations`: modules 2–7, security review, tests, do
 
 | Provider | Code | Tests | Live |
 |---|---|---|---|
-| Telegram | done | mocked, incl. end-to-end workflow | not tested against Telegram |
-| Google Sheets | done | mocked (OAuth, refresh, actions, polling) | needs Google OAuth app |
+| Telegram | done | mocked, incl. end-to-end workflow | ✅ real Bot API (polling mode) on 2026-11-15; webhook mode pending |
+| Google Sheets | done | mocked (OAuth, refresh, actions, polling) | ✅ real OAuth + append/read on 2026-11-15 (test project) |
 | Slack | done | mocked (signature, challenge, routing) | needs Slack app |
 | Notion | done | mocked (signature) | needs Notion public integration |
 | Gmail | done | mocked (MIME, header injection) | needs Google app + CASA for read scope |
