@@ -1,5 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { replaceConnectorForTests } from "../../src/integrations/core/registry.js";
+import { buildGmail, gmail } from "../../src/integrations/providers/gmail.js";
 import { resetDb } from "../helpers/db.js";
 import { harness, mockServer, seedOAuthConnection, signUp, type Agent, type Harness } from "../helpers/integrations.js";
 
@@ -38,7 +40,27 @@ const gmailLikeApi = () => {
   return requested;
 };
 
-describe("Gmail", () => {
+describe("Gmail (default: send only, no restricted scope)", () => {
+  it("requests only gmail.send — no gmail.readonly, no read actions, no trigger", async () => {
+    expect(gmail.auth.type === "oauth2" && gmail.auth.scopes).toEqual(["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/gmail.send"]);
+    expect(Object.keys(gmail.actions)).toEqual(["send_email"]);
+    expect(Object.keys(gmail.triggers ?? {})).toEqual([]);
+    const start = await owner.post("/v1/oauth/gmail/start", {});
+    expect(new URL(start.body.url).searchParams.get("scope")).not.toContain("gmail.readonly");
+  });
+});
+
+describe("Gmail with GMAIL_READ_ENABLED", () => {
+  beforeEach(() => replaceConnectorForTests(buildGmail(true)));
+  afterAll(() => replaceConnectorForTests(gmail));
+
+  it("adds the read scope, actions and trigger", () => {
+    const g = buildGmail(true);
+    expect(g.auth.type === "oauth2" && g.auth.scopes).toContain("https://www.googleapis.com/auth/gmail.readonly");
+    expect(Object.keys(g.actions)).toEqual(["send_email", "search_messages", "read_message"]);
+    expect(Object.keys(g.triggers ?? {})).toEqual(["new_email"]);
+  });
+
   it("search_messages returns from, to, subject and date (metadata headers requested as repeated params)", async () => {
     const requested = gmailLikeApi();
     const conn = await seedOAuthConnection(h.services, owner, "gmail");

@@ -36,7 +36,8 @@ shown as "Not configured" in the UI and cannot be connected.
    and *Gmail API*.
 2. **OAuth consent screen**: External, app name "Telzyra", support e-mail, authorized domain `telzyra.com`,
    privacy policy `https://telzyra.com/privacy`, terms `https://telzyra.com/terms`.
-   Scopes: `openid`, `.../auth/userinfo.email`, `.../auth/spreadsheets`, `.../auth/gmail.send`, `.../auth/gmail.readonly`.
+   Scopes: `openid`, `.../auth/userinfo.email`, `.../auth/spreadsheets`, `.../auth/gmail.send`
+   (+ `.../auth/gmail.readonly` only if `GMAIL_READ_ENABLED=true`, see 5).
 3. **Credentials → Create OAuth client ID → Web application**.
    Authorized redirect URI: **`https://api.telzyra.com/v1/oauth/google/callback`**
    (local: `http://localhost:4000/v1/oauth/google/callback`).
@@ -44,8 +45,10 @@ shown as "Not configured" in the UI and cannot be connected.
 5. Verification: while the app is in *Testing*, only listed test users can connect and refresh tokens
    expire after 7 days. `spreadsheets` and `gmail.send` are *sensitive* scopes (Google verification).
    `gmail.readonly` is *restricted*: public use requires verification **and an annual third-party
-   security assessment (CASA)**. Option: ship Gmail send-only first (remove `gmail.readonly` and the
-   read/search/trigger features) to avoid the assessment.
+   security assessment (CASA)**. **Decision (2026-11-15): Gmail ships send-only** — `GMAIL_READ_ENABLED`
+   defaults to `false`, so Telzyra never requests `gmail.readonly` and no CASA is needed. Setting it to
+   `true` adds the search/read actions and the "new email" trigger (code kept and tested; real-tested on
+   2026-11-15 in Testing mode) — only do that after passing CASA.
 
 ## Continue with Google (sign-in to Telzyra)
 

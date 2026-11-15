@@ -27,6 +27,7 @@ marked 🔒: generate or paste them directly in Railway and never send them in c
 | `EXECUTION_RETENTION_DAYS` | NEW, optional | `30` | Finished workflow runs are deleted after N days (0 = keep) |
 | `WEBHOOK_EVENT_RETENTION_DAYS` | NEW, optional | `30` | Settled webhook payloads are deleted after N days (0 = keep) |
 | `GOOGLE_CLIENT_ID` | NEW, for Google | from Google Cloud → Credentials | Not secret, but keep in Railway |
+| `GMAIL_READ_ENABLED` | optional, default `false` | leave unset | `true` requests the restricted `gmail.readonly` scope — only after Google verification + CASA |
 | `GOOGLE_CLIENT_SECRET` 🔒 | NEW, for Google | from Google Cloud → Credentials | Redirect URIs: `https://api.telzyra.com/v1/oauth/google/callback` (Sheets/Gmail) and `https://api.telzyra.com/v1/auth/google/callback` (Continue with Google) |
 | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET` 🔒, `SLACK_SIGNING_SECRET` 🔒 | later | Slack app | |
 | `NOTION_CLIENT_ID`, `NOTION_CLIENT_SECRET` 🔒, `NOTION_WEBHOOK_VERIFICATION_TOKEN` 🔒 | later | Notion integration | |

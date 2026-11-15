@@ -64,6 +64,15 @@ const schema = z.object({
   /** Meta (Facebook Pages, Instagram) — Meta for Developers app (Facebook Login for Business). */
   META_APP_ID: z.string().optional(),
   META_APP_SECRET: z.string().optional(),
+  /**
+   * Gmail reading (search/read actions + "new email" trigger) needs the restricted gmail.readonly
+   * scope, which requires Google verification + a yearly paid CASA assessment for public apps.
+   * Off by default: Gmail connects with gmail.send only (sensitive scope, no CASA).
+   */
+  GMAIL_READ_ENABLED: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((v) => v === "true"),
   META_GRAPH_VERSION: z.string().regex(/^v\d+\.\d+$/).default("v27.0"),
   SHOPIFY_API_VERSION: z.string().default("2026-10"),
 

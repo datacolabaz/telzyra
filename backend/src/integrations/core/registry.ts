@@ -12,6 +12,12 @@ export function registerConnector(def: ConnectorDefinition) {
   connectors.set(def.id, def);
 }
 
+/** Tests only: swap a registered connector (e.g. Gmail with the read scope enabled). */
+export function replaceConnectorForTests(def: ConnectorDefinition) {
+  if (process.env.NODE_ENV !== "test") throw new Error("replaceConnectorForTests is for tests only");
+  connectors.set(def.id, def);
+}
+
 export function getConnector(id: string): ConnectorDefinition | undefined {
   return connectors.get(id);
 }

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ConnectorError } from "../core/errors.js";
 import type { ConnectorContext, ConnectorDefinition } from "../core/types.js";
+import { env } from "../../config/env.js";
 import { googleIdentity, googleMapError } from "./shared.js";
 
 /**
@@ -113,33 +114,16 @@ async function search(ctx: ConnectorContext, q: string, max: number, pageToken?:
   return res.data;
 }
 
-export const gmail: ConnectorDefinition = {
-  id: "gmail",
-  name: "Gmail",
-  description: "Send email and react to new messages in Gmail.",
-  category: "communication",
-  auth: {
-    type: "oauth2",
-    provider: "google",
-    scopes: ["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/gmail.send", "https://www.googleapis.com/auth/gmail.readonly"],
-  },
-  requiredEnv: ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
-  rateLimit: { note: "Quota units per user per second (send = 100 units); 429 is retried with backoff." },
-  mapError: googleMapError("gmail"),
-  test: (ctx) => googleIdentity(ctx),
+const SEND_SCOPES = ["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/gmail.send"];
+const READ_SCOPE = "https://www.googleapis.com/auth/gmail.readonly";
 
-  actions: {
-    send_email: {
-      key: "send_email",
-      name: "Send email",
-      description: "Send an email from the connected Gmail account.",
-      input: z.object({ to: emailList, cc: emailList.optional(), bcc: emailList.optional(), reply_to: email.optional(), subject: headerSafe.min(1), text: z.string().min(1).max(500_000), html: z.string().max(1_000_000).optional() }),
-      async run(ctx, i) {
-        const raw = Buffer.from(buildMime(i), "utf8").toString("base64url");
-        const res = await ctx.http.request<{ id: string; threadId: string }>({ method: "POST", url: `${API}/messages/send`, headers: auth(ctx), json: { raw } });
-        return { id: res.data.id, thread_id: res.data.threadId };
-      },
-    },
+/**
+ * Send-only by default (gmail.send is a *sensitive* scope: Google verification, no CASA).
+ * With GMAIL_READ_ENABLED=true the restricted gmail.readonly scope, the search/read actions and
+ * the "new email" trigger are added — only enable that once the app has passed CASA.
+ */
+export function buildGmail(readEnabled: boolean): ConnectorDefinition {
+  const readActions: ConnectorDefinition["actions"] = {
     search_messages: {
       key: "search_messages",
       name: "Search messages",
@@ -161,9 +145,8 @@ export const gmail: ConnectorDefinition = {
         return { ...summary(m), text: findText(m.payload, "text/plain") ?? "", html: findText(m.payload, "text/html"), attachments: attachments(m.payload) };
       },
     },
-  },
-
-  triggers: {
+  };
+  const readTriggers: ConnectorDefinition["triggers"] = {
     new_email: {
       key: "new_email",
       name: "New email (polling)",
@@ -183,7 +166,33 @@ export const gmail: ConnectorDefinition = {
       },
       sample: { id: "18c…", thread_id: "18c…", from: "Jane <jane@example.com>", to: "you@example.com", subject: "Invoice", date: "Fri, 14 Nov 2026 10:00:00 +0000", snippet: "Please find…", label_ids: ["INBOX"] },
     },
-  },
-};
+  };
+  return {
+    id: "gmail",
+    name: "Gmail",
+    description: readEnabled ? "Send email and react to new messages in Gmail." : "Send email from your Gmail account.",
+    category: "communication",
+    auth: { type: "oauth2", provider: "google", scopes: readEnabled ? [...SEND_SCOPES, READ_SCOPE] : SEND_SCOPES },
+    requiredEnv: ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+    rateLimit: { note: "Quota units per user per second (send = 100 units); 429 is retried with backoff." },
+    mapError: googleMapError("gmail"),
+    test: (ctx) => googleIdentity(ctx),
+    actions: {
+      send_email: {
+        key: "send_email",
+        name: "Send email",
+        description: "Send an email from the connected Gmail account.",
+        input: z.object({ to: emailList, cc: emailList.optional(), bcc: emailList.optional(), reply_to: email.optional(), subject: headerSafe.min(1), text: z.string().min(1).max(500_000), html: z.string().max(1_000_000).optional() }),
+        async run(ctx, i) {
+          const raw = Buffer.from(buildMime(i), "utf8").toString("base64url");
+          const res = await ctx.http.request<{ id: string; threadId: string }>({ method: "POST", url: `${API}/messages/send`, headers: auth(ctx), json: { raw } });
+          return { id: res.data.id, thread_id: res.data.threadId };
+        },
+      },
+      ...(readEnabled ? readActions : {}),
+    },
+    triggers: readEnabled ? readTriggers : {},
+  };
+}
 
-
+export const gmail = buildGmail(env.GMAIL_READ_ENABLED);
