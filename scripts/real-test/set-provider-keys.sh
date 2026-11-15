@@ -30,6 +30,9 @@ for p in "$@"; do
     read -r -s -p "  $k: " v </dev/tty; echo
     v="${v#"${v%%[![:space:]]*}"}"; v="${v%"${v##*[![:space:]]}"}"   # trim whitespace from paste
     [ -n "$v" ] || { echo "    (kept)"; continue; }
+    case "$v" in
+      *[[:space:]]*) echo "    ✗ contains spaces — that is not a key (was a command pasted?). Not saved; run again."; continue ;;
+    esac
     grep -v "^$k=" "$ENV" > "$ENV.tmp" || true
     printf '%s=%s\n' "$k" "$v" >> "$ENV.tmp"
     mv "$ENV.tmp" "$ENV"; chmod 600 "$ENV"
