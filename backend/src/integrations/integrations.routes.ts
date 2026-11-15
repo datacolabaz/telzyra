@@ -1,6 +1,6 @@
 import express, { Router, type NextFunction, type Request, type Response } from "express";
 import { ipKeyGenerator, rateLimit } from "express-rate-limit";
-import { env } from "../config/env.js";
+import { webhookBaseUrl } from "../config/env.js";
 import { AppError, Errors } from "../lib/errors.js";
 import { requireAuth, requireRole } from "../auth/middleware.js";
 import type { Services } from "../container.js";
@@ -116,7 +116,7 @@ export function webhooksRouter(s: Services, opts: { rateLimitMax?: number } = {}
       headers,
       rawBody: Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0),
       method: req.method,
-      url: `${env.PUBLIC_API_URL}${req.originalUrl}`,
+      url: `${webhookBaseUrl()}${req.originalUrl}`, // as the provider signed it (HubSpot v3)
       params: req.params as Record<string, string>,
       query: Object.fromEntries(Object.entries(req.query).filter(([, v]) => typeof v === "string")) as Record<string, string>,
     };

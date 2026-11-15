@@ -112,7 +112,17 @@ export class WorkflowService {
 
     // One provider subscription per connection, shared by all workflows using it.
     const existing = await this.db.webhookSubscription.findFirst({ where: { workspaceId: ctx.workspaceId, connectionId: def.trigger.connectionId, status: "ACTIVE" } });
-    if (existing) return;
+    if (existing && existing.callbackBase === this.publicApiUrl) return;
+    if (existing) {
+      // The public webhook URL changed (new domain or tunnel): remove the stale registration first.
+      try {
+        const cctx = await this.runtime.context(ctx.workspaceId, connector, def.trigger.connectionId);
+        await spec.unsubscribe?.(cctx, existing.externalId);
+      } catch (err) {
+        logger.warn({ provider: connector.id, code: err instanceof ConnectorError ? err.code : "UNKNOWN" }, "stale webhook unsubscribe failed");
+      }
+      await this.db.webhookSubscription.delete({ where: { id: existing.id } });
+    }
     const endpointToken = randomToken(24);
     const secret = randomToken(32);
     const sub = await this.db.webhookSubscription.create({
@@ -124,7 +134,7 @@ export class WorkflowService {
       const result = (await spec.subscribe?.(cctx, { url, secret, events: [] })) ?? {};
       await this.db.webhookSubscription.update({
         where: { id: sub.id },
-        data: { status: "ACTIVE", externalId: result.externalId ?? null, signingSecret: this.cipher.encrypt(result.signingSecret ?? secret, subscriptionSecretAad(sub.id)) },
+        data: { status: "ACTIVE", callbackBase: this.publicApiUrl, externalId: result.externalId ?? null, signingSecret: this.cipher.encrypt(result.signingSecret ?? secret, subscriptionSecretAad(sub.id)) },
       });
       await this.audit.record({ action: "webhook.subscription.created", workspaceId: ctx.workspaceId, actorUserId: ctx.userId, targetType: "connection", targetId: def.trigger.connectionId, metadata: { provider: connector.id } });
     } catch (err) {

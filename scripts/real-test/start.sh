@@ -8,6 +8,11 @@
 # Secrets: CREDENTIALS_KEY is generated locally; the Google client secret is read with a hidden
 # prompt and written only to backend/.env (mode 600). Nothing secret is printed or committed.
 # Stop everything with Ctrl+C.
+#
+# TELZYRA_TUNNEL=1  also opens a free Cloudflare quick tunnel (HTTPS) so providers can deliver
+#                   webhooks (Telegram webhook mode, Slack, Notion, HubSpot, Shopify, Stripe). Only
+#                   POST /webhooks/* is reachable through it (scripts/webhook-gateway.mjs); OAuth and
+#                   the app stay on localhost. The URL changes on every run.
 set -euo pipefail
 
 DIR="${TELZYRA_TEST_DIR:-$HOME/telzyra-real-test}"
@@ -31,7 +36,7 @@ fi
 in_use() { lsof -nP -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1; }
 who_uses() { lsof -nP -iTCP:"$1" -sTCP:LISTEN 2>/dev/null | awk 'NR>1 {print "    " $1 " (pid " $2 ")"}' | sort -u; }
 # API port is fixed: it is part of the Google redirect URI (http://localhost:4000/v1/oauth/google/callback).
-for p in 4000 54329; do
+for p in 4000 4001 54329; do
   if in_use $p; then
     die "Port $p is used by:
 $(who_uses $p)
@@ -125,6 +130,30 @@ say "Database migrations + schema drift check"
 (cd backend && npx prisma migrate deploy)
 (cd backend && npx prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code >/dev/null 2>&1 && echo "  ✓ schema matches migrations (no drift)") || die "Schema drift detected"
 
+if [ "${TELZYRA_TUNNEL:-0}" = 1 ]; then
+  say "HTTPS tunnel for webhooks (Cloudflare quick tunnel)"
+  CF=$(command -v cloudflared || true)
+  if [ -z "$CF" ]; then
+    mkdir -p "$DIR/.bin"; CF="$DIR/.bin/cloudflared"
+    if [ ! -x "$CF" ]; then
+      OS=$(uname -s | tr A-Z a-z); ARCH=$(uname -m); [ "$ARCH" = x86_64 ] && ARCH=amd64; [ "$ARCH" = aarch64 ] && ARCH=arm64
+      BASE=https://github.com/cloudflare/cloudflared/releases/latest/download
+      if [ "$OS" = darwin ]; then curl -fsSL "$BASE/cloudflared-darwin-$ARCH.tgz" | tar -xz -C "$DIR/.bin"; else curl -fsSL -o "$CF" "$BASE/cloudflared-linux-$ARCH"; fi
+      chmod +x "$CF"
+    fi
+  fi
+  (cd backend && node scripts/webhook-gateway.mjs 4001 http://127.0.0.1:4000 > "$LOGS/gateway.log" 2>&1) & PIDS+=($!)
+  "$CF" tunnel --no-autoupdate --url http://127.0.0.1:4001 > "$LOGS/tunnel.log" 2>&1 & PIDS+=($!)
+  TUNNEL_URL=""
+  for _ in $(seq 1 45); do TUNNEL_URL=$(grep -oE 'https://[a-z0-9-]+\.trycloudflare\.com' "$LOGS/tunnel.log" | head -1 || true); [ -n "$TUNNEL_URL" ] && break; sleep 1; done
+  [ -n "$TUNNEL_URL" ] || die "Tunnel did not start (see $LOGS/tunnel.log)"
+  grep -v -e '^PUBLIC_WEBHOOK_URL=' -e '^TELEGRAM_TRIGGER_MODE=' "$ENV" > "$ENV.tmp" || true
+  printf 'PUBLIC_WEBHOOK_URL=%s\nTELEGRAM_TRIGGER_MODE=auto\n' "$TUNNEL_URL" >> "$ENV.tmp"; mv "$ENV.tmp" "$ENV"; chmod 600 "$ENV"
+  echo "  webhooks: $TUNNEL_URL/webhooks/<provider>  (only /webhooks/* is public)"
+else
+  grep -v '^PUBLIC_WEBHOOK_URL=' "$ENV" > "$ENV.tmp" || true; mv "$ENV.tmp" "$ENV"; chmod 600 "$ENV"
+fi
+
 say "Pre-flight check"
 (cd backend && npm run -s doctor) || die "Fix the problems above and run again"
 
@@ -138,6 +167,7 @@ done
 curl -sf http://localhost:4000/health >/dev/null || die "API did not start (see $LOGS/api.log)"
 
 printf "\n\033[32m✓ Telzyra is running: %s\033[0m\n" "$APP_URL"
+[ -n "${TUNNEL_URL:-}" ] && echo "  Public webhook URL: $TUNNEL_URL"
 echo "  Logs: $LOGS (api.log shows trigger polls and runs). Keep this window open; Ctrl+C stops everything."
 tail -n 0 -F "$LOGS/api.log" | grep --line-buffered -E "workflow execution failed|trigger poll failed|retrying provider|ERROR|error" &
 PIDS+=($!)

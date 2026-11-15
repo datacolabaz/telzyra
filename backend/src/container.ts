@@ -1,6 +1,6 @@
 import type { Db } from "./db/client.js";
 import type { CredentialCipher } from "./security/crypto.js";
-import { env } from "./config/env.js";
+import { env, webhookBaseUrl } from "./config/env.js";
 import { AuditService } from "./audit/audit.service.js";
 import { CredentialService } from "./integrations/connections/credential.service.js";
 import { ConnectionService } from "./integrations/connections/connection.service.js";
@@ -26,7 +26,7 @@ export function createServices(db: Db, cipher: CredentialCipher, queue: JobQueue
   const oauth = new OAuthService(db, cipher, credentials, audit);
   const connections = new ConnectionService(db, credentials, runtime, audit);
   const engine = new WorkflowEngine(db, runtime, queue);
-  const workflows = new WorkflowService(db, cipher, runtime, engine, audit, env.PUBLIC_API_URL);
+  const workflows = new WorkflowService(db, cipher, runtime, engine, audit, webhookBaseUrl());
   const poller = new TriggerPoller(db, runtime, engine, queue);
   const webhooks = new WebhookService(db, cipher, queue, engine, audit);
   const retention = new RetentionService(db, { executionDays: env.EXECUTION_RETENTION_DAYS, webhookEventDays: env.WEBHOOK_EVENT_RETENTION_DAYS });

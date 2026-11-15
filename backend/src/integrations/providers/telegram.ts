@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ConnectorError } from "../core/errors.js";
 import type { ConnectorContext, ConnectorDefinition, TriggerEvent } from "../core/types.js";
 import { safeEqual } from "../../security/crypto.js";
-import { env } from "../../config/env.js";
+import { env, webhookBaseUrl } from "../../config/env.js";
 
 /**
  * Telegram Bot API — https://core.telegram.org/bots/api
@@ -40,9 +40,9 @@ interface TgMessage {
 const messageResult = (m: TgMessage) => ({ message_id: m.message_id, chat_id: m.chat.id, date: m.date });
 
 /** Webhooks need a public HTTPS URL; on localhost Telzyra polls getUpdates instead. */
-export function telegramTriggerMode(e: { TELEGRAM_TRIGGER_MODE: string; PUBLIC_API_URL: string } = env): "webhook" | "polling" {
+export function telegramTriggerMode(e: { TELEGRAM_TRIGGER_MODE: string; PUBLIC_API_URL: string; PUBLIC_WEBHOOK_URL?: string } = env): "webhook" | "polling" {
   if (e.TELEGRAM_TRIGGER_MODE === "webhook" || e.TELEGRAM_TRIGGER_MODE === "polling") return e.TELEGRAM_TRIGGER_MODE;
-  const u = new URL(e.PUBLIC_API_URL);
+  const u = new URL(webhookBaseUrl(e));
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(u.hostname) || u.hostname.endsWith(".local");
   return u.protocol === "https:" && !local ? "webhook" : "polling";
 }

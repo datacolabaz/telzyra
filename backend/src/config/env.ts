@@ -34,6 +34,12 @@ const schema = z.object({
 
   /** Public origin of this API (OAuth redirect URIs, webhook URLs), e.g. https://api.telzyra.com */
   PUBLIC_API_URL: z.string().url().default("http://localhost:4000"),
+  /**
+   * Public HTTPS origin providers deliver webhooks to. Defaults to PUBLIC_API_URL. Set it separately
+   * when the API itself is local (OAuth redirects stay on localhost) but webhooks arrive through an
+   * HTTPS tunnel, e.g. https://xyz.trycloudflare.com.
+   */
+  PUBLIC_WEBHOOK_URL: z.string().url().optional(),
   /** Run queue workers in this process (webhooks, workflow executions, polling). */
   RUN_WORKERS: z
     .enum(["true", "false"])
@@ -58,8 +64,8 @@ const schema = z.object({
   SHOPIFY_API_VERSION: z.string().default("2026-10"),
 
   /**
-   * Telegram triggers: "webhook" (needs a public HTTPS PUBLIC_API_URL), "polling" (getUpdates; works
-   * on localhost) or "auto" = webhook when PUBLIC_API_URL is public HTTPS, otherwise polling.
+   * Telegram triggers: "webhook" (needs a public HTTPS webhook URL), "polling" (getUpdates; works
+   * on localhost) or "auto" = webhook when the webhook URL is public HTTPS, otherwise polling.
    */
   TELEGRAM_TRIGGER_MODE: z.enum(["auto", "webhook", "polling"]).default("auto"),
   /** Default minutes between polls for polling triggers. */
@@ -88,3 +94,6 @@ function load(): Env {
 
 export const env = load();
 export const isProduction = env.NODE_ENV === "production";
+
+/** Origin providers deliver webhooks to (PUBLIC_WEBHOOK_URL, else PUBLIC_API_URL), without trailing slash. */
+export const webhookBaseUrl = (e: Pick<Env, "PUBLIC_API_URL" | "PUBLIC_WEBHOOK_URL"> = env) => (e.PUBLIC_WEBHOOK_URL ?? e.PUBLIC_API_URL).replace(/\/+$/, "");

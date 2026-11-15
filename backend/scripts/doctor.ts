@@ -4,7 +4,7 @@
  * Prints only variable NAMES and derived URLs — never secret values.
  */
 import pg from "pg";
-import { env } from "../src/config/env.js";
+import { env, webhookBaseUrl } from "../src/config/env.js";
 import { redirectUriFor } from "../src/integrations/oauth/oauth.service.js";
 import { telegramTriggerMode } from "../src/integrations/providers/telegram.js";
 
@@ -41,9 +41,13 @@ try {
   await client.end().catch(() => undefined);
 }
 
+console.log("\nWebhooks");
+ok(`public webhook base: ${webhookBaseUrl()}${env.PUBLIC_WEBHOOK_URL ? " (PUBLIC_WEBHOOK_URL)" : " (PUBLIC_API_URL)"}`);
+if (!webhookBaseUrl().startsWith("https://")) warn("not HTTPS: providers cannot deliver webhooks here (Telegram uses polling; Slack/Notion/HubSpot/Shopify/Stripe triggers need TELZYRA_TUNNEL=1 or production)");
+
 console.log("\nTelegram");
 const mode = telegramTriggerMode();
-ok(`trigger delivery: ${mode}${mode === "polling" ? " (getUpdates every minute; works without a public URL)" : ` (webhook at ${env.PUBLIC_API_URL}/webhooks/telegram/<token>)`}`);
+ok(`trigger delivery: ${mode}${mode === "polling" ? " (getUpdates every minute; works without a public URL)" : ` (webhook at ${webhookBaseUrl()}/webhooks/telegram/<token>)`}`);
 ok("bot token is entered in the UI (Integrations → Telegram), not in .env");
 
 console.log("\nGoogle (Sheets/Gmail)");

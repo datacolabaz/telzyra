@@ -239,6 +239,32 @@ describe("sample workflow: Telegram message → Google Sheets row → Telegram r
     expect(await prisma.workflowExecution.count({ where: { workflowId } })).toBe(1);
   });
 
+  it("re-registers the webhook when the public webhook URL changes (e.g. a new tunnel)", async () => {
+    const { workflowId, webhook } = await setup();
+    const { WorkflowService } = await import("../../src/workflows/workflow.service.js");
+    const { cipher } = await import("../../src/db/client.js");
+    const s = h.services;
+    const moved = new WorkflowService(prisma, cipher, s.runtime, s.engine, s.audit, "https://new-tunnel.trycloudflare.com");
+    let registered: { url: string } | undefined;
+    let deleted = 0;
+    mockServer.use(
+      http.post(`${TG}/deleteWebhook`, () => { deleted++; return HttpResponse.json({ ok: true, result: true }); }),
+      http.post(`${TG}/setWebhook`, async ({ request }) => { registered = (await request.json()) as { url: string }; return HttpResponse.json({ ok: true, result: true }); }),
+    );
+    const ctx = { userId: owner.userId, workspaceId: owner.workspaceId, role: "OWNER" } as never;
+    await moved.activate(ctx, workflowId);
+    expect(deleted).toBe(1);
+    expect(registered?.url).toMatch(/^https:\/\/new-tunnel\.trycloudflare\.com\/webhooks\/telegram\/[A-Za-z0-9_-]+$/);
+    expect(registered?.url).not.toBe(webhook.url);
+    const subs = await prisma.webhookSubscription.findMany({ where: { provider: "telegram" } });
+    expect(subs).toHaveLength(1);
+    expect(subs[0]!.callbackBase).toBe("https://new-tunnel.trycloudflare.com");
+    // Same URL again: nothing to do.
+    registered = undefined;
+    await moved.activate(ctx, workflowId);
+    expect(registered).toBeUndefined();
+  });
+
   it("rejects deliveries with a wrong secret or an unknown endpoint", async () => {
     const { webhook } = await setup();
     const path = new URL(webhook.url).pathname;
