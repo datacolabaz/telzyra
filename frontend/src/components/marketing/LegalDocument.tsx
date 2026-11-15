@@ -3,7 +3,7 @@ import { LOCALES } from "@/i18n/config";
 import { getLocale, getTranslations } from "@/i18n/server";
 
 /** Date the current Privacy Policy and Terms were last changed. Update with every revision. */
-export const LEGAL_UPDATED = "2026-11-07";
+export const LEGAL_UPDATED = "2026-11-15";
 
 export interface LegalSection {
   h: string;
@@ -13,7 +13,7 @@ export interface LegalSection {
 }
 
 /** Shared layout for Privacy Policy and Terms of Service: title, date, contents, sections. */
-export async function LegalDocument({ doc }: { doc: "privacy" | "terms" }) {
+export async function LegalDocument({ doc, children }: { doc: "privacy" | "terms" | "dataDeletion"; children?: React.ReactNode }) {
   const locale = await getLocale();
   const t = await getTranslations("legal");
   const sections = t.raw(`${doc}.sections`) as LegalSection[];
@@ -48,6 +48,7 @@ export async function LegalDocument({ doc }: { doc: "privacy" | "terms" }) {
             <time dateTime={LEGAL_UPDATED}>{t("updated", { date: updated })}</time>
           </p>
           <p className="mt-8 text-[17px] leading-relaxed text-ink-700">{t(`${doc}.intro`)}</p>
+          {children}
 
           {sections.map((s, i) => (
             <section key={s.h} id={anchor(i)} aria-labelledby={`${anchor(i)}-h`} className="mt-10 scroll-mt-24">

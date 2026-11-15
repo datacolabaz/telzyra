@@ -39,5 +39,9 @@
   "dashboard": {
     "title": "Kontrol paneli",
     "description": "Telzyra çalışma alanınız."
+  },
+  "dataDeletion": {
+    "title": "Veri Silme",
+    "description": "Telzyra'nın Facebook, Instagram ve diğer bağlı uygulamalardan tuttuğu verileri nasıl sileceğiniz ve bir silme talebini nasıl kontrol edeceğiniz."
   }
 }

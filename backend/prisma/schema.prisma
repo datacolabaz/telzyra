@@ -378,3 +378,19 @@ model WorkflowHook {
   @@index([workspaceId])
   @@map("workflow_hooks")
 }
+
+/// Platform-initiated data deletion requests (Meta "Data Deletion Request Callback").
+/// Stores only a hash of the provider's user id; the confirmation code is shown to the user.
+model DataDeletionRequest {
+  id                  String    @id @default(uuid(7)) @db.Uuid
+  confirmationCode    String    @unique
+  provider            String
+  subjectHash         String
+  connectionsAffected Int       @default(0)
+  status              String    @default("RECEIVED")
+  createdAt           DateTime  @default(now())
+  completedAt         DateTime?
+
+  @@index([subjectHash])
+  @@map("data_deletion_requests")
+}

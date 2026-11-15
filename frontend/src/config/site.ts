@@ -38,6 +38,7 @@ export const PUBLIC_PAGES = [
   "/docs",
   "/privacy",
   "/terms",
+  "/data-deletion",
 ] as const;
 
 /** Header navigation: keys map to common.nav.* messages. Text never lives here. */

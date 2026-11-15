@@ -45,7 +45,8 @@
     "documentation": "Sənədlər",
     "privacy": "Məxfilik siyasəti",
     "terms": "İstifadə şərtləri",
-    "rights": "© {year} Telzyra. Bütün hüquqlar qorunur."
+    "rights": "© {year} Telzyra. Bütün hüquqlar qorunur.",
+    "dataDeletion": "Məlumatların silinməsi"
   },
   "notFound": {
     "title": "Səhifə tapılmadı",

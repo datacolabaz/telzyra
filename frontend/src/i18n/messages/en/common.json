@@ -45,7 +45,8 @@
     "documentation": "Documentation",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
-    "rights": "© {year} Telzyra. All rights reserved."
+    "rights": "© {year} Telzyra. All rights reserved.",
+    "dataDeletion": "Data deletion"
   },
   "notFound": {
     "title": "Page not found",

@@ -45,7 +45,8 @@
     "documentation": "Документация",
     "privacy": "Политика конфиденциальности",
     "terms": "Условия использования",
-    "rights": "© {year} Telzyra. Все права защищены."
+    "rights": "© {year} Telzyra. Все права защищены.",
+    "dataDeletion": "Удаление данных"
   },
   "notFound": {
     "title": "Страница не найдена",

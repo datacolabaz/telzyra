@@ -15,6 +15,7 @@ import { RetentionService } from "./maintenance/retention.js";
 import type { PgCircuitBreaker } from "./integrations/core/shared-breaker.js";
 import { WorkflowService } from "./workflows/workflow.service.js";
 import { WorkflowHookService } from "./workflows/hooks.js";
+import { MetaDataDeletionService } from "./integrations/meta-data-deletion.js";
 
 export type Services = ReturnType<typeof createServices>;
 
@@ -28,11 +29,12 @@ export function createServices(db: Db, cipher: CredentialCipher, queue: JobQueue
   const connections = new ConnectionService(db, credentials, runtime, audit);
   const engine = new WorkflowEngine(db, runtime, queue);
   const hooks = new WorkflowHookService(db, cipher, engine);
+  const metaDeletion = new MetaDataDeletionService(db, audit);
   const workflows = new WorkflowService(db, cipher, runtime, engine, audit, webhookBaseUrl(), hooks);
   const poller = new TriggerPoller(db, runtime, engine, queue);
   const webhooks = new WebhookService(db, cipher, queue, engine, audit);
   const retention = new RetentionService(db, { executionDays: env.EXECUTION_RETENTION_DAYS, webhookEventDays: env.WEBHOOK_EVENT_RETENTION_DAYS });
-  return { db, audit, credentials, runtime, oauth, connections, engine, workflows, hooks, poller, webhooks, retention, breaker: opts.breaker, queue };
+  return { db, audit, credentials, runtime, oauth, connections, engine, workflows, hooks, metaDeletion, poller, webhooks, retention, breaker: opts.breaker, queue };
 }
 
 /** Job handlers for the queue workers. */

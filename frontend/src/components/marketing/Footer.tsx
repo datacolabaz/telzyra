@@ -69,6 +69,7 @@ export async function Footer() {
           <ul className="mt-4 space-y-3">
             <li><Link className={linkClass} href={href("/privacy")}>{t("footer.privacy")}</Link></li>
             <li><Link className={linkClass} href={href("/terms")}>{t("footer.terms")}</Link></li>
+            <li><Link className={linkClass} href={href("/data-deletion")}>{t("footer.dataDeletion")}</Link></li>
           </ul>
         </nav>
       </Container>

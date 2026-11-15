@@ -29,6 +29,14 @@ export function integrationsRouter(s: Services) {
     res.redirect(303, target);
   }));
 
+  // Public: status of a platform data deletion request (the code is the user's confirmation code).
+  r.get("/data-deletion/:code", h(async (req, res) => {
+    const status = await s.metaDeletion.status(String(req.params.code));
+    res.set("Cache-Control", "no-store");
+    if (!status) return void res.status(404).json({ code: "not_found" });
+    res.json(status);
+  }));
+
   r.use(["/integrations", "/connections", "/oauth", "/workflows", "/executions", "/webhook-events"], requireAuth);
 
   // ── Catalog ────────────────────────────────────────────────────────────────
@@ -125,6 +133,11 @@ export function webhooksRouter(s: Services, opts: { rateLimitMax?: number } = {}
   };
   r.post("/shopify/compliance", h(async (req, res) => {
     const result = await s.webhooks.shopifyCompliance(toRaw(req));
+    res.status(result.status).json(result.body);
+  }));
+  // Meta Data Deletion Request Callback (signed_request, verified with META_APP_SECRET).
+  r.post("/meta/data-deletion", h(async (req, res) => {
+    const result = await s.metaDeletion.handle(Buffer.isBuffer(req.body) ? req.body : Buffer.alloc(0));
     res.status(result.status).json(result.body);
   }));
   // Inbound Webhook trigger (per-workflow secret URL). Registered before the provider routes.

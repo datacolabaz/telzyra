@@ -13,7 +13,9 @@
       },
       {
         "h": "2. Hazırda topladığımız məlumatlar",
-        "p": ["Hesablar hələ açılmadığı üçün yalnız aşağıdakıları emal edirik:"],
+        "p": [
+          "Hesablar hələ açılmadığı üçün yalnız aşağıdakıları emal edirik:"
+        ],
         "list": [
           "Seçim cookie-ləri: TELZYRA_LOCALE seçdiyiniz dili, TELZYRA_CURRENCY isə qiymətlər üçün seçdiyiniz valyutanı yadda saxlayır. Hər ikisi 12 aya qədər saxlanılır və yalnız seçiminizi xatırlamaq üçün istifadə olunur.",
           "Texniki loglar: sayta daxil olduqda hostinq provayderimiz IP ünvanınızı, brauzer növünü, açılan səhifəni və vaxtı avtomatik qeyd edir. Bu loglardan yalnız xidmətin işləməsi və qorunması üçün istifadə edirik.",
@@ -30,7 +32,9 @@
       },
       {
         "h": "4. Hesablar açıldıqdan sonra toplanacaq məlumatlar",
-        "p": ["Telzyra hesabı yaratdıqda aşağıdakı məlumatları emal edəcəyik:"],
+        "p": [
+          "Telzyra hesabı yaratdıqda aşağıdakı məlumatları emal edəcəyik:"
+        ],
         "list": [
           "Hesab məlumatları: adınız, e-poçt ünvanınız və şifrəniz (yalnız heşlənmiş formada saxlanılır).",
           "İş sahəsi məlumatları: qurduğunuz iş axınları, ayarlar və dəvət etdiyiniz komanda üzvləri.",
@@ -40,14 +44,30 @@
         ]
       },
       {
-        "h": "5. Məlumatlardan necə və nə üçün istifadə edirik",
+        "h": "5. Qoşulmuş tətbiqlər (inteqrasiyalar)",
+        "p": [
+          "Google Sheets, Gmail, Slack, Notion, Telegram, Facebook Pages və ya Instagram kimi tətbiqi qoşduğunuzda Telzyra-ya həmin provayderin öz giriş səhifəsi vasitəsilə icazə verirsiniz. Yalnız istifadə etdiyiniz funksiyalar üçün lazım olan icazələri istəyirik və qoşulmuş hesabdan yalnız qurduğunuz iş axınlarını və başlatdığınız əməliyyatları icra etmək üçün istifadə edirik."
+        ],
+        "list": [
+          "Nə saxlayırıq: provayderin verdiyi giriş tokenləri (şifrələnmiş şəkildə), hesabın identifikatoru və görünən adı (məsələn, səhifənizin və ya iş sahənizin adı) və verdiyiniz icazələr. Qoşulmuş tətbiqin parolunu heç vaxt görmürük və saxlamırıq.",
+          "Nə emal edirik: iş axınının sizin göstərişinizlə oxuduğu və ya yazdığı məzmun, məsələn mesaj, cədvəl sətri, səhifə postu və ya Instagram şəkli və mətni. Bu məzmun yalnız icra jurnalında, \"Məlumatları nə qədər saxlayırıq\" bölməsində göstərilən müddətdə saxlanılır.",
+          "Nə etmirik: qoşulmuş tətbiqlərdən gələn məlumatları satmırıq, reklam üçün və ya süni intellekt modellərini öyrətmək üçün istifadə etmirik. Telzyra əməkdaşları onları oxumur — sizin icazəniz, təhlükəsizlik araşdırması və ya qanun tələbi istisna olmaqla.",
+          "Google: Telzyra-nın Google API-lərindən aldığı məlumatlardan istifadəsi və ötürülməsi Google API Services User Data Policy, o cümlədən Limited Use tələblərinə uyğundur.",
+          "Meta (Facebook və Instagram): verdiyiniz Pages və Instagram icazələrindən yalnız səhifələrinizi və Instagram professional hesablarınızı siyahıya almaq, qurduğunuz postları paylaşmaq və ya planlaşdırmaq və onların statusunu göstərmək üçün istifadə edirik. Şəxsi Facebook profilinizdən adınız və tətbiqə xas ID-dən başqa heç nəyə çıxışımız yoxdur.",
+          "Ayırma və silmə: istənilən tətbiqi İnteqrasiyalar bölməsində ayıra bilərsiniz; bu zaman provayder imkan verirsə çıxışımızı ləğv edir və saxlanılan tokenləri silirik. Telzyra-nı Facebook ayarlarınızdan da silə bilərsiniz; bu zaman həmin hesab üzrə saxladığımız tokenləri və identifikatorları silir və sizə təsdiq kodu veririk. Ətraflı: telzyra.com/data-deletion."
+        ]
+      },
+      {
+        "h": "6. Məlumatlardan necə və nə üçün istifadə edirik",
         "p": [
           "Məlumatlardan xidməti təqdim etmək və qorumaq, sorğularınıza cavab vermək, məhsulu təkmilləşdirmək və qanuni öhdəlikləri yerinə yetirmək üçün istifadə edirik. Vəziyyətdən asılı olaraq bunu sizinlə bağlanmış müqavilənin icrasına, təhlükəsiz və etibarlı xidmət göstərməkdə qanuni marağımıza, razılığınıza və ya qanun tələblərinə əsaslanaraq edirik."
         ]
       },
       {
-        "h": "6. Xidmət provayderləri",
-        "p": ["Məlumatları yalnız Telzyra-nın işləməsinə kömək edən provayderlərlə bölüşürük:"],
+        "h": "7. Xidmət provayderləri",
+        "p": [
+          "Məlumatları yalnız Telzyra-nın işləməsinə kömək edən provayderlərlə bölüşürük:"
+        ],
         "list": [
           "Railway: tətbiqin hostinqi (serverlər ABŞ-da yerləşir).",
           "Namecheap: domen və e-poçt yönləndirməsi.",
@@ -56,36 +76,40 @@
         "after": "Ödəniş və e-poçt göndərmə kimi əlavə provayderlərdən istifadəyə başlamazdan əvvəl onları burada qeyd edəcəyik."
       },
       {
-        "h": "7. Beynəlxalq ötürmə",
+        "h": "8. Beynəlxalq ötürmə",
         "p": [
           "Hostinq provayderimiz məlumatları Azərbaycan, Türkiyə və Avropa İttifaqından kənarda saxlayır. Tələb olunduğu hallarda belə ötürmələr üçün müvafiq qoruma tədbirlərinə əsaslanırıq."
         ]
       },
       {
-        "h": "8. Məlumatları nə qədər saxlayırıq",
+        "h": "9. Məlumatları nə qədər saxlayırıq",
         "p": [
           "Seçim cookie-lərinin müddəti 12 aydan sonra bitir. Texniki loglar təhlükəsizlik məqsədilə məhdud müddət saxlanılır. Mesajlar sorğunuzu həll etmək üçün lazım olduğu qədər saxlanılır. Hesab və iş axını məlumatları hesabınız aktiv olduğu müddətdə saxlanılacaq və qanun daha uzun saxlamağı tələb etmirsə, hesabı bağladıqdan sonra silinəcək."
         ]
       },
       {
-        "h": "9. Hüquqlarınız",
+        "h": "10. Hüquqlarınız",
         "p": [
           "Yaşadığınız ölkədən asılı olaraq şəxsi məlumatlarınıza çıxış əldə etmək, onları düzəltmək və ya silmək, emalına etiraz etmək və ya onu məhdudlaşdırmaq, həmçinin onların surətini almaq hüququnuz ola bilər. Bu hüquqlardan istifadə etmək üçün hello@telzyra.com ünvanına yazın. Həmçinin ölkənizdəki məlumatların qorunması üzrə səlahiyyətli quruma şikayət edə bilərsiniz."
         ]
       },
       {
-        "h": "10. Uşaqlar",
-        "p": ["Telzyra 16 yaşından kiçik şəxslər üçün nəzərdə tutulmayıb və biz onların şəxsi məlumatlarını bilərəkdən toplamırıq."]
+        "h": "11. Uşaqlar",
+        "p": [
+          "Telzyra 16 yaşından kiçik şəxslər üçün nəzərdə tutulmayıb və biz onların şəxsi məlumatlarını bilərəkdən toplamırıq."
+        ]
       },
       {
-        "h": "11. Bu siyasətdə dəyişikliklər",
+        "h": "12. Bu siyasətdə dəyişikliklər",
         "p": [
           "Telzyra inkişaf etdikcə, xüsusilə hesablar və ödənişlər istifadəyə verilməzdən əvvəl bu siyasəti yeniləyəcəyik. Yuxarıdakı tarix həmişə son versiyanı göstərir."
         ]
       },
       {
-        "h": "12. Əlaqə",
-        "p": ["E-poçt: hello@telzyra.com. Həmçinin hər səhifənin aşağısındakı keçid vasitəsilə bizə WhatsApp-da yaza bilərsiniz."]
+        "h": "13. Əlaqə",
+        "p": [
+          "E-poçt: hello@telzyra.com. Həmçinin hər səhifənin aşağısındakı keçid vasitəsilə bizə WhatsApp-da yaza bilərsiniz."
+        ]
       }
     ]
   },
@@ -107,7 +131,9 @@
       },
       {
         "h": "3. Qəbul edilən istifadə",
-        "p": ["Telzyra-dan aşağıdakılar üçün istifadə etməyəcəyinizlə razılaşırsınız:"],
+        "p": [
+          "Telzyra-dan aşağıdakılar üçün istifadə etməyəcəyinizlə razılaşırsınız:"
+        ],
         "list": [
           "hər hansı qanunu və ya başqalarının hüquqlarını pozmaq;",
           "spam və ya istənilməyən mesajlar göndərmək;",
@@ -173,8 +199,45 @@
       },
       {
         "h": "13. Əlaqə",
-        "p": ["Bu Şərtlərlə bağlı suallar üçün: hello@telzyra.com."]
+        "p": [
+          "Bu Şərtlərlə bağlı suallar üçün: hello@telzyra.com."
+        ]
       }
     ]
+  },
+  "dataDeletion": {
+    "title": "Məlumatların silinməsi",
+    "intro": "Telzyra-nın Facebook, Instagram və digər qoşulmuş tətbiqlərdən saxladığı məlumatları istənilən vaxt silə bilərsiniz. Bu məlumatların silinməsi həmin bağlantıdan istifadə edən iş axınlarını dayandırır.",
+    "sections": [
+      {
+        "h": "1. Telzyra-da ayırın",
+        "p": [
+          "İnteqrasiyalar → Bağlantılarım bölməsini açın və tətbiqin yanında Ayır seçin. Telzyra provayder imkan verirsə çıxışını ləğv edir və saxlanılan giriş tokenlərini dərhal silir. Bu bağlantıdan istifadə edən iş axınları dayandırılır."
+        ]
+      },
+      {
+        "h": "2. Telzyra-nı Facebook və ya Instagram-dan silin",
+        "list": [
+          "Facebook: Ayarlar və məxfilik → Ayarlar → Biznes inteqrasiyaları (və ya Tətbiqlər və saytlar) → Telzyra → Sil; soruşulduqda məlumatların silinməsini seçin.",
+          "Instagram: Ayarlar → Sayt icazələri → Tətbiqlər və saytlar → Telzyra → Sil.",
+          "Bundan sonra Meta bizə silmə sorğusu göndərir. Həmin hesab üzrə saxladığımız giriş tokenlərini, hesab identifikatorlarını və adları silir və sizə aşağıda yoxlaya biləcəyiniz təsdiq kodu veririk."
+        ]
+      },
+      {
+        "h": "3. Hər şeyi silin",
+        "p": [
+          "Telzyra hesabınızı və bütün iş sahəsi məlumatlarını silmək üçün və ya sualınız varsa, hesabınızın e-poçtundan hello@telzyra.com ünvanına yazın. 30 gün ərzində təsdiq edirik."
+        ]
+      }
+    ],
+    "status": {
+      "heading": "Silmə sorğusunu yoxlayın",
+      "label": "Təsdiq kodu",
+      "check": "Statusu yoxla",
+      "COMPLETED": "{date} tarixində tamamlanıb. Bu hesab üzrə saxladığımız məlumatlar silinib.",
+      "RECEIVED": "{date} tarixində qəbul edilib və icra olunur.",
+      "notFound": "Bu kodla sorğu tapılmadı. Kodu yoxlayıb yenidən cəhd edin.",
+      "error": "Statusu hazırda yoxlamaq mümkün olmadı. Bir qədər sonra yenidən cəhd edin."
+    }
   }
 }

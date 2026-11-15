@@ -39,5 +39,9 @@
   "dashboard": {
     "title": "Dashboard",
     "description": "Your Telzyra workspace."
+  },
+  "dataDeletion": {
+    "title": "Data Deletion",
+    "description": "How to delete the data Telzyra holds from Facebook, Instagram and other connected apps, and how to check a deletion request."
   }
 }
