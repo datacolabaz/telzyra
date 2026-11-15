@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowLeft, CheckCircle2, ChevronDown, Loader2, Pause, Play, Plus, Save, Trash2, Webhook, Clock, XCircle, FlaskConical } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ChevronDown, Copy, Loader2, Pause, Play, Plus, RefreshCw, Save, Trash2, Webhook, Clock, XCircle, FlaskConical } from "lucide-react";
 import { Badge, buttonClass, Card } from "@/components/ui/primitives";
 import { createTranslator } from "@/i18n/translator";
 import type { Messages } from "@/i18n/messages";
@@ -361,9 +361,13 @@ function Builder({
               <>
                 <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-500">
                   {trigger.mode === "webhook" ? <Webhook className="size-3.5" aria-hidden /> : <Clock className="size-3.5" aria-hidden />}
-                  {trigger.description} {trigger.mode === "webhook" ? t("workflows.builder.webhookNote") : t("workflows.builder.pollingNote", { minutes: trigger.pollIntervalMinutes ?? 5 })}
+                  {trigger.description} {def.trigger.connector === "webhook" ? "" : trigger.mode === "webhook" ? t("workflows.builder.webhookNote") : t("workflows.builder.pollingNote", { minutes: trigger.pollIntervalMinutes ?? 5 })}
                 </p>
-                <ConnectionSelect t={t} provider={def.trigger.connector} connections={connections} value={def.trigger.connectionId ?? ""} onChange={(v) => setTrigger({ connectionId: v || null })} integrationsHref={integrationsHref} />
+                {def.trigger.connector === "webhook" ? (
+                  <HookUrl t={t} api={api} workflowId={id ?? undefined} status={status} />
+                ) : (
+                  <ConnectionSelect t={t} provider={def.trigger.connector} connections={connections} value={def.trigger.connectionId ?? ""} onChange={(v) => setTrigger({ connectionId: v || null })} integrationsHref={integrationsHref} />
+                )}
                 <SchemaFields t={t} schema={trigger.configSchema} value={def.trigger.config} onChange={(config) => setTrigger({ config })} />
               </>
             )}
@@ -586,6 +590,64 @@ function SchemaFields({ t, schema, value, onChange }: { t: T; schema: JsonSchema
           />
         );
       })}
+    </div>
+  );
+}
+
+/** Inbound Webhook trigger: shows the workflow's secret URL (after activation) with copy and rotate. */
+function HookUrl({ t, api, workflowId, status }: { t: T; api: ReturnType<typeof createApi>; workflowId?: string; status?: string }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    let active = true;
+    if (!workflowId) return;
+    api
+      .get<{ url: string | null }>(`/workflows/${workflowId}/webhook`)
+      .then((r) => active && setUrl(r.url))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [api, workflowId, status]);
+
+  if (!workflowId || !url) return <p className="mt-3 rounded-lg bg-ink-50 p-3 text-xs text-ink-600">{t("workflows.builder.hookPending")}</p>;
+  return (
+    <div className="mt-3">
+      <label className="block text-xs font-medium text-ink-700" htmlFor="hook-url">{t("workflows.builder.hookUrl")}</label>
+      <div className="mt-1 flex gap-2">
+        <input id="hook-url" readOnly value={url} onFocus={(e) => e.currentTarget.select()} className="h-9 min-w-0 flex-1 rounded-lg border border-ink-200 bg-ink-50 px-3 font-mono text-xs text-ink-900" />
+        <button
+          type="button"
+          className={buttonClass("secondary")}
+          onClick={async () => {
+            await navigator.clipboard?.writeText(url).catch(() => {});
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          }}
+        >
+          <Copy className="size-4" aria-hidden />
+          {copied ? t("workflows.builder.hookCopied") : t("workflows.builder.hookCopy")}
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          className={buttonClass("ghost")}
+          onClick={async () => {
+            if (!window.confirm(t("workflows.builder.hookRotateConfirm"))) return;
+            setBusy(true);
+            try {
+              setUrl((await api.send<{ url: string }>("POST", `/workflows/${workflowId}/webhook/rotate`)).url);
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          <RefreshCw className="size-4" aria-hidden />
+          {t("workflows.builder.hookRotate")}
+        </button>
+      </div>
+      <p className="mt-1.5 text-xs text-ink-500">{t("workflows.builder.hookHelp")}</p>
     </div>
   );
 }

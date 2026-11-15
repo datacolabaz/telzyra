@@ -78,6 +78,8 @@ export function integrationsRouter(s: Services) {
     res.status(204).end();
   }));
   r.post("/workflows/:id/activate", h(async (req, res) => res.json(await s.workflows.activate(req.auth!, String(req.params.id), req))));
+  r.get("/workflows/:id/webhook", h(async (req, res) => res.set("Cache-Control", "no-store").json(await s.workflows.webhookUrl(req.auth!, String(req.params.id)))));
+  r.post("/workflows/:id/webhook/rotate", h(async (req, res) => res.json(await s.workflows.rotateWebhookUrl(req.auth!, String(req.params.id), req))));
   r.post("/workflows/:id/pause", h(async (req, res) => res.json(await s.workflows.pause(req.auth!, String(req.params.id)))));
   r.post("/workflows/:id/run", h(async (req, res) => {
     const triggerData = req.body?.triggerData && typeof req.body.triggerData === "object" ? (req.body.triggerData as Record<string, unknown>) : undefined;
@@ -125,6 +127,13 @@ export function webhooksRouter(s: Services, opts: { rateLimitMax?: number } = {}
     const result = await s.webhooks.shopifyCompliance(toRaw(req));
     res.status(result.status).json(result.body);
   }));
+  // Inbound Webhook trigger (per-workflow secret URL). Registered before the provider routes.
+  const hook = h(async (req, res) => {
+    const result = await s.hooks.receive(String(req.params.token), toRaw(req));
+    res.status(result.status).json(result.body);
+  });
+  r.post("/hook/:token", hook);
+  r.put("/hook/:token", hook);
   const receive = h(async (req, res) => {
     const raw = toRaw(req);
     const result = await s.webhooks.ingest(String(req.params.provider), req.params.endpointToken ? String(req.params.endpointToken) : undefined, raw);

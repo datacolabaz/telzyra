@@ -18,7 +18,8 @@ export type AuditAction =
   | "workflow.created"
   | "workflow.activated"
   | "workflow.paused"
-  | "workflow.deleted";
+  | "workflow.deleted"
+  | "workflow.webhook_rotated";
 
 export interface AuditEntry {
   action: AuditAction;

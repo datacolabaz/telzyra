@@ -304,6 +304,7 @@ model Workflow {
   workspace    Workspace           @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   executions   WorkflowExecution[]
   triggerState TriggerState?
+  hook         WorkflowHook?
 
   @@index([workspaceId])
   @@index([triggerConnectionId, triggerKey, status])
@@ -359,4 +360,21 @@ model CircuitBreakerState {
   updatedAt DateTime  @default(now()) @updatedAt
 
   @@map("circuit_breakers")
+}
+
+/// Inbound "Webhook" trigger: one secret URL per workflow (POST /webhooks/hook/<token>).
+/// The token is looked up by its SHA-256; the encrypted copy is only used to show the URL to the owner.
+model WorkflowHook {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  workflowId  String    @unique @db.Uuid
+  workspaceId String    @db.Uuid
+  tokenHash   String    @unique
+  tokenEnc    String
+  createdAt   DateTime  @default(now())
+  rotatedAt   DateTime?
+
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@map("workflow_hooks")
 }

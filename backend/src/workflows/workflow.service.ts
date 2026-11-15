@@ -14,6 +14,8 @@ import { getConnector } from "../integrations/core/registry.js";
 import { MANUAL_TRIGGER, triggerMode, validateDefinition, type WorkflowDefinition } from "./definition.js";
 import type { WorkflowEngine } from "./engine.js";
 import { resolveTemplates } from "./templates.js";
+import type { WorkflowHookService } from "./hooks.js";
+import { WEBHOOK_CONNECTOR_ID } from "../integrations/providers/webhook.js";
 
 export const subscriptionSecretAad = (subscriptionId: string) => `webhook-subscription:${subscriptionId}`;
 
@@ -36,6 +38,7 @@ export class WorkflowService {
     private readonly engine: WorkflowEngine,
     private readonly audit: AuditService,
     private readonly publicApiUrl: string,
+    private readonly hooks?: WorkflowHookService,
   ) {}
 
   private scoped(ctx: AuthContext) {
@@ -87,12 +90,30 @@ export class WorkflowService {
     return updated;
   }
 
+  /** The workflow's inbound webhook URL (Webhook trigger), or null before its first activation. */
+  async webhookUrl(ctx: AuthContext, id: string) {
+    await this.get(ctx, id);
+    return { url: (await this.hooks?.url(ctx.workspaceId, id)) ?? null };
+  }
+
+  async rotateWebhookUrl(ctx: AuthContext, id: string, req?: Request) {
+    const w = await this.get(ctx, id);
+    if ((w.definition as unknown as WorkflowDefinition).trigger.connector !== WEBHOOK_CONNECTOR_ID) throw new AppError(400, "workflow.not_webhook_trigger");
+    const url = await this.hooks!.rotate(ctx.workspaceId, id);
+    await this.audit.record({ action: "workflow.webhook_rotated", workspaceId: ctx.workspaceId, actorUserId: ctx.userId, targetType: "workflow", targetId: id }, req);
+    return { url };
+  }
+
   async pause(ctx: AuthContext, id: string) {
     await this.get(ctx, id);
     return this.scoped(ctx).workflow.update({ where: { id }, data: { status: "PAUSED" } });
   }
 
   private async ensureTrigger(ctx: AuthContext, workflowId: string, def: WorkflowDefinition) {
+    if (def.trigger.connector === WEBHOOK_CONNECTOR_ID) {
+      await this.hooks?.ensure(ctx.workspaceId, workflowId); // inbound URL owned by the workflow, no provider subscription
+      return;
+    }
     const mode = triggerMode(def);
     if (mode === "polling") {
       const t = getConnector(def.trigger.connector)?.triggers[def.trigger.trigger];

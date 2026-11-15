@@ -164,7 +164,14 @@
       "pollingNote": "{minutes} dakikada bir kontrol edilir.",
       "webhookNote": "Uygulama bir olay gönderdiğinde hemen başlar.",
       "sampleData": "Örnek tetikleyici verisi (JSON)",
-      "back": "Tüm iş akışları"
+      "back": "Tüm iş akışları",
+      "hookUrl": "Webhook URL'si",
+      "hookPending": "Benzersiz URL'yi almak için iş akışını etkinleştirin.",
+      "hookHelp": "Bu URL'ye POST (JSON, form veya metin) gönderin. Gizli tutun: URL'ye sahip olan herkes bu iş akışını başlatabilir. Aşağıdaki adımlarda {{trigger.body.field}} kullanın.",
+      "hookCopy": "Kopyala",
+      "hookCopied": "Kopyalandı",
+      "hookRotate": "Yeni URL",
+      "hookRotateConfirm": "Yeni URL oluşturulsun mu? Mevcut URL hemen çalışmayı durduracak."
     },
     "runs": {
       "title": "Çalıştırmalar",

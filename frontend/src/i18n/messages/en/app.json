@@ -164,7 +164,14 @@
       "pollingNote": "Checked every {minutes} min.",
       "webhookNote": "Starts instantly when the app sends an event.",
       "sampleData": "Sample trigger data (JSON)",
-      "back": "All workflows"
+      "back": "All workflows",
+      "hookUrl": "Webhook URL",
+      "hookPending": "Activate the workflow to get its unique URL.",
+      "hookHelp": "Send a POST (JSON, form or text) to this URL. Keep it secret: anyone with the URL can start this workflow. Use {{trigger.body.field}} in the steps below.",
+      "hookCopy": "Copy",
+      "hookCopied": "Copied",
+      "hookRotate": "New URL",
+      "hookRotateConfirm": "Create a new URL? The current one stops working immediately."
     },
     "runs": {
       "title": "Runs",

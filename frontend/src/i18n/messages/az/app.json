@@ -164,7 +164,14 @@
       "pollingNote": "Hər {minutes} dəqiqədən bir yoxlanılır.",
       "webhookNote": "Tətbiq hadisə göndərən kimi dərhal başlayır.",
       "sampleData": "Nümunə trigger məlumatı (JSON)",
-      "back": "Bütün iş axınları"
+      "back": "Bütün iş axınları",
+      "hookUrl": "Webhook URL",
+      "hookPending": "Unikal URL almaq üçün iş axınını aktiv edin.",
+      "hookHelp": "Bu URL-ə POST sorğusu göndərin (JSON, form və ya mətn). URL-i gizli saxlayın: onu bilən hər kəs bu iş axınını işə sala bilər. Aşağıdakı addımlarda {{trigger.body.field}} istifadə edin.",
+      "hookCopy": "Kopyala",
+      "hookCopied": "Kopyalandı",
+      "hookRotate": "Yeni URL",
+      "hookRotateConfirm": "Yeni URL yaradılsın? Hazırkı URL dərhal işləməyi dayandıracaq."
     },
     "runs": {
       "title": "İcralar",
