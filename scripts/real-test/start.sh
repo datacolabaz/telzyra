@@ -10,8 +10,9 @@
 # Stop everything with Ctrl+C.
 #
 # TELZYRA_PROVIDERS="meta slack notion hubspot shopify"  asks (hidden input) for the app credentials
-#                   of these providers when they are not in backend/.env yet. Values never leave
-#                   your machine and are not printed.
+#                   of these providers (scripts/real-test/set-provider-keys.sh). Values never leave
+#                   your machine and are not printed. While running, use that script in another
+#                   terminal instead — the API reloads on .env changes.
 # TELZYRA_TUNNEL=1  also opens a free Cloudflare quick tunnel (HTTPS) so providers can deliver
 #                   webhooks (Telegram webhook mode, Slack, Notion, HubSpot, Shopify, Stripe). Only
 #                   POST /webhooks/* is reachable through it (scripts/webhook-gateway.mjs); OAuth and
@@ -111,6 +112,10 @@ if ! grep -q '^GOOGLE_CLIENT_SECRET=..*' "$ENV"; then
   mv "$ENV.tmp" "$ENV"; chmod 600 "$ENV"
   unset GSECRET
   echo "  saved to backend/.env"
+fi
+if [ -n "${TELZYRA_PROVIDERS:-}" ]; then
+  # shellcheck disable=SC2086
+  bash "$DIR/scripts/real-test/set-provider-keys.sh" $TELZYRA_PROVIDERS
 fi
 # Same-origin API proxy: the browser talks only to the web app's port (some embedded browsers block
 # cross-port requests to localhost); Next.js forwards /api/v1/* to the API on :4000.
