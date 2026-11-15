@@ -35,7 +35,8 @@ for p in "$@"; do
     esac
     grep -v "^$k=" "$ENV" > "$ENV.tmp" || true
     printf '%s=%s\n' "$k" "$v" >> "$ENV.tmp"
-    mv "$ENV.tmp" "$ENV"; chmod 600 "$ENV"
+    # Write in place (not mv): the API's file watcher only notices changes to the same file.
+    cat "$ENV.tmp" > "$ENV"; rm -f "$ENV.tmp"; chmod 600 "$ENV"
     echo "    ✓ saved (${#v} chars)"
   done
 done
