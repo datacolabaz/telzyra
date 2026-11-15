@@ -45,7 +45,14 @@ export function createApp({ db, rateLimitMax, services }: AppDeps) {
       logger,
       // Never log bodies; headers are redacted by the logger's redact list.
       autoLogging: { ignore: (req) => req.url === "/health" },
-      serializers: { req: (req: { id?: unknown; method?: string; url?: string }) => ({ id: req.id, method: req.method, url: safeLogUrl(req.url) }) },
+      serializers: {
+        req: (req: { id?: unknown; method?: string; url?: string }) => ({ id: req.id, method: req.method, url: safeLogUrl(req.url) }),
+        // Only the status and the redirect target without its query (OAuth state/code, PKCE challenge).
+        res: (res: { statusCode?: number; headers?: Record<string, unknown> }) => {
+          const location = res.headers?.location;
+          return { statusCode: res.statusCode, ...(typeof location === "string" ? { location: location.split("?")[0] } : {}) };
+        },
+      },
       customLogLevel: (_req, res, err) => (err || res.statusCode >= 500 ? "error" : res.statusCode >= 400 ? "warn" : "info"),
     }),
   );
