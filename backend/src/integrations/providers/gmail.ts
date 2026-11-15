@@ -102,7 +102,8 @@ async function getMessage(ctx: ConnectorContext, id: string, format: "metadata" 
   const res = await ctx.http.request<GmailMessage>({
     url: `${API}/messages/${encodeURIComponent(id)}`,
     headers: auth(ctx),
-    query: format === "metadata" ? { format, metadataHeaders: "From" } : { format },
+    // The summary needs all four headers; Gmail returns only the ones listed (repeated parameter).
+    query: format === "metadata" ? { format, metadataHeaders: ["From", "To", "Subject", "Date"] } : { format },
   });
   return res.data;
 }

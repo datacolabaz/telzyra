@@ -73,7 +73,7 @@ Implemented on `feature/integrations`: modules 2–7, security review, tests, do
 | Slack | done | mocked (signature, challenge, routing) | ✅ real on 2026-11-15 (test app, local + tunnel): OAuth v2, Events URL verified, list_channels, send_channel_message, not_in_channel error, Slack message → workflow → thread reply (no loop). Note: connect in a normal browser — the Claude desktop pane blocks the tunnel → localhost callback |
 | Continue with Google (sign-in) | done | mocked Google token/userinfo; real state, linking, sessions (12 tests) | pending real Google test (needs redirect URI added in Google Cloud) |
 | Notion | done | mocked (signature) | needs Notion public integration |
-| Gmail | done | mocked (MIME, header injection) | needs Google app + CASA for read scope |
+| Gmail | done | mocked (MIME, header injection) | needs Google app + CASA for read scope | — real 2026-11-15: send ✅, search ✅, read ✅, new_email poll → Slack ✅ (bug found: metadata headers; fixed)
 | HubSpot | done | mocked (signature v3) | needs HubSpot app |
 | Stripe | done | mocked (endpoint, signature, DLQ/replay) | needs restricted test key |
 | Shopify | done | mocked (HMAC, compliance) | needs Shopify app + protected data access |

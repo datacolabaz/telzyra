@@ -15,7 +15,8 @@ import { codeForStatus, ConnectorError, type ConnectorErrorCode } from "./errors
 export interface HttpRequest {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   url: string;
-  query?: Record<string, string | number | boolean | undefined>;
+  /** Arrays become repeated parameters (?h=a&h=b), as Google APIs expect. */
+  query?: Record<string, string | number | boolean | Array<string | number> | undefined>;
   headers?: Record<string, string>;
   json?: unknown;
   form?: Record<string, string | number | boolean | undefined>;
@@ -95,7 +96,11 @@ export class HttpClient {
   async request<T = unknown>(req: HttpRequest): Promise<HttpResponse<T>> {
     const method = req.method ?? "GET";
     const url = new URL(req.url);
-    for (const [k, v] of Object.entries(req.query ?? {})) if (v !== undefined) url.searchParams.set(k, String(v));
+    for (const [k, v] of Object.entries(req.query ?? {})) {
+      if (v === undefined) continue;
+      if (Array.isArray(v)) for (const item of v) url.searchParams.append(k, String(item));
+      else url.searchParams.set(k, String(v));
+    }
 
     const headers: Record<string, string> = { Accept: "application/json", ...req.headers };
     let body: string | Uint8Array | undefined = req.body;
