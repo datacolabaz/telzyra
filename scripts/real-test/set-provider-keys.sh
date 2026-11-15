@@ -40,4 +40,6 @@ for p in "$@"; do
     echo "    ✓ saved (${#v} chars)"
   done
 done
+# Nudge the dev server's watcher (tsx watch) so the new values are loaded right away.
+touch "$ROOT/backend/src/server.ts" 2>/dev/null || true
 echo "✓ backend/.env updated — the API restarts automatically."
