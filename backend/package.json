@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Telzyra Platform API",
   "scripts": {
-    "dev": "tsx watch --env-file=.env src/server.ts",
+    "dev": "tsx watch --include .env --env-file=.env src/server.ts",
     "build": "prisma generate && tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",

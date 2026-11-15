@@ -122,6 +122,7 @@ const slackHttp = () =>
 export const slack: OAuthProvider = {
   id: "slack",
   pkce: false,
+  httpsRedirectOnly: true,
   requiredEnv: ["SLACK_CLIENT_ID", "SLACK_CLIENT_SECRET", "SLACK_SIGNING_SECRET"],
   clientId: () => env.SLACK_CLIENT_ID ?? "",
   clientSecret: () => env.SLACK_CLIENT_SECRET ?? "",
@@ -272,6 +273,7 @@ export function shopifyQueryHmac(query: Record<string, string>, secret: string):
 export const shopify: OAuthProvider = {
   id: "shopify",
   pkce: false,
+  httpsRedirectOnly: true,
   requiredEnv: ["SHOPIFY_CLIENT_ID", "SHOPIFY_CLIENT_SECRET"],
   clientId: () => env.SHOPIFY_CLIENT_ID ?? "",
   clientSecret: () => env.SHOPIFY_CLIENT_SECRET ?? "",

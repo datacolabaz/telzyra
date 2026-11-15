@@ -10,6 +10,7 @@ development/test mode.
 | OAuth redirect (callback) | `https://api.telzyra.com/v1/oauth/<oauth-provider>/callback` |
 | App-level webhooks | `https://api.telzyra.com/webhooks/<connector>` |
 | Per-connection webhooks | `https://api.telzyra.com/webhooks/<connector>/<endpointToken>` — registered automatically, nothing to configure |
+| Local https-only OAuth (Slack, Shopify) | With `TELZYRA_TUNNEL=1` the redirect URI becomes `<tunnel>/v1/oauth/<provider>/callback`; the gateway 302-redirects it to `http://localhost:4000/…` so the session cookie is used |
 | Local webhook testing | `TELZYRA_TUNNEL=1 bash scripts/real-test/start.sh` prints a `https://….trycloudflare.com` URL (changes each run); only `/webhooks/*` is reachable through it |
 
 OAuth provider ids: `google` (Google Sheets, Gmail), `slack`, `notion`, `hubspot`, `shopify`, `meta` (Facebook Pages, Instagram).

@@ -2,16 +2,23 @@
 /**
  * Local webhook gateway for HTTPS tunnels.
  *
- *   node scripts/webhook-gateway.mjs [listenPort=4001] [apiOrigin=http://127.0.0.1:4000]
+ *   node scripts/webhook-gateway.mjs [listenPort=4001] [apiOrigin=http://127.0.0.1:4000] [browserApiOrigin=http://localhost:4000]
  *
  * A tunnel (e.g. cloudflared) points at this port instead of the API, so the internet can reach ONLY
  * POST /webhooks/* (and GET /health). Everything else — /v1 (sessions, OAuth, connections) — returns
  * 404 and never reaches the API. Bodies are streamed unchanged, so provider signatures stay valid.
+ *
+ * OAuth bounce: providers that only accept https redirect URIs (Slack, Shopify) send the browser to
+ * <tunnel>/v1/oauth/<provider>/callback. The gateway does NOT forward that to the API; it answers with a
+ * 302 to the local API callback (browserApiOrigin), so the request reaches the API from the user's own
+ * browser with its session cookie, where state, session binding and PKCE are verified as usual.
  */
 import http from "node:http";
 
 const port = Number(process.argv[2] ?? 4001);
 const api = new URL(process.argv[3] ?? "http://127.0.0.1:4000");
+const browserApi = new URL(process.argv[4] ?? "http://localhost:4000");
+const OAUTH_CALLBACK = /^\/v1\/oauth\/[a-z0-9-]+\/callback$/;
 const MAX_BODY = 1024 * 1024; // the API enforces the same limit
 
 export function allowed(method, url) {
@@ -21,6 +28,12 @@ export function allowed(method, url) {
 }
 
 const server = http.createServer((req, res) => {
+  const path = (req.url ?? "/").split("?")[0];
+  if (req.method === "GET" && OAUTH_CALLBACK.test(path)) {
+    const target = new URL(req.url ?? "/", browserApi);
+    res.writeHead(302, { location: target.toString(), "cache-control": "no-store", "referrer-policy": "no-referrer" }).end();
+    return;
+  }
   if (!allowed(req.method, req.url)) {
     res.writeHead(404, { "content-type": "application/json" }).end('{"code":"not_found"}');
     return;

@@ -26,6 +26,8 @@ export interface OAuthProvider {
   id: string;
   /** Use PKCE (S256) for this provider. */
   pkce: boolean;
+  /** Provider only accepts https redirect URIs (no http://localhost), e.g. Slack and Shopify. */
+  httpsRedirectOnly?: boolean;
   requiredEnv: string[];
   clientId(): string;
   clientSecret(): string;

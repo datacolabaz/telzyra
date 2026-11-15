@@ -3,7 +3,7 @@ import type { Request } from "express";
 import type { Db } from "../../db/client.js";
 import type { CredentialCipher } from "../../security/crypto.js";
 import { randomToken, sha256 } from "../../security/crypto.js";
-import { env } from "../../config/env.js";
+import { env, webhookBaseUrl } from "../../config/env.js";
 import type { AuthContext } from "../../auth/session.service.js";
 import type { AuditService } from "../../audit/audit.service.js";
 import { AppError } from "../../lib/errors.js";
@@ -14,7 +14,16 @@ import { OAuthError } from "./types.js";
 
 export const STATE_TTL_MS = 10 * 60 * 1000;
 
-export const redirectUriFor = (providerId: string) => `${env.PUBLIC_API_URL}/v1/oauth/${providerId}/callback`;
+/**
+ * OAuth redirect URI. Normally PUBLIC_API_URL. When the API runs on http (local development) and the
+ * provider only accepts https redirects, the public HTTPS webhook origin (tunnel) is used instead; the
+ * local webhook gateway answers that callback with a 302 back to the local API, where the session
+ * cookie and the single-use state are checked as usual.
+ */
+export const redirectUriFor = (providerId: string) => {
+  const base = getOAuthProvider(providerId)?.httpsRedirectOnly && !env.PUBLIC_API_URL.startsWith("https://") && webhookBaseUrl().startsWith("https://") ? webhookBaseUrl() : env.PUBLIC_API_URL;
+  return `${base}/v1/oauth/${providerId}/callback`;
+};
 
 function pkcePair() {
   const verifier = randomBytes(32).toString("base64url");
