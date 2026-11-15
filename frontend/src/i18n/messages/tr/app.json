@@ -37,6 +37,7 @@
       "crm": "CRM",
       "payments": "Ödemeler",
       "commerce": "E-ticaret",
+      "social": "Sosyal medya",
       "core": "Yerleşik"
     },
     "auth": {

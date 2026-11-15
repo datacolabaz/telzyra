@@ -8,9 +8,11 @@ import { hubspot } from "./hubspot.js";
 import { stripe } from "./stripe.js";
 import { shopify } from "./shopify.js";
 import { httpRequest } from "./http.js";
+import { facebookPages } from "./facebook-pages.js";
+import { instagram } from "./instagram.js";
 
 /** Registers every built-in connector once. New providers are added here. */
 export function registerBuiltInConnectors() {
   if (listConnectors().length > 0) return;
-  for (const c of [telegram, googleSheets, slack, notion, gmail, hubspot, stripe, shopify, httpRequest]) registerConnector(c);
+  for (const c of [telegram, googleSheets, slack, notion, gmail, hubspot, stripe, shopify, facebookPages, instagram, httpRequest]) registerConnector(c);
 }

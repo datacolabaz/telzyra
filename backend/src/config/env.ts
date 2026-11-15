@@ -61,6 +61,10 @@ const schema = z.object({
   HUBSPOT_APP_ID: z.string().optional(),
   SHOPIFY_CLIENT_ID: z.string().optional(),
   SHOPIFY_CLIENT_SECRET: z.string().optional(),
+  /** Meta (Facebook Pages, Instagram) — Meta for Developers app (Facebook Login for Business). */
+  META_APP_ID: z.string().optional(),
+  META_APP_SECRET: z.string().optional(),
+  META_GRAPH_VERSION: z.string().regex(/^v\d+\.\d+$/).default("v27.0"),
   SHOPIFY_API_VERSION: z.string().default("2026-10"),
 
   /**

@@ -37,6 +37,7 @@
       "crm": "CRM",
       "payments": "Payments",
       "commerce": "E-commerce",
+      "social": "Social media",
       "core": "Built-in"
     },
     "auth": {

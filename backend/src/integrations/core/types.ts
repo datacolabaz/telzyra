@@ -125,7 +125,7 @@ export interface ConnectorDefinition {
   id: string;
   name: string;
   description: string;
-  category: "communication" | "productivity" | "crm" | "commerce" | "payments" | "core";
+  category: "communication" | "productivity" | "crm" | "commerce" | "payments" | "social" | "core";
   auth: AuthSpec;
   actions: Record<string, ActionDefinition>;
   triggers: Record<string, TriggerDefinition>;

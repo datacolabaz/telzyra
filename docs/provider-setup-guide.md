@@ -10,8 +10,9 @@ development/test mode.
 | OAuth redirect (callback) | `https://api.telzyra.com/v1/oauth/<oauth-provider>/callback` |
 | App-level webhooks | `https://api.telzyra.com/webhooks/<connector>` |
 | Per-connection webhooks | `https://api.telzyra.com/webhooks/<connector>/<endpointToken>` — registered automatically, nothing to configure |
+| Local webhook testing | `TELZYRA_TUNNEL=1 bash scripts/real-test/start.sh` prints a `https://….trycloudflare.com` URL (changes each run); only `/webhooks/*` is reachable through it |
 
-OAuth provider ids: `google` (Google Sheets, Gmail), `slack`, `notion`, `hubspot`, `shopify`.
+OAuth provider ids: `google` (Google Sheets, Gmail), `slack`, `notion`, `hubspot`, `shopify`, `meta` (Facebook Pages, Instagram).
 After setting a variable on Railway, redeploy the backend. A connector whose variables are missing is
 shown as "Not configured" in the UI and cannot be connected.
 
@@ -106,6 +107,26 @@ shown as "Not configured" in the UI and cannot be connected.
    requires Shopify app review.
 7. Users connect by entering their `*.myshopify.com` domain. Order webhooks are registered per shop
    with `webhookSubscriptionCreate` (`uri` field).
+
+## Meta: Facebook Pages and Instagram
+
+One Meta app serves both connectors (OAuth provider id `meta`).
+
+1. https://developers.facebook.com → **My Apps → Create app** → use case **"Other"** → type **Business**.
+2. Add the product **Facebook Login for Business**. Valid OAuth Redirect URIs:
+   **`https://api.telzyra.com/v1/oauth/meta/callback`** (local: `http://localhost:4000/v1/oauth/meta/callback`;
+   Meta allows `localhost` only while the app is in Development mode).
+3. Permissions requested: Facebook Pages → `pages_show_list`, `pages_read_engagement`, `pages_manage_posts`,
+   `business_management`; Instagram → `instagram_basic`, `instagram_content_publish`, `pages_show_list`,
+   `pages_read_engagement`, `business_management`.
+4. App settings → Basic → App ID / App Secret → Railway `META_APP_ID`, `META_APP_SECRET` (optional `META_GRAPH_VERSION`, default `v27.0`).
+5. Accounts: a Facebook **Page** (personal profiles cannot be posted to by any API) and an Instagram
+   **Business or Creator** account linked to that Page (Instagram app → Settings → Account type; Page settings → Linked accounts).
+6. Development mode: people with a role on the app (admin/developer/tester) can connect without review.
+   Public use: **Business verification** + **App Review** (Advanced Access) for each permission, with a
+   screencast of connecting and publishing in Telzyra. Plan for days to weeks.
+7. Media for Instagram must be a public **https** URL; images JPEG only; reels MP4. Limit: 100 API posts per
+   account per 24 h (Telzyra checks `content_publishing_limit` before publishing).
 
 ## Core: HTTP Request
 

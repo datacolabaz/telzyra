@@ -32,6 +32,8 @@ marked 🔒: generate or paste them directly in Railway and never send them in c
 | `NOTION_CLIENT_ID`, `NOTION_CLIENT_SECRET` 🔒, `NOTION_WEBHOOK_VERIFICATION_TOKEN` 🔒 | later | Notion integration | |
 | `HUBSPOT_CLIENT_ID`, `HUBSPOT_CLIENT_SECRET` 🔒, `HUBSPOT_APP_ID` | later | HubSpot app | |
 | `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET` 🔒, `SHOPIFY_API_VERSION` | later | Shopify app | |
+| `META_APP_ID`, `META_APP_SECRET` 🔒, `META_GRAPH_VERSION` | later | Meta app (Facebook Pages, Instagram) | Redirect `https://api.telzyra.com/v1/oauth/meta/callback` |
+| `PUBLIC_WEBHOOK_URL` | optional | Leave unset in production (defaults to `PUBLIC_API_URL`) | Only for local tunnels |
 
 Telegram and Stripe need no server variables (bot token / API key are entered per connection in the UI and
 stored encrypted).

@@ -12,6 +12,7 @@ import { OAuthError, type OAuthProvider, type TokenSet } from "./types.js";
  *  Notion   https://developers.notion.com/docs/authorization
  *  HubSpot  https://developers.hubspot.com/docs/api/oauth-quickstart-guide
  *  Shopify  https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens/authorization-code-grant
+ *  Meta     https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow
  */
 const http = (provider: string) => new HttpClient({ provider: `${provider}-oauth`, breakerKey: `${provider}-oauth` });
 
@@ -307,7 +308,59 @@ export const shopify: OAuthProvider = {
   },
 };
 
-const PROVIDERS = new Map<string, OAuthProvider>([google, slack, notion, hubspot, shopify].map((p) => [p.id, p]));
+
+// ─────────────────────────────── Meta (Facebook Login for Business) ───────────────────────────────
+const metaHttp = () =>
+  new HttpClient({
+    provider: "meta-oauth",
+    breakerKey: "meta-oauth",
+    mapError: (res) => {
+      const e = (res.data as { error?: { message?: string; code?: number; type?: string } })?.error ?? {};
+      return new ConnectorError(e.code === 190 || e.code === 100 ? "VALIDATION" : res.status >= 500 ? "PROVIDER_UNAVAILABLE" : "VALIDATION", e.message ?? `HTTP ${res.status}`, { provider: "meta", status: res.status, providerCode: String(e.code ?? "") });
+    },
+  });
+const metaGraph = () => `https://graph.facebook.com/${env.META_GRAPH_VERSION}`;
+const metaProof = (token: string) => createHmac("sha256", env.META_APP_SECRET ?? "").update(token).digest("hex");
+
+export const meta: OAuthProvider = {
+  id: "meta",
+  pkce: false,
+  requiredEnv: ["META_APP_ID", "META_APP_SECRET"],
+  clientId: () => env.META_APP_ID ?? "",
+  clientSecret: () => env.META_APP_SECRET ?? "",
+  authorizeUrl(p) {
+    const u = new URL(`https://www.facebook.com/${env.META_GRAPH_VERSION}/dialog/oauth`);
+    u.search = new URLSearchParams({ client_id: p.clientId, redirect_uri: p.redirectUri, state: p.state, response_type: "code", scope: p.scopes.join(",") }).toString();
+    return u.toString();
+  },
+  async exchange({ code, redirectUri }) {
+    const short = await metaHttp()
+      .request<{ access_token: string; expires_in?: number }>({ url: `${metaGraph()}/oauth/access_token`, query: { client_id: this.clientId(), client_secret: this.clientSecret(), redirect_uri: redirectUri, code } })
+      .catch(tokenError);
+    // Exchange for a long-lived user token (~60 days); Meta issues no refresh token.
+    const long = await metaHttp()
+      .request<{ access_token: string; expires_in?: number }>({ url: `${metaGraph()}/oauth/access_token`, query: { grant_type: "fb_exchange_token", client_id: this.clientId(), client_secret: this.clientSecret(), fb_exchange_token: short.data.access_token } })
+      .catch(tokenError);
+    const token = long.data.access_token;
+    // Granular consent: report only what the user actually granted, so missing scopes are detected.
+    const perms = await metaHttp().request<{ data: Array<{ permission: string; status: string }> }>({ url: `${metaGraph()}/me/permissions`, query: { access_token: token, appsecret_proof: metaProof(token) } });
+    return {
+      accessToken: token,
+      expiresAt: expiresAt(long.data.expires_in ?? 60 * 86_400),
+      scopes: perms.data.data.filter((p) => p.status === "granted").map((p) => p.permission),
+    };
+  },
+  async revoke({ accessToken }) {
+    if (!accessToken) return;
+    await metaHttp().request({ method: "DELETE", url: `${metaGraph()}/me/permissions`, query: { access_token: accessToken, appsecret_proof: metaProof(accessToken) } });
+  },
+  async identify(tokens) {
+    const r = await metaHttp().request<{ id: string; name?: string }>({ url: `${metaGraph()}/me`, query: { fields: "id,name", access_token: tokens.accessToken, appsecret_proof: metaProof(tokens.accessToken) } });
+    return { externalAccountId: r.data.id, displayName: r.data.name ?? "Meta account" };
+  },
+};
+
+const PROVIDERS = new Map<string, OAuthProvider>([google, slack, notion, hubspot, shopify, meta].map((p) => [p.id, p]));
 
 export function getOAuthProvider(id: string): OAuthProvider | undefined {
   return PROVIDERS.get(id);
